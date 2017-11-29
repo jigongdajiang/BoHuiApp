@@ -5,7 +5,6 @@ import android.content.Context;
 /**
  * @author : gaojigong
  * @date : 2017/11/9
- * @FileName:
  * @description:
  * 公共参数提供器
  */

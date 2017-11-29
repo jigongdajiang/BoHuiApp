@@ -42,13 +42,13 @@
 
     <!-- 系统部分 -->
     <!-- 系统通用的几款外边距 -->
+    <dimen name="sys_margin">@dimen/dp_15</dimen>
     <dimen name="sys_margin_small">@dimen/dp_10</dimen>
-    <dimen name="sys_margin_middle">@dimen/dp_15</dimen>
     <dimen name="sys_margin_large">@dimen/dp_20</dimen>
 
     <!-- 系统通用的几款内边距 -->
+    <dimen name="sys_padding">@dimen/dp_15</dimen>
     <dimen name="sys_padding_small">@dimen/dp_10</dimen>
-    <dimen name="sys_padding_middle">@dimen/dp_15</dimen>
     <dimen name="sys_padding_large">@dimen/dp_20</dimen>
 
     <!-- 系统小控件相邻边距 -->
@@ -64,8 +64,8 @@
     <dimen name="sys_tab_height_bottom">@dimen/dp_50</dimen>
 
     <!-- 系统分割线的宽度 -->
+    <dimen name="sys_divider_width">@dimen/dp_1</dimen>
     <dimen name="sys_divider_width_small">@dimen/dp_0.5</dimen>
-    <dimen name="sys_divider_width_middle">@dimen/dp_1</dimen>
     <dimen name="sys_divider_width_large">@dimen/dp_2</dimen>
 
     <!-- 系统内横向导航的间距，例如我的模块 -->
@@ -78,9 +78,9 @@
     <!-- operation部分 -->
     <!-- 通用对话框 使用到的距离值 -->
     <dimen name="dialog_out_margin_lr">@dimen/sys_margin_large</dimen>
-    <dimen name="dialog_title_margin_tb">@dimen/sys_margin_middle</dimen>
-    <dimen name="dialog_message_margin">@dimen/sys_margin_middle</dimen>
-    <dimen name="dialog_btn_padding">@dimen/sys_padding_middle</dimen>
+    <dimen name="dialog_title_margin_tb">@dimen/sys_margin</dimen>
+    <dimen name="dialog_message_margin">@dimen/sys_margin</dimen>
+    <dimen name="dialog_btn_padding">@dimen/sys_padding</dimen>
     <dimen name="dialog_btn_divider_width">@dimen/sys_divider_width_small</dimen>
     <dimen name="dialog_title_font_size">@dimen/sp_17</dimen>
     <dimen name="dialog_message_font_size">@dimen/sys_font_size_middle</dimen>
@@ -88,18 +88,18 @@
 
     <!-- 标题栏 -->
     <dimen name="title_bar_height">@dimen/dp_50</dimen>
-    <dimen name="title_bar_left_padding">@dimen/sys_padding_middle</dimen>
+    <dimen name="title_bar_left_padding">@dimen/sys_padding</dimen>
     <dimen name="title_bar_left_img_width">@dimen/dp_13</dimen>
     <dimen name="title_bar_left_img_height">@dimen/dp_24</dimen>
     <dimen name="title_bar_left_text_padding">@dimen/sys_widget_padding</dimen>
     <dimen name="title_bar_lr_font_size">@dimen/sys_font_size_middle</dimen>
     <dimen name="title_bar_title_font_size">@dimen/sys_font_size_large</dimen>
     <dimen name="title_bar_center_img_wh">@dimen/dp_30</dimen>
-    <dimen name="title_bar_right_lr_padding">@dimen/sys_padding_middle</dimen>
+    <dimen name="title_bar_right_lr_padding">@dimen/sys_padding</dimen>
     <dimen name="title_bar_right_bottom_padding">@dimen/sys_widget_padding</dimen>
     <dimen name="title_bar_right_font_size">@dimen/sp_15</dimen>
     <dimen name="title_bar_right_img_wh">@dimen/dp_21</dimen>
-    <dimen name="title_bar_right_img_margin_right">@dimen/sys_margin_middle</dimen>
+    <dimen name="title_bar_right_img_margin_right">@dimen/sys_margin</dimen>
     <dimen name="title_bar_right_img_margin_right2">@dimen/sys_margin_small</dimen>
     <dimen name="title_bar_divider_height">@dimen/sys_divider_width_small</dimen>
 </resources>

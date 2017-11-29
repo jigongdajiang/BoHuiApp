@@ -13,7 +13,6 @@ import com.jimeijf.grecycleview.viewholder.BaseViewHolder;
 /**
  * @author : gaojigong
  * @date : 2017/11/28
- * @FileName:
  * @description:
  */
 

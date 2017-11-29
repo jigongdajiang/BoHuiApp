@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * @author : gaojigong
  * @date : 2017/11/28
- * @FileName:
  * @description:
  * 基础 无数据无网络包装类
  *

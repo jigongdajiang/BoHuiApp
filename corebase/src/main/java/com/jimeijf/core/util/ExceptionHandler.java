@@ -22,7 +22,6 @@ import java.util.Map;
 /**
  * @author : gaojigong
  * @date : 2017/9/18
- * @FileName:
  * @description:
  * 异常捕获类
  * 单例

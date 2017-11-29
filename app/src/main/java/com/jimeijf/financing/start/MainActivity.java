@@ -6,7 +6,6 @@ import com.jimeijf.financing.common.activity.AbsBaseActivity;
 /**
  * @author : gaojigong
  * @date : 2017/11/29
- * @FileName:
  * @description:
  */
 

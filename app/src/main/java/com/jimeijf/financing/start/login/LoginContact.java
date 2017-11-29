@@ -12,7 +12,6 @@ import io.reactivex.Observable;
 /**
  * @author : gaojigong
  * @date : 2017/11/17
- * @FileName:
  * @description:
  */
 

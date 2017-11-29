@@ -3,7 +3,6 @@ package com.jimeijf.core.http.model;
 /**
  * @author : gaojigong
  * @date : 2017/11/9
- * @FileName:
  * @description:
  * 参数转义接口
  * 有些情况我们的请求体可能多样化，如json等

@@ -11,7 +11,6 @@ import com.jimeijf.core.toast.ToastShow;
 /**
  * @author : gaojigong
  * @date : 2017/11/16
- * @FileName:
  * @description:
  * BaseFragment 和 BaseActivity通用的功能辅助工具类
  * 业务层可以集成该对象，进行其它公共功能的扩展

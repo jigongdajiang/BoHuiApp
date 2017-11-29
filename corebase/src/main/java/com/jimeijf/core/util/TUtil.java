@@ -17,7 +17,6 @@ import okhttp3.RequestBody;
 /**
  * @author : gaojigong
  * @date : 2017/11/13
- * @FileName:
  * @description:
  *  泛型及Type操作
  *  根据泛型查找类型，进行转换

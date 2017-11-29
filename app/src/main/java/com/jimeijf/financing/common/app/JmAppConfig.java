@@ -5,7 +5,6 @@ import com.jimeijf.core.app.AppConfig;
 /**
  * @author : gaojigong
  * @date : 2017/11/17
- * @FileName:
  * @description:
  */
 

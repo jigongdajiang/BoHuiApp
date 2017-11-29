@@ -6,7 +6,6 @@ import android.os.SystemClock;
 /**
  * @author : gaojigong
  * @date : 2017/10/12
- * @FileName:
  * @description:
  */
 

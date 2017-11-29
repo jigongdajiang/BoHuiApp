@@ -3,7 +3,6 @@ package com.jimeijf.financing.common.app;
 /**
  * @author : gaojigong
  * @date : 2017/11/29
- * @FileName:
  * @description:
  *
  * 内存缓存Key文件

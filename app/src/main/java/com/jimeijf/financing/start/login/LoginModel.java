@@ -14,7 +14,6 @@ import io.reactivex.functions.Function;
 /**
  * @author : gaojigong
  * @date : 2017/11/17
- * @FileName:
  * @description:
  */
 

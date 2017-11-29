@@ -7,12 +7,16 @@ import com.jimeijf.financing.common.activity.AbsBaseActivity;
 /**
  * @author : gaojigong
  * @date : 2017/11/17
- * @FileName:
  * @description:
  *
  * 防止从后台进入每次都进入启屏页
  * 全屏模式
- *
+ * 展示图片
+ *  3秒后
+ *      如果是第一次安装启动，进入欢迎页
+ *      如果已经启动过，请求启动页接口，返回后显示图片
+ *          图片加载成功后进行5秒倒计时，倒计时过程中可以点击跳转到响应广告页
+ *          加载失败进入主页面
  */
 
 

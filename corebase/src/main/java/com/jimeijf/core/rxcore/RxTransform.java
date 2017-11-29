@@ -15,7 +15,6 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * @author : gaojigong
  * @date : 2017/11/13
- * @FileName:
  * @description:
  */
 

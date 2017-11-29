@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 /**
  * @author : gaojigong
  * @date : 2017/11/14
- * @FileName:
  * @description:
  */
 

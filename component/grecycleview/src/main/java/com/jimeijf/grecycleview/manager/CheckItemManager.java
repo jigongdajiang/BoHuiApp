@@ -3,7 +3,6 @@ package com.jimeijf.grecycleview.manager;
 /**
  * @author : gaojigong
  * @date : 2017/11/28
- * @FileName:
  * @description:
  */
 

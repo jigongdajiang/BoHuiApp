@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 /**
  * @author : gaojigong
  * @date : 2017/11/17
- * @FileName:
  * @description:
  * 字符串操作类
  * md5操作

@@ -5,7 +5,6 @@ import com.jimeijf.core.http.model.ApiResult;
 /**
  * @author : gaojigong
  * @date : 2017/11/10
- * @FileName:
  * @description:
  */
 

@@ -31,7 +31,6 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
 /**
  * @author : gaojigong
  * @date : 2017/11/27
- * @FileName:
  * @description:
  */
 

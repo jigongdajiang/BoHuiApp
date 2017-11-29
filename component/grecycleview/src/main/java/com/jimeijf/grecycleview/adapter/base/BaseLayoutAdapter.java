@@ -8,7 +8,6 @@ import com.jimeijf.grecycleview.item.BaseLayoutItem;
 /**
  * @author : gaojigong
  * @date : 2017/11/28
- * @FileName:
  * @description:
  * 数据和布局不统一时使用
  */

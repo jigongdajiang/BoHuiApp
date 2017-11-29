@@ -7,7 +7,6 @@ import com.jimeijf.core.base.BasePresenter;
 /**
  * @author : gaojigong
  * @date : 2017/11/29
- * @FileName:
  * @description:
  */
 

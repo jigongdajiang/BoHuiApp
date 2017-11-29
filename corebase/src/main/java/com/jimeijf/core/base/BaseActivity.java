@@ -13,7 +13,6 @@ import butterknife.Unbinder;
 /**
  * @author : gaojigong
  * @date : 2017/11/13
- * @FileName:
  * @description:
  * 基础Activity
  * 模板初始化

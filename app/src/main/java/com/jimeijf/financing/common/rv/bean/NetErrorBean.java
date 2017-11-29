@@ -3,7 +3,6 @@ package com.jimeijf.financing.common.rv.bean;
 /**
  * @author : gaojigong
  * @date : 2017/11/28
- * @FileName:
  * @description:
  */
 
