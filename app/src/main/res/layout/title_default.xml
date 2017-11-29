@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_default"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/title_bar_bg_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height">
+
+        <RelativeLayout
+            android:id="@+id/rl_title_left_area"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/title_bar_left_padding"
+            android:paddingRight="@dimen/title_bar_left_padding">
+
+            <ImageView
+                android:id="@+id/iv_title_left"
+                android:layout_width="@dimen/title_bar_left_img_width"
+                android:layout_height="@dimen/title_bar_left_img_height"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_back_blue"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_title_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/iv_title_left"
+                android:gravity="center_vertical"
+                android:padding="@dimen/title_bar_left_text_padding"
+                android:textColor="@color/title_bar_main_text_color"
+                android:textSize="@dimen/title_bar_lr_font_size"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_title_center_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/tv_title_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/dp_5"
+                android:text="标题"
+                android:textColor="@color/title_bar_main_text_color"
+                android:textSize="17sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_title_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title_title"
+                android:layout_centerHorizontal="true"
+                android:text="子标题"
+                android:textColor="@color/title_bar_main_text_color"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_title_center"
+                android:layout_width="@dimen/title_bar_center_img_wh"
+                android:layout_height="@dimen/title_bar_center_img_wh"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_title_right_area"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/tv_title_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingBottom="@dimen/title_bar_right_bottom_padding"
+                android:paddingLeft="@dimen/title_bar_right_lr_padding"
+                android:paddingRight="@dimen/title_bar_right_lr_padding"
+                android:paddingTop="@dimen/title_bar_right_bottom_padding"
+                android:text="提交"
+                android:textColor="@color/title_bar_main_text_color"
+                android:textSize="@dimen/title_bar_right_font_size"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_title_right_1"
+                android:layout_width="@dimen/title_bar_right_img_wh"
+                android:layout_height="@dimen/title_bar_right_img_wh"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/title_bar_right_img_margin_right"
+                android:scaleType="centerInside"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_title_right_2"
+                android:layout_width="@dimen/title_bar_right_img_wh"
+                android:layout_height="@dimen/title_bar_right_img_wh"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/title_bar_right_img_margin_right2"
+                android:layout_toLeftOf="@+id/iv_title_right_1"
+                android:scaleType="centerInside"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/title_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_divider_height"
+        android:background="@color/title_bar_bottom_divider_color" />
+</LinearLayout>

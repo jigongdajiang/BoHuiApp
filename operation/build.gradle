@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+
+def VERSION = System.properties['version'] ?: '1'
+def VERSION_NAME = System.properties['versionName'] ?: '1.0.0'
+def COMPILESDK_VERSION = System.properties['compileSdkVersion'] ?: '26'
+def BUILDTOOLS_VERSION = System.properties['buildToolsVersion'] ?: '26.0.2'
+def MINSDK_VERSION = System.properties['minSdkVersion'] ?: '14'
+def TARGETSDK_VERSION = System.properties['targetSdkVersion'] ?: '26'
+android {
+    compileSdkVersion Integer.parseInt(COMPILESDK_VERSION)
+    buildToolsVersion BUILDTOOLS_VERSION
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MINSDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGETSDK_VERSION)
+        versionCode Integer.parseInt(VERSION)
+        versionName VERSION_NAME
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile project(':component:flycotab')
+    compile project(':component:smallelement')
+    compile project(':component:grecycleview')
+
+
+}

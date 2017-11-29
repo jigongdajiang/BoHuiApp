@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App的基础距离值定义，包含两部分，
+        基础值部分:
+            该App所用的所有原始值。
+            目的是为了应变，把系统全值级别的距离值的变更
+        系统部分:
+            具有公用意义的部分。主要是系统及通用的定义
+            该部分值全部来自基础值，具体业务模块大部分引用的是该部分，极特殊没有意义的时候可能会引用基础值。
+            目的是应用系统某一点资源之的变更，例如所有原来为10dp的公共padding变为15dp
+
+        operation部分:
+            在该层的一些公共具体控件的值的定义
+            例如通用对话框的资源值，明确的系统及字号。
+     -->
+
+    <!-- 基础值部分 -->
+    <dimen name="dp_0.5">0.5dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_13">13dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_21">21dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+
+    <dimen name="sp_8">8sp</dimen>
+    <dimen name="sp_10">10sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_17">17sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+
+    <!-- 系统部分 -->
+    <!-- 系统通用的几款外边距 -->
+    <dimen name="sys_margin_small">@dimen/dp_10</dimen>
+    <dimen name="sys_margin_middle">@dimen/dp_15</dimen>
+    <dimen name="sys_margin_large">@dimen/dp_20</dimen>
+
+    <!-- 系统通用的几款内边距 -->
+    <dimen name="sys_padding_small">@dimen/dp_10</dimen>
+    <dimen name="sys_padding_middle">@dimen/dp_15</dimen>
+    <dimen name="sys_padding_large">@dimen/dp_20</dimen>
+
+    <!-- 系统小控件相邻边距 -->
+    <dimen name="sys_widget_margin">@dimen/dp_3</dimen>
+    <!-- 系统小控件内边距 -->
+    <dimen name="sys_widget_padding">@dimen/dp_5</dimen>
+    <!-- 系统默认标题高度 -->
+    <dimen name="sys_title_height_normal">@dimen/dp_48</dimen>
+    <!-- 系统默认标题左右的内边距 -->
+    <dimen name="sys_title_padding_lr_normal">@dimen/dp_15</dimen>
+
+    <!-- 系统底部Tab高度 -->
+    <dimen name="sys_tab_height_bottom">@dimen/dp_50</dimen>
+
+    <!-- 系统分割线的宽度 -->
+    <dimen name="sys_divider_width_small">@dimen/dp_0.5</dimen>
+    <dimen name="sys_divider_width_middle">@dimen/dp_1</dimen>
+    <dimen name="sys_divider_width_large">@dimen/dp_2</dimen>
+
+    <!-- 系统内横向导航的间距，例如我的模块 -->
+    <dimen name="sys_guide_margin">@dimen/dp_10</dimen>
+
+    <dimen name="sys_font_size_small">@dimen/sp_12</dimen>
+    <dimen name="sys_font_size_middle">@dimen/sp_14</dimen>
+    <dimen name="sys_font_size_large">@dimen/sp_17</dimen>
+
+    <!-- operation部分 -->
+    <!-- 通用对话框 使用到的距离值 -->
+    <dimen name="dialog_out_margin_lr">@dimen/sys_margin_large</dimen>
+    <dimen name="dialog_title_margin_tb">@dimen/sys_margin_middle</dimen>
+    <dimen name="dialog_message_margin">@dimen/sys_margin_middle</dimen>
+    <dimen name="dialog_btn_padding">@dimen/sys_padding_middle</dimen>
+    <dimen name="dialog_btn_divider_width">@dimen/sys_divider_width_small</dimen>
+    <dimen name="dialog_title_font_size">@dimen/sp_17</dimen>
+    <dimen name="dialog_message_font_size">@dimen/sys_font_size_middle</dimen>
+    <dimen name="dialog_btn_font_size">@dimen/sys_font_size_large</dimen>
+
+    <!-- 标题栏 -->
+    <dimen name="title_bar_height">@dimen/dp_50</dimen>
+    <dimen name="title_bar_left_padding">@dimen/sys_padding_middle</dimen>
+    <dimen name="title_bar_left_img_width">@dimen/dp_13</dimen>
+    <dimen name="title_bar_left_img_height">@dimen/dp_24</dimen>
+    <dimen name="title_bar_left_text_padding">@dimen/sys_widget_padding</dimen>
+    <dimen name="title_bar_lr_font_size">@dimen/sys_font_size_middle</dimen>
+    <dimen name="title_bar_title_font_size">@dimen/sys_font_size_large</dimen>
+    <dimen name="title_bar_center_img_wh">@dimen/dp_30</dimen>
+    <dimen name="title_bar_right_lr_padding">@dimen/sys_padding_middle</dimen>
+    <dimen name="title_bar_right_bottom_padding">@dimen/sys_widget_padding</dimen>
+    <dimen name="title_bar_right_font_size">@dimen/sp_15</dimen>
+    <dimen name="title_bar_right_img_wh">@dimen/dp_21</dimen>
+    <dimen name="title_bar_right_img_margin_right">@dimen/sys_margin_middle</dimen>
+    <dimen name="title_bar_right_img_margin_right2">@dimen/sys_margin_small</dimen>
+    <dimen name="title_bar_divider_height">@dimen/sys_divider_width_small</dimen>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorF5F6F5">
+
+    <TextView
+        android:id="@+id/title_item_time_tv"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/sys_color_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/sys_margin_middle"
+        android:text=""
+        android:textColor="@color/color026BB5"
+        android:textSize="@dimen/sys_font_size_middle" />
+</LinearLayout>

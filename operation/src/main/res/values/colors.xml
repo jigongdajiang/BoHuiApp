@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App的基础距离值定义，包含两部分，
+        基础值部分:
+            该App所用的所有原始值。
+            目的是为了应变，把系统全值级别的距离值的变更
+        系统部分:
+            具有公用意义的部分。主要是系统及通用的定义
+            该部分值全部来自基础值，具体业务模块大部分引用的是该部分，极特殊没有意义的时候可能会引用基础值。
+            目的是应用系统某一点资源之的变更，例如所有原来为10dp的公共padding变为15dp
+
+        operation部分:
+            在该层的一些公共具体控件的值的定义
+            例如通用对话框的资源值，明确的系统及字号。
+     -->
+
+    <!-- 基础值部分 -->
+    <color name="colorF7B00E">#F7B00E</color>
+    <color name="colorEF9E0F">#EF9E0F</color>
+    <color name="colorD1D5DB">#D1D5DB</color>
+    <color name="colorFF6D6D">#FF6D6D</color>
+    <color name="colorF55050">#F55050</color>
+    <color name="colorF5F5F5">#F5F5F5</color>
+    <color name="colorF5F6F5">#F5F6F5</color>
+    <color name="colorE0E0E0">#E0E0E0</color>
+    <color name="colorD1D1D1">#D1D1D1</color>
+    <color name="colorFAFAFA">#FAFAFA</color>
+    <color name="color4A4A4A">#4A4A4A</color>
+    <color name="color848484">#848484</color>
+    <color name="colorA8A8A8">#A8A8A8</color>
+    <color name="colorFF4657">#FF4657</color>
+    <color name="colorF6AB00">#F6AB00</color>
+    <color name="color026BB5">#026BB5</color>
+    <color name="color462727">#462727</color>
+    <color name="color426BF2">#426BF2</color>
+    <color name="color37B2F3">#37B2F3</color>
+    <color name="color1F7EC7">#1F7EC7</color>
+    <color name="color095E9A">#095E9A</color>
+    <color name="color9BC9FF">#9BC9FF</color>
+    <color name="color11AB6B">#11AB6B</color>
+    <color name="colorFFFFFF">#FFFFFF</color>
+    <color name="colorC4C4C4">#C4C4C4</color>
+    <color name="color999999">#999999</color>
+
+    <color name="colorB2026BB5">#B2026BB5</color>
+    <color name="color88026BB5">#88026BB5</color>
+    <color name="colorB2FFFFFF">#B2FFFFFF</color>
+    <color name="color00000000">#00000000</color>
+    <color name="color55F5F5F5">#55F5F5F5</color>
+    <color name="color88000000">#88000000</color>
+
+    <!-- 系统部分 -->
+    <!-- 主基色 -->
+    <color name="sys_color_base">@color/color026BB5</color>
+    <!-- 默认背景色，没有内容时的背景 -->
+    <color name="sys_color_bg">@color/colorF5F5F5</color>
+    <!-- 分割线颜色 -->
+    <color name="sys_color_divider">@color/colorD1D1D1</color>
+    <!-- 纯白色 -->
+    <color name="sys_color_white">@color/colorFFFFFF</color>
+    <!-- 全透明 -->
+    <color name="sys_color_transparent">@color/color00000000</color>
+
+    <!--字体—深黑-->
+    <color name="sys_color_font_black">@color/color4A4A4A</color>
+    <!--字体—浅黑-->
+    <color name="sys_color_font_somber">@color/color848484</color>
+    <!--字体—浅灰-->
+    <color name="sys_color_font_light_gray">@color/colorA8A8A8</color>
+    <!--字体—红-->
+    <color name="sys_color_font_red">@color/colorFF4657</color>
+    <!--字体—黄-->
+    <color name="sys_color_font_yellow">@color/colorF6AB00</color>
+    <!--字体-主题蓝 -->
+    <color name="sys_color_font_blue">@color/sys_color_base</color>
+
+    <!-- 系统状态栏颜色 -->
+    <color name="sys_status_bar_color">#000000</color>
+
+
+    <!-- operation部分 -->
+    <!-- 通用对话框 使用到的距离值 -->
+    <color name="dialog_title_content_color">@color/sys_color_font_black</color>
+    <color name="dialog_divider_color">@color/sys_color_divider</color>
+    <color name="dialog_btn_color">@color/sys_color_font_blue</color>
+    <color name="dialog_bg">@color/sys_color_white</color>
+    <!-- 默认标题 -->
+    <color name="title_bar_bg_color">@color/colorFAFAFA</color>
+    <color name="title_bar_main_text_color">@color/sys_color_base</color>
+    <color name="title_bar_bottom_divider_color">@color/colorE0E0E0</color>
+</resources>

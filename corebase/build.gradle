@@ -1,0 +1,93 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+    dependencies {
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
+    }
+}
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+
+def VERSION = System.properties['version'] ?: '1'
+def VERSION_NAME = System.properties['versionName'] ?: '1.0.0'
+def COMPILESDK_VERSION = System.properties['compileSdkVersion'] ?: '26'
+def BUILDTOOLS_VERSION = System.properties['buildToolsVersion'] ?: '26.0.2'
+def MINSDK_VERSION = System.properties['minSdkVersion'] ?: '14'
+def TARGETSDK_VERSION = System.properties['targetSdkVersion'] ?: '26'
+android {
+    compileSdkVersion Integer.parseInt(COMPILESDK_VERSION)
+    buildToolsVersion BUILDTOOLS_VERSION
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MINSDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGETSDK_VERSION)
+        versionCode Integer.parseInt(VERSION)
+        versionName VERSION_NAME
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //开启分包模式
+        multiDexEnabled true
+
+        //全局参数
+        buildConfigField "String", "MESSAGE", "\"I am the base apk\""
+        buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
+        buildConfigField "String", "PLATFORM",  "\"all\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:appcompat-v7:27.0.1'
+    compile 'com.android.support:support-v4:27.0.1'
+    //第三方依赖库
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.jakewharton:disklrucache:2.0.2'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.orhanobut:logger:2.1.1'
+
+    //----butterknife-start---//
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //----butterknife-end---//
+
+    //----glide-start---//
+    compile 'com.github.bumptech.glide:glide:4.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+    compile 'com.github.bumptech.glide:okhttp3-integration:4.3.1'
+    compile 'jp.wasabeef:glide-transformations:3.0.1'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    //----glide-end---//
+
+    //tinker的核心库
+    compile("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}") { changing = true }
+
+}
+
+/**
+ * 这里直接写死为VersionName
+ * @return
+ */
+def getTinkerIdValue() {
+    return android.defaultConfig.versionName
+}
