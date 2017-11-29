@@ -4,9 +4,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/13
- * FileName:
+ * @FileName:
  * @description:
  */
 

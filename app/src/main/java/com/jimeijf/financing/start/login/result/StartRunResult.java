@@ -3,9 +3,9 @@ package com.jimeijf.financing.start.login.result;
 import java.io.Serializable;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/10
- * FileName:
+ * @FileName:
  * @description:
  */
 

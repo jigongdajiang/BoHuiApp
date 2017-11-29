@@ -1,9 +1,9 @@
 package com.jimeijf.financing.start.splash;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  */
 

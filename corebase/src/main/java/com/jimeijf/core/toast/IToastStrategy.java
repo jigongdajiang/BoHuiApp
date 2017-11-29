@@ -3,9 +3,9 @@ package com.jimeijf.core.toast;
 import android.content.Context;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/14
- * FileName:
+ * @FileName:
  * @description:
  */
 

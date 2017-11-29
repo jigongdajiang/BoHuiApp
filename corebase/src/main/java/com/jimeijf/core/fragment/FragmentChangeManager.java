@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/15
- * FileName:
+ * @FileName:
  * @description:
  * 管理Fragment的类
  * 一个Activity或Fragment对应一个管理器

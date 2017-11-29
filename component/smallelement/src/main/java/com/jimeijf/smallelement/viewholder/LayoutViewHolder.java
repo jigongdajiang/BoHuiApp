@@ -14,7 +14,7 @@ import com.jimeijf.core.util.ResUtil;
 /**
  * @author : gaojigong
  * @date : 2017/6/16
- * FileName:
+ * @FileName:
  * @description: DialogViewHolder  功能随需求扩展
  */
 

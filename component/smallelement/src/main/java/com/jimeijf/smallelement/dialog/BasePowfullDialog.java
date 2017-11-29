@@ -29,7 +29,7 @@ import java.io.Serializable;
 /**
  * @author : gaojigong
  * @date : 2017/6/15
- * FileName:
+ * @FileName:
  * @description: MyApplication.params  这是一个配套的参数，如果有横竖屏要求，则必须要有
  * <p>
  * 这里点击事件采用在Dialog层设置，为的是点击回调中能正常使用Dialog，以及能自动消失

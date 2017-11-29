@@ -9,7 +9,7 @@ import com.jimeijf.smallelement.viewholder.LayoutViewHolder;
 /**
  * @author : gaojigong
  * @date : 2017/6/17
- * FileName:
+ * @FileName:
  * @description: 抽象TitleBar 依赖布局  title虽然大多数差不多，但是个别还是有区别
  */
 

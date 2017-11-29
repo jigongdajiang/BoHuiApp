@@ -4,9 +4,9 @@ import android.os.StrictMode;
 import android.os.SystemClock;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/10/12
- * FileName:
+ * @FileName:
  * @description:
  */
 

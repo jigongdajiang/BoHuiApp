@@ -1,9 +1,9 @@
 package com.jimeijf.financing.common.app;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/29
- * FileName:
+ * @FileName:
  * @description:
  *  SharePreference key 文件
  */

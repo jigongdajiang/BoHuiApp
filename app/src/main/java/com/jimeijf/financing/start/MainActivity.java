@@ -4,9 +4,9 @@ import com.jimeijf.financing.R;
 import com.jimeijf.financing.common.activity.AbsBaseActivity;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/29
- * FileName:
+ * @FileName:
  * @description:
  */
 

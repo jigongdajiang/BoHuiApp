@@ -4,9 +4,9 @@ import com.jimeijf.core.base.BaseModel;
 import com.jimeijf.core.base.BasePresenter;
 import com.jimeijf.core.base.BaseView;
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  */
 

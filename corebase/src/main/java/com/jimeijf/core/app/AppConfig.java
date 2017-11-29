@@ -1,9 +1,9 @@
 package com.jimeijf.core.app;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/16
- * FileName:
+ * @FileName:
  * @description:
  * 全局配置
  */

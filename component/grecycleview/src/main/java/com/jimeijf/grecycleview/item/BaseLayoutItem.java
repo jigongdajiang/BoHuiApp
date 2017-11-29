@@ -1,9 +1,9 @@
 package com.jimeijf.grecycleview.item;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/28
- * FileName:
+ * @FileName:
  * @description:
  *  混合布局时，列表封装成改对象进行处理
  */

@@ -3,9 +3,9 @@ package com.jimeijf.financing.common.app;
 import com.jimeijf.core.app.AppConfig;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  */
 

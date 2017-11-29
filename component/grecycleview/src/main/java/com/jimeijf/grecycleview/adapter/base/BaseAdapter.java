@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/26
- * FileName:
+ * @FileName:
  * @description: 默认一个Adapter，一个布局，对应一种数据类型
  * <p>
  * 如果需要交替性较强复杂的布局混合，可以将数据封装成BaseRvBean

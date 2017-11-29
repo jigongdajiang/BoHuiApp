@@ -19,9 +19,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/1
- * FileName:
+ * @FileName:
  * @description:
  */
 

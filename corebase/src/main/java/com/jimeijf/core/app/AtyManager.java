@@ -7,9 +7,9 @@ import android.content.Context;
 import java.util.Stack;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/10/26
- * FileName:
+ * @FileName:
  * @description:
  * Activity管理
  *

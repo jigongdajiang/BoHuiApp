@@ -5,9 +5,9 @@ import android.content.Context;
 import com.jimeijf.core.rxcore.RxManager;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/13
- * FileName:
+ * @FileName:
  * @description:
  * M V 的中间交互组件
  */

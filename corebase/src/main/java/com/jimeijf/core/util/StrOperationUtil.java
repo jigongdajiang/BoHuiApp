@@ -3,9 +3,9 @@ package com.jimeijf.core.util;
 import java.security.MessageDigest;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  * 字符串操作类
  * md5操作

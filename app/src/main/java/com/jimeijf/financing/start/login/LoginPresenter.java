@@ -6,9 +6,9 @@ import com.jimeijf.financing.start.login.result.LoginResult;
 import com.jimeijf.financing.start.login.result.VerCodeResult;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  */
 

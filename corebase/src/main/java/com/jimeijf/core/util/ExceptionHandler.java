@@ -20,9 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/9/18
- * FileName:
+ * @FileName:
  * @description:
  * 异常捕获类
  * 单例

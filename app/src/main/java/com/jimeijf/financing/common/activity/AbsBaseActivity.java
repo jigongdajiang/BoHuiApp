@@ -8,9 +8,9 @@ import com.jimeijf.core.base.BasePresenter;
 import com.jimeijf.core.util.StatusBarCompatUtil;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/29
- * FileName:
+ * @FileName:
  * @description:
  */
 

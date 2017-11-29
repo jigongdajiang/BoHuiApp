@@ -10,9 +10,9 @@ import com.jimeijf.financing.start.login.result.VerCodeResult;
 import io.reactivex.Observable;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  */
 

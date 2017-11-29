@@ -5,9 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/14
- * FileName:
+ * @FileName:
  * @description:
  */
 

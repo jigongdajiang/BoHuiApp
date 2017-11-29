@@ -11,9 +11,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/13
- * FileName:
+ * @FileName:
  * @description:
  * 基础Activity
  * 模板初始化

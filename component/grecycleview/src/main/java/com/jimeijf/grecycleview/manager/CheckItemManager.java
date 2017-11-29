@@ -1,9 +1,9 @@
 package com.jimeijf.grecycleview.manager;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/28
- * FileName:
+ * @FileName:
  * @description:
  */
 

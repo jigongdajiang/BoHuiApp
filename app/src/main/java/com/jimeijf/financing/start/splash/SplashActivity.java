@@ -5,9 +5,9 @@ import com.jimeijf.financing.R;
 import com.jimeijf.financing.common.activity.AbsBaseActivity;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/17
- * FileName:
+ * @FileName:
  * @description:
  *
  * 防止从后台进入每次都进入启屏页

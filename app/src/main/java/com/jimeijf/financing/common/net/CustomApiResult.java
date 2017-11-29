@@ -3,9 +3,9 @@ package com.jimeijf.financing.common.net;
 import com.jimeijf.core.http.model.ApiResult;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/10
- * FileName:
+ * @FileName:
  * @description:
  */
 

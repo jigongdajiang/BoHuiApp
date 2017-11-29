@@ -10,9 +10,9 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Type;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/14
- * FileName:
+ * @FileName:
  * @description:
  */
 

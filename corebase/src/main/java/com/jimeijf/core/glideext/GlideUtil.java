@@ -15,9 +15,9 @@ import com.bumptech.glide.request.RequestOptions;
 import java.lang.ref.WeakReference;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/15
- * FileName:
+ * @FileName:
  * @description:
  * Glide 加载图片工具
  * 常用加载方案处理，可在业务层进行具体业务特殊需求的封装

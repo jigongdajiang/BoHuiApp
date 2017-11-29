@@ -3,9 +3,9 @@ package com.jimeijf.core.http.model;
 import android.content.Context;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/9
- * FileName:
+ * @FileName:
  * @description:
  * 公共头部提供器
  */

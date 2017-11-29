@@ -15,9 +15,9 @@ import java.util.List;
 import okhttp3.RequestBody;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/13
- * FileName:
+ * @FileName:
  * @description:
  *  泛型及Type操作
  *  根据泛型查找类型，进行转换

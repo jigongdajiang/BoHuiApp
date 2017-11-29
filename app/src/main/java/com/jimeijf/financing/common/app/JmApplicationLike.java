@@ -29,9 +29,9 @@ import com.tencent.tinker.loader.app.DefaultApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/27
- * FileName:
+ * @FileName:
  * @description:
  */
 

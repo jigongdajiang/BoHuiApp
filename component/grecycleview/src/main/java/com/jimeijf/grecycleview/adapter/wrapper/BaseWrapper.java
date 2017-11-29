@@ -19,9 +19,9 @@ import java.util.List;
 
 
 /**
- * @author : gongdaocai
+ * @author : gaojigong
  * @date : 2017/11/28
- * FileName:
+ * @FileName:
  * @description:
  * 基础 无数据无网络包装类
  *
