@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jimeijf.financing">
+    package="com.bohui.art">
 
     <!-- 基本权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -64,8 +64,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.jimeijf.financing.common.app.JmApplication">
+        android:theme="@style/Jm_Theme"
+        android:name="com.bohui.art.common.app.JmApplication">
         <activity android:name=".start.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,10 +77,10 @@
 
         <!-- ThinkerResultService -->
         <service
-            android:name="com.jimeijf.core.thinker.service.SampleResultService"
+            android:name="com.framework.core.thinker.service.SampleResultService"
             android:exported="false"
             />
-        <service android:name="com.jimeijf.core.thinker.service.DownLoadPatchService"
+        <service android:name="com.framework.core.thinker.service.DownLoadPatchService"
             android:exported="false"/>
     </application>
 

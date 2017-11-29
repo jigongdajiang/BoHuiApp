@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 启动页 -->
+    <dimen name="splash_logo_width">117dp</dimen>
+    <dimen name="splash_logo_height">140dp</dimen>
+    <dimen name="splash_logo_margin_top">150dp</dimen>
+    <dimen name="splash_bottom_img_width">217dp</dimen>
+    <dimen name="splash_bottom_img_height">12dp</dimen>
+    <dimen name="splash_bottom_img_margin_bottom">@dimen/dp_30</dimen>
+    <dimen name="splash_leave_text_margin_right">@dimen/sys_margin</dimen>
+    <dimen name="splash_leave_text_margin_top">@dimen/sys_margin_small</dimen>
+    <dimen name="splash_leave_text_padding_bt">3dp</dimen>
+    <dimen name="splash_leave_text_padding_rl">6dp</dimen>
+    <dimen name="splash_leave_text_size">@dimen/sys_font_size_small</dimen>
+
+</resources>

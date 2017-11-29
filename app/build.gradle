@@ -50,7 +50,7 @@ android {
     compileSdkVersion Integer.parseInt(COMPILESDK_VERSION)
     buildToolsVersion BUILDTOOLS_VERSION
     defaultConfig {
-        applicationId "com.jimeijf.financing"
+        applicationId "com.bohui.art"
         minSdkVersion Integer.parseInt(MINSDK_VERSION)
         targetSdkVersion Integer.parseInt(TARGETSDK_VERSION)
         versionCode Integer.parseInt(VERSION)

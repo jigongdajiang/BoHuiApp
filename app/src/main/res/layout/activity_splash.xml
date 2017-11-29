@@ -7,26 +7,26 @@
         android:id="@+id/ll_lanuch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#026BB5"
+        android:background="@color/sys_color_base"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="117dp"
-            android:layout_height="140dp"
+            android:layout_width="@dimen/splash_logo_width"
+            android:layout_height="@dimen/splash_logo_height"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="@dimen/splash_logo_margin_top"
             android:adjustViewBounds="false"
             android:background="@drawable/img_lanuch"
             android:scaleType="centerCrop" />
 
         <ImageView
-            android:layout_width="217dp"
-            android:layout_height="12dp"
+            android:layout_width="@dimen/splash_bottom_img_width"
+            android:layout_height="@dimen/splash_bottom_img_height"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/splash_bottom_img_margin_bottom"
             android:adjustViewBounds="false"
-            android:background="@drawable/img_lanuch_bottom"
+            android:background="@drawable/img_launch_bottom"
             android:scaleType="centerCrop" />
     </RelativeLayout>
 
@@ -42,15 +42,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="3dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:paddingTop="3dp"
-        android:text="aaaaaaa"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
+        android:layout_marginRight="@dimen/splash_leave_text_margin_right"
+        android:layout_marginTop="@dimen/splash_leave_text_margin_top"
+        android:paddingBottom="@dimen/splash_leave_text_padding_bt"
+        android:paddingLeft="@dimen/splash_leave_text_padding_rl"
+        android:paddingRight="@dimen/splash_leave_text_padding_rl"
+        android:paddingTop="@dimen/splash_leave_text_padding_bt"
+        android:text=""
+        android:textColor="@color/splash_leave_text_color"
+        android:textSize="@dimen/splash_leave_text_size"
         android:visibility="gone" />
+
 
 </FrameLayout>
