@@ -1,6 +1,7 @@
 package com.widget.grecycleview.listener;
 
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -14,22 +15,22 @@ import com.widget.grecycleview.adapter.base.BaseAdapter;
 public class RvClickListenerIml extends SimpleClickListener {
 
     @Override
-    public void onItemClick(BaseAdapter childAdapter, View view, int position) {
+    public void onItemClick(BaseAdapter adapter, View view, int position) {
 
     }
 
     @Override
-    public void onItemLongClick(BaseAdapter childAdapter, View view, int position) {
+    public void onItemLongClick(BaseAdapter adapter, View view, int position) {
 
     }
 
     @Override
-    public void onItemChildClick(BaseAdapter childAdapter, View view, int position) {
+    public void onItemChildClick(BaseAdapter adapter, View view, int position) {
 
     }
 
     @Override
-    public void onItemChildLongClick(BaseAdapter childAdapter, View view, int position) {
+    public void onItemChildLongClick(BaseAdapter adapter, View view, int position) {
 
     }
 }

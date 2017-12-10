@@ -99,11 +99,30 @@ public class TreeRecyclerAdapter extends BaseAdapter<TreeItem> {
 
 
     @Override
-    public int geLayoutId(int position) {
+    public int geLayoutId(int viewType) {
+        //通过反托尔运算得到position
+        // 如果不是一致的，也就是类型经过了托尔运算
+        // 反向托尔函数，用来来解析出原来的真实的itemType和position
+        long w = (int) (Math.floor(Math.sqrt(8.0 * viewType + 1) - 1) / 2);
+        long t = (w * w + w) / 2;
+
+        //得到索引
+        int position = (int) (viewType - t);
+        //得到ItemType
+        int trueType = (int) (w - position);
         return getData(position).getLayoutId();
     }
-
-
+    @Override
+    public int geViewType(int position) {
+        int type = getData(position).initViewType();
+        return (int) getCantor(type,position);
+    }
+    /**
+     * 托尔函数
+     */
+    private static long getCantor(long k1, long k2) {
+        return (k1 + k2) * (k1 + k2 + 1) / 2 + k2;
+    }
     @Override
     public final void bindViewHolder(BaseViewHolder holder, TreeItem item, int position) {
         item.onBindViewHolder(holder);

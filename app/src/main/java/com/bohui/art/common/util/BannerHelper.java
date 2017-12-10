@@ -33,7 +33,9 @@ public class BannerHelper {
     private List<BannerBean> mBannerDatas;
 
     private static final int TURINGTIME = 5 * 1000;
+    private int turingTime = TURINGTIME;
     private String show;
+    private boolean isVertical = false;
 
     public BannerHelper(ConvenientBanner banner, final Activity context, final String show) {
         this.mBanner = banner;
@@ -63,6 +65,14 @@ public class BannerHelper {
         mBannerDatas = new ArrayList<>();
     }
 
+    public void setVertical(boolean vertical) {
+        isVertical = vertical;
+    }
+
+    public void setTuringTime(int turingTime) {
+        this.turingTime = turingTime;
+    }
+
     public void refreshBanner(List<BannerBean> bannerBeans) {
         if (mBannerDatas == null || mBannerDatas.size() == 0) {
             mBannerDatas = new ArrayList<>();
@@ -72,10 +82,14 @@ public class BannerHelper {
         if (mBanner != null) {
             mBannerDatas.clear();
             mBannerDatas.addAll(bannerBeans);
+                if(isVertical){
+                    mBanner.setPages(mCbViewHolderCreator, mBannerDatas); //选中.
+                }else{
+                    mBanner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                            .setPageIndicator(new int[]{R.drawable.shape_banner_ind_unsel, R.drawable.shape_banner_ind_sel})
+                            .setPages(mCbViewHolderCreator, mBannerDatas); //选中.
+                }
 
-                mBanner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-                        .setPageIndicator(new int[]{R.drawable.shape_banner_ind_unsel, R.drawable.shape_banner_ind_sel})
-                        .setPages(mCbViewHolderCreator, mBannerDatas); //选中.
             onResume();
         }
     }
@@ -83,7 +97,7 @@ public class BannerHelper {
     public void onResume() {
         if (null != mBanner && !mBanner.isTurning()) {
             if (null != mBannerDatas && mBannerDatas.size() > 1) {
-                mBanner.startTurning(TURINGTIME);
+                mBanner.startTurning(turingTime);
                 mBanner.getViewPager().setCanLoop(true);
             } else {
                 mBanner.getViewPager().setCanLoop(false);

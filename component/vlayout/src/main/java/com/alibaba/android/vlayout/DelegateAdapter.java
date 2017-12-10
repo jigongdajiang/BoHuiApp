@@ -84,7 +84,7 @@ public class DelegateAdapter extends VirtualLayoutAdapter<RecyclerView.ViewHolde
      * @param layoutManager layoutManager
      */
     public DelegateAdapter(VirtualLayoutManager layoutManager) {
-        this(layoutManager, true, false);
+        this(layoutManager, false, false);
     }
 
     /**

@@ -37,7 +37,7 @@ public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
     private EM mEmptyData;
     private ER mNetErrorData;
 
-    //Header，Footer的数量基本限制在100个以内
+    //Header，Footer的数量基本限制在100个以内  并且Header和Footer的Type一定是负数
     private final static int ITEM_TYPE_HEEADER_START = Integer.MIN_VALUE+100;
     private final static int ITEM_TYPE_FOOTER_START = Integer.MIN_VALUE+200;
 
@@ -71,6 +71,10 @@ public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
         }else{
             return mAdapter.getItemViewType(position);
         }
+    }
+    @Override
+    public int geViewType(int position) {
+        return mAdapter.geViewType(position);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.alibaba.android.vlayout.DelegateAdapter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.adapter.wrapper.BaseWrapper;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -30,7 +31,7 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
     private boolean mIsPrepressed = false;
     private boolean mIsShowPress = false;
     private View mPressedView = null;
-    private BaseAdapter adapter;
+    private DelegateAdapter adapter;
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -38,7 +39,7 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
         if (recyclerView == null) {
             this.recyclerView = rv;
             mGestureDetector = new GestureDetectorCompat(recyclerView.getContext(), new ItemTouchHelperGestureListener(recyclerView));
-            this.adapter = (BaseAdapter) recyclerView.getAdapter();
+            this.adapter = (DelegateAdapter) recyclerView.getAdapter();
         }
         if (!mGestureDetector.onTouchEvent(e) && e.getActionMasked() == MotionEvent.ACTION_UP && mIsShowPress) {
             if (mPressedView != null) {
@@ -107,15 +108,16 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
                         View childView = pressedView.findViewById(childClickViewId);
                         if (inRangeOfView(childView, e) && childView.isEnabled()) {
                             int position = vh.getLayoutPosition();
-                            if(adapter instanceof BaseWrapper){
-                                BaseWrapper tempAdapter = (BaseWrapper) adapter;
-                                if(tempAdapter.getCheckItemManager().checkPosition(position)){
-                                    int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
-                                    onItemChildClick(adapter,childView, dataPosition);
-                                }
-                            }else{
-                                onItemChildClick(adapter,childView, position);
-                            }
+//                            if(adapter instanceof BaseWrapper){
+//                                BaseWrapper tempAdapter = (BaseWrapper) adapter;
+//                                if(tempAdapter.getCheckItemManager().checkPosition(position)){
+//                                    int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
+//                                    onItemChildClick(adapter,childView, dataPosition);
+//                                }
+//                            }else{
+//                                onItemChildClick(adapter,childView, position);
+//                            }
+                            onItemChildClick((BaseAdapter)adapter.findAdapterByPosition(position).second,childView, adapter.findOffsetPosition(position));
                             resetPressedView(pressedView);
                             return true;
                         }
@@ -123,15 +125,16 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
 
                 }
                 int position = vh.getLayoutPosition();
-                if(adapter instanceof BaseWrapper){
-                    BaseWrapper tempAdapter = (BaseWrapper) adapter;
-                    if(tempAdapter.getCheckItemManager().checkPosition(position)){
-                        int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
-                        onItemClick(adapter,pressedView, dataPosition);
-                    }
-                }else{
-                    onItemClick(adapter,pressedView, position);
-                }
+//                if(adapter instanceof BaseWrapper){
+//                    BaseWrapper tempAdapter = (BaseWrapper) adapter;
+//                    if(tempAdapter.getCheckItemManager().checkPosition(position)){
+//                        int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
+//                        onItemClick(adapter,pressedView, dataPosition);
+//                    }
+//                }else{
+//                    onItemClick(adapter,pressedView, position);
+//                }
+                onItemClick((BaseAdapter)adapter.findAdapterByPosition(position).second,pressedView, adapter.findOffsetPosition(position));
                 resetPressedView(pressedView);
             }
             return false;
@@ -166,15 +169,16 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
                         View childView = mPressedView.findViewById(longClickViewId);
                         if (inRangeOfView(childView, e) && childView.isEnabled()) {
                             int position = vh.getLayoutPosition();
-                            if(adapter instanceof BaseWrapper){
-                                BaseWrapper tempAdapter = (BaseWrapper) adapter;
-                                if(tempAdapter.getCheckItemManager().checkPosition(position)){
-                                    int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
-                                    onItemChildLongClick(adapter,childView, dataPosition);
-                                }
-                            }else{
-                                onItemChildLongClick(adapter,childView, position);
-                            }
+//                            if(adapter instanceof BaseWrapper){
+//                                BaseWrapper tempAdapter = (BaseWrapper) adapter;
+//                                if(tempAdapter.getCheckItemManager().checkPosition(position)){
+//                                    int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
+//                                    onItemChildLongClick(adapter,childView, dataPosition);
+//                                }
+//                            }else{
+//                                onItemChildLongClick(adapter,childView, position);
+//                            }
+                            onItemChildLongClick((BaseAdapter)adapter.findAdapterByPosition(position).second,childView, adapter.findOffsetPosition(position));
                             mPressedView.setPressed(true);
                             mIsShowPress = true;
                             isChildLongClick = true;
@@ -184,15 +188,16 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
                 }
                 if (!isChildLongClick) {
                     int position = vh.getLayoutPosition();
-                    if(adapter instanceof BaseWrapper){
-                        BaseWrapper tempAdapter = (BaseWrapper) adapter;
-                        if(tempAdapter.getCheckItemManager().checkPosition(position)){
-                            int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
-                            onItemLongClick(adapter,mPressedView, dataPosition);
-                        }
-                    }else{
-                        onItemLongClick(adapter,mPressedView, position);
-                    }
+//                    if(adapter instanceof BaseWrapper){
+//                        BaseWrapper tempAdapter = (BaseWrapper) adapter;
+//                        if(tempAdapter.getCheckItemManager().checkPosition(position)){
+//                            int dataPosition = tempAdapter.getCheckItemManager().getAfterCheckingPosition(position);
+//                            onItemLongClick(adapter,mPressedView, dataPosition);
+//                        }
+//                    }else{
+//                        onItemLongClick(adapter,mPressedView, position);
+//                    }
+                    onItemLongClick((BaseAdapter)adapter.findAdapterByPosition(position).second,mPressedView, adapter.findOffsetPosition(position));
                     mPressedView.setPressed(true);
                     mIsShowPress = true;
                 }
@@ -208,7 +213,7 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
      *                 will be a view provided by the adapter)
      * @param position The position of the view in the adapter.
      */
-    public abstract void onItemClick(BaseAdapter childAdapter,View view, int position);
+    public abstract void onItemClick(BaseAdapter adapter,View view, int position);
 
     /**
      * callback method to be invoked when an item in this view has been
@@ -218,11 +223,11 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
      * @param position The position of the view int the adapter
      * @return true if the callback consumed the long click ,false otherwise
      */
-    public abstract void onItemLongClick(BaseAdapter childAdapter,View view, int position);
+    public abstract void onItemLongClick(BaseAdapter adapter,View view, int position);
 
-    public abstract void onItemChildClick(BaseAdapter childAdapter,View view, int position);
+    public abstract void onItemChildClick(BaseAdapter adapter,View view, int position);
 
-    public abstract void onItemChildLongClick(BaseAdapter childAdapter,View view, int position);
+    public abstract void onItemChildLongClick(BaseAdapter adapter,View view, int position);
 
     public boolean inRangeOfView(View view, MotionEvent ev) {
         int[] location = new int[2];

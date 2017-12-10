@@ -66,7 +66,8 @@ public abstract class TreeItem<D> {
      *
      * @return 布局id
      */
-    protected abstract int initLayoutId();
+    public abstract int initLayoutId();
+    public abstract int initViewType();
 
     /**
      * 觉得item的所占比例

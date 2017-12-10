@@ -50,6 +50,7 @@ public class CBLoopViewPager extends ViewPager {
 
     public void setVertical(boolean vertical) {
         isVertical = vertical;
+        init();
     }
 
     private float oldX = 0, newX = 0;

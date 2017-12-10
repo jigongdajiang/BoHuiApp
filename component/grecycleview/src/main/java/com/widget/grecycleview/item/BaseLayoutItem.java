@@ -1,6 +1,8 @@
 package com.widget.grecycleview.item;
 
 
+import android.util.SparseArray;
+
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
 /**
@@ -13,17 +15,14 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
 
 public abstract class BaseLayoutItem<T> {
     private T data;
-
     public T getData() {
         return data;
     }
-
+    public abstract int getViewType();
+    public abstract int getLayoutId();
     public void setData(T data) {
         this.data = data;
     }
-
-
-    public abstract int getLayoutId();
 
     public abstract void bindViewHolder(BaseViewHolder holder, T itemData, int position);
 }

@@ -50,6 +50,7 @@ public class ConvenientBanner<T> extends LinearLayout {
     private boolean canTurn = false;
     private boolean manualPageable = true;
     private boolean canLoop = true;
+    private boolean isVertical = false;
 
     public enum PageIndicatorAlign {
         ALIGN_PARENT_LEFT, ALIGN_PARENT_RIGHT, CENTER_HORIZONTAL
