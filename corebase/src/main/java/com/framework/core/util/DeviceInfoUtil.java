@@ -61,7 +61,7 @@ public class DeviceInfoUtil {
     public static String getUnique(Context context) {
         String tmDevice, androidId;
         tmDevice = getImei(context);
-        androidId = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32));
         return deviceUuid.toString().replaceAll("-", "");
     }

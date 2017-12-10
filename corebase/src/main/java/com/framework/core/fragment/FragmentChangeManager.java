@@ -52,19 +52,24 @@ public class FragmentChangeManager {
         }
         //默认Tag规则
         if (mFragmentTags.size() == 0 || mFragmentTags.size() != mFragments.size()){
-            //Tag与Fragment不对应，充值Tag
+            //Tag与Fragment不对应，重置Tag
             //Tag Fragment的名字+顺序
             for (int i=0;i<mFragments.size();i++) {
                 Fragment fragment = mFragments.get(i);
                 String tag = fragment.getClass().getSimpleName()+String.valueOf(i);
                 mFragmentTags.add(tag);
-                //添加并隐藏
-                mFragmentManager.beginTransaction().add(mContainerViewId,fragment,tag).hide(fragment).commit();
             }
         }
+        //添加到管理器
+        for (int i=0;i<mFragments.size();i++) {
+            Fragment fragment = mFragments.get(i);
+            String tag = mFragmentTags.get(i);
+            //添加并隐藏
+            mFragmentManager.beginTransaction().add(mContainerViewId,fragment,tag).hide(fragment).commitAllowingStateLoss();
+        }
         //默认显示第一个
-        if(mFragments.size() > 0){
-            mFragmentManager.beginTransaction().show(mFragments.get(0)).commit();
+         if(mFragments.size() > 0){
+            mFragmentManager.beginTransaction().show(mFragments.get(0)).commitAllowingStateLoss();
             mCurrentTab = 0;
         }
     }
@@ -78,7 +83,7 @@ public class FragmentChangeManager {
         if(!fragment.isAdded()){
             mFragments.add(fragment);
             mFragmentTags.add(tag);
-            mFragmentManager.beginTransaction().add(mContainerViewId,fragment,tag).hide(fragment).commit();
+            mFragmentManager.beginTransaction().add(mContainerViewId,fragment,tag).hide(fragment).commitAllowingStateLoss();
         }
     }
     public void addFragment(Fragment fragment){
@@ -105,7 +110,7 @@ public class FragmentChangeManager {
             mCurrentTab = mCurrentTab-1;
         }
         Fragment fragment = mFragments.get(position);
-        mFragmentManager.beginTransaction().remove(fragment).commit();
+        mFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss();
         mFragmentTags.remove(position);
         mFragments.remove(position);
         showFragment(mCurrentTab);
@@ -125,7 +130,7 @@ public class FragmentChangeManager {
             } else {
                 ft.hide(fragment);
             }
-            ft.commit();
+            ft.commitAllowingStateLoss();
         }
         mCurrentTab = position;
     }

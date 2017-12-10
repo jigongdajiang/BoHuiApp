@@ -1,6 +1,7 @@
 include ':corebase',
         ':component:flycotab',
         ':component:smallelement',
+        ':component:vlayout',
         ':component:grecycleview',
         ':operation',
         ':app'

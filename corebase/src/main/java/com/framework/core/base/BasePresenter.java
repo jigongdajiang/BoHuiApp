@@ -2,8 +2,8 @@ package com.framework.core.base;
 
 import android.content.Context;
 
-import com.framework.core.http.exception.AbsApiExceptionHandler;
 import com.framework.core.rxcore.RxManager;
+
 
 /**
  * @author : gaojigong
@@ -17,18 +17,12 @@ public abstract class BasePresenter<M extends BaseModel, V extends BaseView> {
     public Context mContext;
     public M mModel;
     public V mView;
-    public AbsApiExceptionHandler mApiExceptionHandler;
     public RxManager mRxManage = new RxManager();
 
     public void setMV(M m, V v) {
         this.mModel = m;
         this.mView = v;
     }
-
-    public void setApiExceptionHandler(AbsApiExceptionHandler apiExceptionHandler) {
-        this.mApiExceptionHandler = apiExceptionHandler;
-    }
-
     public void onDestroy() {
         mRxManage.clear();
     }

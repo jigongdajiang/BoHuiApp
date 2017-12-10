@@ -4,6 +4,8 @@ package com.widget.grecycleview.adapter.base;
 import android.content.Context;
 
 import com.widget.grecycleview.item.BaseLayoutItem;
+import com.widget.grecycleview.viewholder.BaseViewHolder;
+
 
 /**
  * @author : gaojigong
@@ -15,7 +17,6 @@ import com.widget.grecycleview.item.BaseLayoutItem;
 
 public abstract class BaseLayoutAdapter extends  BaseAdapter<BaseLayoutItem> {
 
-
     public BaseLayoutAdapter(Context context) {
         super(context);
     }
@@ -25,4 +26,8 @@ public abstract class BaseLayoutAdapter extends  BaseAdapter<BaseLayoutItem> {
         return getData(position).getLayoutId();
     }
 
+    @Override
+    public void bindViewHolder(BaseViewHolder holder, BaseLayoutItem itemData, int position) {
+        itemData.bindViewHolder(holder,itemData.getData(),position);
+    }
 }

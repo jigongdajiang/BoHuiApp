@@ -18,13 +18,14 @@ package com.framework.core.http.exception;
 
 import android.net.ParseException;
 
+import com.framework.core.http.model.ApiResult;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
-import com.framework.core.http.model.ApiResult;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.NotSerializableException;
 import java.net.ConnectException;
@@ -56,25 +57,23 @@ public class ApiException extends Exception {
 
     private final int code;
     private String displayMessage;
-    private String extMessage;
+    //只用于强制更新
+    private JSONObject errorData;
 
     public static final int UNKNOWN = 1000;
     public static final int PARSE_ERROR = 1001;
     public static final int FORCE_UPDATE = 20005;
 
-    private String message;
-
-
     public ApiException(Throwable throwable, int code) {
         super(throwable);
         this.code = code;
-        this.message = throwable.getMessage();
+        this.displayMessage = throwable.getMessage();
     }
 
     public ApiException(String msg, int code) {
         super(msg);
         this.code = code;
-        this.message = msg;
+        this.displayMessage = msg;
     }
 
     /**
@@ -97,6 +96,14 @@ public class ApiException extends Exception {
         this.displayMessage = msg + "(code:" + code + ")";
     }
 
+    public JSONObject getErrorData() {
+        return errorData;
+    }
+
+    public void setErrorData(JSONObject errorData) {
+        this.errorData = errorData;
+    }
+
     /**
      * 是否是正常code值
      * @param apiResult
@@ -110,15 +117,6 @@ public class ApiException extends Exception {
         else
             return false;
     }
-
-    public String getExtMessage() {
-        return extMessage;
-    }
-
-    public void setExtMessage(String extMessage) {
-        this.extMessage = extMessage;
-    }
-
     /**
      * 错误分发处理将请求中的错误进行分类
      * @param e
@@ -129,12 +127,12 @@ public class ApiException extends Exception {
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
             ex = new ApiException(httpException, httpException.code());
-            ex.message = httpException.getMessage();
+            ex.displayMessage = httpException.getMessage();
             return ex;
         } else if (e instanceof ServerException) {
             ServerException resultException = (ServerException) e;
             ex = new ApiException(resultException, resultException.getErrCode());
-            ex.message = resultException.getMessage();
+            ex.displayMessage = resultException.getMessage();
             return ex;
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
@@ -143,54 +141,50 @@ public class ApiException extends Exception {
                 || e instanceof NotSerializableException
                 || e instanceof ParseException) {
             ex = new ApiException(e, ERROR.PARSE_ERROR);
-            ex.message = "解析错误";
+            ex.displayMessage = "解析错误";
             return ex;
         } else if (e instanceof ClassCastException) {
             ex = new ApiException(e, ERROR.CAST_ERROR);
-            ex.message = "类型转换错误";
+            ex.displayMessage = "类型转换错误";
             return ex;
         } else if (e instanceof ConnectException) {
             ex = new ApiException(e, ERROR.NETWORD_ERROR);
-            ex.message = "连接失败";
+            ex.displayMessage = "连接失败";
             return ex;
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
             ex = new ApiException(e, ERROR.SSL_ERROR);
-            ex.message = "证书验证失败";
+            ex.displayMessage = "证书验证失败";
             return ex;
         } else if (e instanceof ConnectTimeoutException) {
             ex = new ApiException(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex.displayMessage = "连接超时";
             return ex;
         } else if (e instanceof java.net.SocketTimeoutException) {
             ex = new ApiException(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex.displayMessage = "连接超时";
             return ex;
         } else if (e instanceof UnknownHostException) {
             ex = new ApiException(e, ERROR.UNKNOWNHOST_ERROR);
-            ex.message = "无法解析该域名";
+            ex.displayMessage = "无法解析该域名";
             return ex;
         } else if (e instanceof NullPointerException) {
             ex = new ApiException(e, ERROR.NULLPOINTER_EXCEPTION);
-            ex.message = "NullPointerException";
+            ex.displayMessage = "NullPointerException";
             return ex;
         }else if( e instanceof ApiException){
             ex = (ApiException) e;
             return ex;
         } else {
             ex = new ApiException(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex.displayMessage = "未知错误";
             return ex;
         }
     }
 
     @Override
     public String getMessage() {
-        return message;
+        return displayMessage;
     }
-
-    /*public String getErrMessage() {
-        return message;
-    }*/
 
     /**
      * 约定异常

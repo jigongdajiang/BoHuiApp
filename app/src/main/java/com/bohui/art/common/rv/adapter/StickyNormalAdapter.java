@@ -15,19 +15,12 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  * @date 16/11/01.
  */
 public abstract class StickyNormalAdapter<T extends StickyTagBean> extends BaseGroupAdapter<T> {
-
     public StickyNormalAdapter(Context context) {
-        super(context);
+        super(context, R.layout.item_sticky);
     }
-
-    @Override
-    public int geLayoutId(int position) {
-        return R.layout.layout_sticky;
-    }
-
     @Override
     public void convertSticky(BaseViewHolder holder, T itemData) {
-        holder.setText(R.id.title_item_time_tv, itemData.getStickyDes());
+        holder.setText(R.id.tv_sticky, itemData.getStickyDes());
     }
 
     @Override

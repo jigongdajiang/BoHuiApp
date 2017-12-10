@@ -1,0 +1,103 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2016 Alibaba Group
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'Tangram'
+    bintrayName = 'vlayout'
+
+    publishedGroupId = GROUP
+    libraryName = ARTIFACT
+    artifact = ARTIFACT
+
+    libraryDescription = 'Project vlayout is a powerfull LayoutManager extension for RecyclerView, it provides a group of layouts for RecyclerView. Make it able to handle a complicate situation when grid, list and other layouts in the same recyclerview.'
+
+    siteUrl = 'https://github.com/alibaba/vlayout'
+    gitUrl = 'https://github.com/alibaba/vlayout.git'
+
+    libraryVersion = VERSION_NAME
+
+    developerId = 'longerian'
+    developerName = 'longerian'
+    developerEmail = 'xlhongultimate@gmail.com'
+
+    licenseName = 'MIT'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+}
+
+def VERSION = System.properties['version'] ?: '1'
+def VERSION_NAME = System.properties['versionName'] ?: '1.0.0'
+def COMPILESDK_VERSION = System.properties['compileSdkVersion'] ?: '26'
+def BUILDTOOLS_VERSION = System.properties['buildToolsVersion'] ?: '26.0.2'
+def MINSDK_VERSION = System.properties['minSdkVersion'] ?: '14'
+def TARGETSDK_VERSION = System.properties['targetSdkVersion'] ?: '26'
+android {
+    compileSdkVersion Integer.parseInt(COMPILESDK_VERSION)
+    buildToolsVersion BUILDTOOLS_VERSION
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MINSDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGETSDK_VERSION)
+        versionCode Integer.parseInt(VERSION)
+        versionName VERSION_NAME
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':corebase')
+    compile 'com.android.support:recyclerview-v7:27.0.1@aar'
+    compile 'com.android.support:support-annotations:27.0.1'
+    compile 'com.android.support:support-core-ui:27.0.1'
+}
+
+
+File deployConfig = rootProject.file('deploy.gradle')
+if (deployConfig.exists()) {
+    apply from: rootProject.file('deploy.gradle')
+}
+
+deployConfig = rootProject.file('jcenterInstall.gradle')
+if (deployConfig.exists()) {
+    apply from: rootProject.file('jcenterInstall.gradle')
+}
+
+deployConfig = rootProject.file('jcenterDeploy.gradle')
+if (deployConfig.exists()) {
+    apply from: rootProject.file('jcenterDeploy.gradle')
+}

@@ -1,3 +1,18 @@
 <resources>
+    <string name="app_name">博辉艺术</string>
+
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="prompt">提示</string>
+
+    <!-- 启动页版权说明 -->
+    <string name="all_right">Copyright © 2017 BoHui</string>
+    <!-- 欢迎页 -->
+    <string name="welcome_start">开启体验</string>
+    <!-- 主页 -->
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_classify">分类</string>
+    <string name="main_tab_found">发现</string>
+    <string name="main_tab_mine">我的</string>
 
 </resources>

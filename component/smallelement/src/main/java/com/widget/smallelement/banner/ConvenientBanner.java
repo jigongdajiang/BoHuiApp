@@ -368,4 +368,8 @@ public class ConvenientBanner<T> extends LinearLayout {
         this.canLoop = canLoop;
         viewPager.setCanLoop(canLoop);
     }
+
+    public void setIsVertical(boolean isVertical){
+        viewPager.setVertical(isVertical);
+    }
 }

@@ -11,47 +11,22 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="@dimen/splash_logo_width"
-            android:layout_height="@dimen/splash_logo_height"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/splash_logo_margin_top"
-            android:adjustViewBounds="false"
-            android:background="@drawable/img_lanuch"
+            android:layout_width="128dp"
+            android:layout_height="189dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_splash_logo"
             android:scaleType="centerCrop" />
 
-        <ImageView
-            android:layout_width="@dimen/splash_bottom_img_width"
-            android:layout_height="@dimen/splash_bottom_img_height"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/sys_margin_large"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/splash_bottom_img_margin_bottom"
-            android:adjustViewBounds="false"
-            android:background="@drawable/img_launch_bottom"
-            android:scaleType="centerCrop" />
+            android:text="@string/all_right"
+            android:textSize="@dimen/sp_10"
+            android:textColor="@color/sys_color_font_light_gray"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/iv_splash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_leave_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_marginRight="@dimen/splash_leave_text_margin_right"
-        android:layout_marginTop="@dimen/splash_leave_text_margin_top"
-        android:paddingBottom="@dimen/splash_leave_text_padding_bt"
-        android:paddingLeft="@dimen/splash_leave_text_padding_rl"
-        android:paddingRight="@dimen/splash_leave_text_padding_rl"
-        android:paddingTop="@dimen/splash_leave_text_padding_bt"
-        android:text=""
-        android:textColor="@color/splash_leave_text_color"
-        android:textSize="@dimen/splash_leave_text_size"
-        android:visibility="gone" />
-
 
 </FrameLayout>

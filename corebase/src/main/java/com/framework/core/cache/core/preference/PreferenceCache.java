@@ -48,7 +48,7 @@ public class PreferenceCache extends BaseCache {
     }
     @Override
     protected boolean doContainsKey(String key) {
-        return mPreferences.contains(key);
+        return true;
     }
 
     @Override

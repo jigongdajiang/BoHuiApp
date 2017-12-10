@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.framework.core.rxcore.RxManager;
 
 import butterknife.ButterKnife;
@@ -24,6 +25,8 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
     /**
      * 存储跟View
      * 这样不会因Fragment被移除而被清空，能保留原View的状态
+     * 这当Fragment被不断创建时，View不会重新创建，所以在对View进行设置时，需要进行刷新操作
+     * 例如 addHeader等，否则会导致重复添加
      */
     protected View rootView;
     /**
@@ -48,25 +51,35 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
      * 如果需要该工具类能自由操作操控该基类内的对象，对该基类的需要对象提供get方法即可
      * 本基类的集成子类如果有这种情况会累加类似对象的持有，目的是减少BaseXXX的代码冗余
      */
-    protected BaseHelperUtil mHelperUtil;
+    protected AbsHelperUtil mHelperUtil;
     private Unbinder mUnbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-        mHelperUtil = new BaseHelperUtil(this);
+        mHelperUtil = createHelperUtil();
         mRxManager=new RxManager();
         doBeforeOnCreateView();
     }
-
+    /**
+     * 钩子方法
+     * 创建当前层的通用帮助类，主要是将fragment和activity的相同代码统一管理
+     * @return
+     */
+    protected AbsHelperUtil createHelperUtil() {
+        return new BaseHelperUtil(this);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null){
             rootView = inflater.inflate(getLayoutId(), container, false);
         }else {
-            ((ViewGroup) rootView.getParent()).removeView(rootView);
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if(parent != null){
+                parent.removeView(rootView);
+            }
         }
         mUnbinder = ButterKnife.bind(this,rootView);
         return rootView;

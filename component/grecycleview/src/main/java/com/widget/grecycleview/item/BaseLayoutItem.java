@@ -1,5 +1,8 @@
 package com.widget.grecycleview.item;
 
+
+import com.widget.grecycleview.viewholder.BaseViewHolder;
+
 /**
  * @author : gaojigong
  * @date : 2017/11/28
@@ -8,9 +11,8 @@ package com.widget.grecycleview.item;
  */
 
 
-public class BaseLayoutItem<T> {
+public abstract class BaseLayoutItem<T> {
     private T data;
-    private int layoutId;
 
     public T getData() {
         return data;
@@ -20,11 +22,8 @@ public class BaseLayoutItem<T> {
         this.data = data;
     }
 
-    public int getLayoutId() {
-        return layoutId;
-    }
 
-    public void setLayoutId(int layoutId) {
-        this.layoutId = layoutId;
-    }
+    public abstract int getLayoutId();
+
+    public abstract void bindViewHolder(BaseViewHolder holder, T itemData, int position);
 }

@@ -10,8 +10,5 @@ package com.bohui.art.common.app;
 
 
 public interface MemoryCackeKey {
-    /**
-     * 是否启动过  对应存储的是boolean
-     */
-    String SPLASHSTARTED = "splashStarted";
+
 }

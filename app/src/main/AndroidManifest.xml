@@ -65,16 +65,25 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Jm_Theme"
-        android:name="com.bohui.art.common.app.JmApplication">
-        <activity android:name=".start.splash.SplashActivity">
+        android:name="com.bohui.art.common.app.PApplication">
+        <!-- 启动页 -->
+        <activity android:name=".start.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".start.login.LoginActivity"/>
-
+        <!-- 启动页 -->
+        <activity android:name=".start.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 主页 -->
+        <activity android:name=".start.MainActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 基础Web页 -->
+        <activity android:name=".common.activity.BaseWebActivity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"

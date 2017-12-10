@@ -35,7 +35,7 @@ import java.util.LinkedHashMap;
 public class MemoryCache extends BaseCache {
     @Override
     protected boolean doContainsKey(String key) {
-        return MCache.getInstance().doContainsKey(key);
+        return true;
     }
 
     @Override

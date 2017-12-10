@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.widget.grecycleview.sticky.StickyRecyclerHeadersAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
+
 /**
  * @author gaojigong
  * @version V1.0
@@ -15,10 +16,11 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  * @date 16/11/01.
  */
 public abstract class BaseGroupAdapter<T> extends BaseAdapter<T> implements StickyRecyclerHeadersAdapter<BaseViewHolder> {
-    private int mstickyLayouResId;
+    private int mStickyLayouResId;
 
-    public BaseGroupAdapter(Context context) {
+    public BaseGroupAdapter(Context context,int stickyLayouResId) {
         super(context);
+        this.mStickyLayouResId = stickyLayouResId;
     }
 
 
@@ -28,7 +30,7 @@ public abstract class BaseGroupAdapter<T> extends BaseAdapter<T> implements Stic
             mContext = parent.getContext();
         }
 
-        View stickyView = LayoutInflater.from(mContext).inflate(mstickyLayouResId, parent, false);
+        View stickyView = LayoutInflater.from(mContext).inflate(mStickyLayouResId, parent, false);
         return BaseViewHolder.createViewHolder(stickyView);
     }
 

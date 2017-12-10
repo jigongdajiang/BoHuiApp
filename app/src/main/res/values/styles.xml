@@ -1,3 +1,74 @@
 <resources>
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
 
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView" />
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:paddingRight">@dimen/dp_0</item>
+        <item name="android:layout_marginTop">@dimen/dp_0</item>
+        <item name="android:popupBackground">?attr/colorPrimary</item>
+        <!--<item name="android:popupBackground">@android:color/darker_gray</item>-->
+        <item name="android:dropDownVerticalOffset">@dimen/dp_3</item>
+        <item name="android:dropDownHorizontalOffset">@dimen/dp_0</item>
+    </style>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!-- 窗口的背景颜色 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- SearchView -->
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="android:textColorPrimary">@color/sys_color_white</item>
+    </style>
+    <!--activity的弹出方式-->
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_out_to_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_in_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_out_to_right</item>
+    </style>
+
+    <style name="AppTheme" parent="@style/AppBaseTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+    </style>
+
+    <!-- 项目主题 -->
+    <style name="Jm_Theme" parent="@style/AppBaseTheme">
+        <item name="android:windowBackground">@color/sys_color_base</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!--部分对话框的弹出方式-->
+    <style name="dialogAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out_bottom</item>
+    </style>
+
+    <!-- 全填充横线1dp -->
+    <style name="divider_line_full_hor">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/sys_divider_width</item>
+        <item name="android:background">@color/sys_color_divider</item>
+    </style>
+    <!-- 全填充横线0.5dp -->
+    <style name="divider_line_full_hor_thin" parent="divider_line_full_hor">
+        <item name="android:layout_height">@dimen/sys_divider_width_small</item>
+    </style>
+
+    <!-- 欢迎页 -->
+    <style name="welcome_dot_style">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:padding">@dimen/welcome_dot_padding</item>
+        <item name="android:src">@drawable/selector_welcome_dot_src</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
 </resources>

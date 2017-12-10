@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
@@ -20,8 +21,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+
 import com.framework.core.cache.core.CacheCoreFactory;
 import com.framework.core.log.PrintLog;
+import com.framework.core.util.ReflectionUtils;
 import com.widget.smallelement.viewholder.LayoutViewHolder;
 
 import java.io.Serializable;
@@ -63,8 +66,8 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         showDialogLife("onCreate");
         //如果重构，如横竖屏切换则从内存缓存中获取
         if (null != savedInstanceState &&
-                CacheCoreFactory.getMemoryCache().load(BasePowfullDialog.Builder.Params.class,DIALOG_PARAMS_MEMORY_KEY) != null && mParams == null) {
-            mParams =  CacheCoreFactory.getMemoryCache().load(BasePowfullDialog.Builder.Params.class,DIALOG_PARAMS_MEMORY_KEY);
+                CacheCoreFactory.getMemoryCache().load(BasePowfullDialog.Builder.Params.class, DIALOG_PARAMS_MEMORY_KEY) != null && mParams == null) {
+            mParams = CacheCoreFactory.getMemoryCache().load(BasePowfullDialog.Builder.Params.class, DIALOG_PARAMS_MEMORY_KEY);
         }
         CacheCoreFactory.getMemoryCache().remove(DIALOG_PARAMS_MEMORY_KEY);
     }
@@ -92,7 +95,7 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         //键盘点击事件 如果制定了要在外部处理，且 明却指定点击返回取消对话框时
         if (null != mParams.onKeyListener) {
             getDialog().setOnKeyListener(mParams.onKeyListener);
-        }else{
+        } else {
             getDialog().setOnKeyListener(this);
         }
 
@@ -104,10 +107,10 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             getDialog().setOnCancelListener(mParams.onCancelListener);
         }
         //弹出方向
-        if(mParams.gravity == Gravity.LEFT
+        if (mParams.gravity == Gravity.LEFT
                 || mParams.gravity == Gravity.TOP
                 || mParams.gravity == Gravity.RIGHT
-                || mParams.gravity == Gravity.BOTTOM){
+                || mParams.gravity == Gravity.BOTTOM) {
             // 设置宽度为屏宽, 靠近屏幕底部。
             Window window = getDialog().getWindow();
             WindowManager.LayoutParams lp = window.getAttributes();
@@ -123,13 +126,15 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         }
         return view;
     }
+
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if(mParams.onDismissListener != null){
+        if (mParams.onDismissListener != null) {
             mParams.onDismissListener.onDismiss(dialog);
         }
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         showDialogLife("onActivityCreated");
@@ -146,11 +151,20 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         super.onStart();
         showDialogLife("onStart");
         //dialog占屏幕的比例
+        int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        int height = ViewGroup.LayoutParams.WRAP_CONTENT;;
         if (mParams.dialogWidthForScreen > 0) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-            getDialog().getWindow().setLayout((int) (dm.widthPixels * mParams.dialogWidthForScreen), ViewGroup.LayoutParams.WRAP_CONTENT);
+            width = (int) (dm.widthPixels * mParams.dialogWidthForScreen);
         }
+        if(mParams.dialogHeightForScreen > 0){
+            DisplayMetrics dm = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+            height = (int) (dm.heightPixels * mParams.dialogHeightForScreen);
+        }
+        getDialog().getWindow().setLayout(width, height);
+
     }
 
     @Override
@@ -194,11 +208,11 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         showDialogLife("onSaveInstanceState");
-        CacheCoreFactory.getMemoryCache().save(DIALOG_PARAMS_MEMORY_KEY,mParams);
+        CacheCoreFactory.getMemoryCache().save(DIALOG_PARAMS_MEMORY_KEY, mParams);
     }
 
     private void showDialogLife(String method) {
-            PrintLog.e(TAG, method);
+        PrintLog.e(TAG, method);
     }
 
 
@@ -218,7 +232,7 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
                     if (listener != null) {
                         listener.onClick(v);
                     }
-                    dismiss();
+                    miss();
                 }
             } : listener);
         return this;
@@ -239,7 +253,7 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             mParams.layoutViewHolder.setViewOnClickListener(id, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dismiss();
+                    miss();
                 }
             });
         return this;
@@ -258,12 +272,14 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         }
         return this;
     }
+
     public BasePowfullDialog setDialogAnim(int animStyleId) {
         if (animStyleId != 0) {
             mParams.dialogAnim = animStyleId;
         }
         return this;
     }
+
     /**
      * 获取dialog中的控件，用于在外部进行操作，建议在dialog显示后进行
      *
@@ -278,25 +294,63 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
      * 为了不重复显示dialog，在显示对话框之前移除正在显示的对话框。
      */
     public BasePowfullDialog showDialog() {
-        FragmentTransaction ft = mParams.fragmentManager.beginTransaction();
-        DialogFragment fragment = (DialogFragment) mParams.fragmentManager.findFragmentByTag(DIALOG_TAG);
-        if (null != fragment) {
-            if (!fragment.getDialog().isShowing()) {
-                ft.remove(fragment);
+        if (showMust()) {
+            mParams.fragmentManager.executePendingTransactions();
+            FragmentTransaction ft = mParams.fragmentManager.beginTransaction();
+            if (mParams.isCanCover) {
                 this.show(ft, DIALOG_TAG);
+            } else {
+                DialogFragment fragment = (DialogFragment) mParams.fragmentManager.findFragmentByTag(DIALOG_TAG);
+                if (fragment == null || !fragment.isAdded()) {
+                    this.show(ft, DIALOG_TAG);
+                }
             }
-        } else {
-            this.show(ft, DIALOG_TAG);
         }
         return this;
+    }
+
+    /**
+     * 确保异步时还添加引起的崩溃
+     *
+     * @return
+     */
+    private boolean showMust() {
+        return mParams.context != null
+                && mParams.fragmentManager != null
+                && mParams.context instanceof FragmentActivity
+                && !isAdded()
+                && !((FragmentActivity) mParams.context).isFinishing()
+                && (null == getDialog() || !getDialog().isShowing());
+    }
+
+    /**
+     * 防止由于异步导致的onSaveInstance崩溃
+     *
+     * @param transaction
+     * @param tag
+     * @return
+     */
+    @Override
+    public int show(FragmentTransaction transaction, String tag) {
+        ReflectionUtils.setFieldValue(this, "mDismissed", false);
+        ReflectionUtils.setFieldValue(this, "mShownByMe", true);
+        transaction.add(this, tag);
+        ReflectionUtils.setFieldValue(this, "mViewDestroyed", false);
+        int backStackId = transaction.commitAllowingStateLoss();
+        ReflectionUtils.setFieldValue(this, "mBackStackId", backStackId);
+        return backStackId;
     }
 
     /**
      * 由外部控制消失，比如加载Dialog的消失
      */
     public void miss() {
-        if (null != mParams && mParams.currentDialog != null)
-            mParams.currentDialog.dismiss();
+        if (null != mParams && mParams.currentDialog != null) {
+            FragmentActivity activity = getActivity();
+            if (null != activity && !activity.isFinishing() && null != getDialog() && getDialog().isShowing()) {
+                dismissAllowingStateLoss();
+            }
+        }
     }
 
     @Override
@@ -346,6 +400,12 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             }
             return this;
         }
+        public Builder setDialogHeightForScreen(double d) {
+            if (d > 0) {
+                mP.dialogHeightForScreen = d;
+            }
+            return this;
+        }
 
         public Builder setDialogAnim(int animStyleId) {
             if (animStyleId != 0) {
@@ -353,13 +413,20 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             }
             return this;
         }
-        public Builder setGravity(int gravity){
+
+        public Builder setGravity(int gravity) {
             mP.gravity = gravity;
+            return this;
+        }
+
+        public Builder setCanCover(boolean isCanCover) {
+            mP.isCanCover = isCanCover;
             return this;
         }
 
         /**
          * 设置外部处理键盘响应事件，这里需要配合 isBackCancled  只有在指定isBackCancled=true时,该设置才会生效
+         *
          * @param listener
          * @return
          */
@@ -403,8 +470,10 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             public Drawable backGroundDrawable = new ColorDrawable(Color.TRANSPARENT);
             public boolean canceledOnTouchOutside = false;
             public double dialogWidthForScreen = 0.85;
+            public double dialogHeightForScreen = 0;
             public int dialogAnim = 0;
             public int gravity;//弹出的位置
+            public boolean isCanCover;//是否允许覆盖，默认不允许。
             public DialogInterface.OnKeyListener onKeyListener;
             public DialogInterface.OnCancelListener onCancelListener;
             public DialogInterface.OnDismissListener onDismissListener;

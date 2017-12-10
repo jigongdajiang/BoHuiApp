@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.bohui.art.R;
 import com.framework.core.util.ResUtil;
 import com.framework.core.util.StatusBarCompatUtil;
-import com.bohui.art.R;
 import com.widget.smallelement.title.AbsTitleBar;
-import com.widget.smallelement.title.AbsTitleBar.Builder;
-import com.widget.smallelement.title.AbsTitleBar.Builder.Params;
+
 
 /**
  * @author gaojigong
@@ -116,7 +115,7 @@ public class DefaultTitleBar extends AbsTitleBar<DefaultTitleBar.DefaultBuilder.
         }
     }
 
-    public static class DefaultBuilder extends Builder {
+    public static class DefaultBuilder extends AbsTitleBar.Builder {
 
         private final DefaultParams mParams;
 
@@ -296,10 +295,10 @@ public class DefaultTitleBar extends AbsTitleBar<DefaultTitleBar.DefaultBuilder.
         /**
          * 只关注内容参数，动态改变属性时刻通过getView得到具体View去操作，简单操作时刻通过viewHolder去操作
          */
-        public static class DefaultParams extends Params {
+        public static class DefaultParams extends AbsTitleBar.Builder.Params {
             public int backgroundColor = R.color.title_bar_bg_color;//底部分割线是否可见
 
-            public boolean bottomViewVisible = true;//底部分割线是否可见
+            public boolean bottomViewVisible = false;//底部分割线是否可见
             public int bottomViewColor = R.color.title_bar_bottom_divider_color;//底部分割线默认颜色
 
             public String leftText;//左侧文字，为空时不显示
@@ -307,7 +306,7 @@ public class DefaultTitleBar extends AbsTitleBar<DefaultTitleBar.DefaultBuilder.
             public int leftTextColor = R.color.title_bar_main_text_color;//左边文字颜色
 
             public boolean leftImageShow = true;//左按钮是否显示
-            public int leftImageResId = R.drawable.ic_back_blue;//左侧按钮图片
+            public int leftImageResId = R.mipmap.ic_back_white;//左侧按钮图片
 
             public String title;//中间标题，为空不显示
             public int titleTextSize = R.dimen.title_bar_title_font_size;//中间标题大小
@@ -327,9 +326,9 @@ public class DefaultTitleBar extends AbsTitleBar<DefaultTitleBar.DefaultBuilder.
             public int rightImageResId1;//右边第一个图片按钮的资源文件，为0时不显示
             public int rightImageResId2;//右边第二个图片按钮的资源文件，为0时不显示
 
-            public boolean supportImmersion;//是否支持沉浸式
+            public boolean supportImmersion = true;//是否支持沉浸式
             public int immersionColorId;//是否有着色栏颜色，为0时不设置
-            public int darkModeStartBar;//0 不改  1 深色图标 2浅色图标
+            public int darkModeStartBar = 1;//0 不改  1 深色图标 2浅色图标
 
             public View.OnClickListener leftClickListner;//左边区域统一一个点击事件，一般为返回
             public View.OnClickListener centerAreaClickLinstener;//中间标题区域的点击事件

@@ -28,7 +28,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile project(':component:flycotab')
     compile project(':component:smallelement')
     compile project(':component:grecycleview')

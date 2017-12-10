@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.vlayout.DelegateAdapter;
+import com.alibaba.android.vlayout.LayoutHelper;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.widget.grecycleview.manager.CheckItemManager;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -25,7 +28,7 @@ import java.util.List;
  */
 
 
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class BaseAdapter<T> extends DelegateAdapter.Adapter<BaseViewHolder> {
     //所有Rv内的数据对象最终将封装成一个BaseRvBean的集合
     private List<T> mDatas;
     //上下文对象
@@ -55,7 +58,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
      */
     @Override
     public int getItemViewType(int position) {
-        return geLayoutId(position);
+        return geViewType(position);
     }
 
 
@@ -67,7 +70,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         if(mLayoutInflater == null){
             mLayoutInflater = LayoutInflater.from(mContext);
         }
-        BaseViewHolder holder = BaseViewHolder.createViewHolder(parent,viewType);
+        BaseViewHolder holder = BaseViewHolder.createViewHolder(parent,geLayoutId(viewType));
         onBindViewHolderClick(holder, holder.itemView);
         return holder;
     }
@@ -217,10 +220,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
      * 指定布局
      * 目的是为了解耦ItemType
      */
+    public abstract int geViewType(int position);
     public abstract int geLayoutId(int position);
 
     /**
      * 子类必须实现的方法，用于完成数据和页面的绑定
      */
     public abstract void bindViewHolder(BaseViewHolder holder, T itemData,int position);
+
+    @Override
+    public LayoutHelper onCreateLayoutHelper() {
+        return new LinearLayoutHelper();
+    }
 }

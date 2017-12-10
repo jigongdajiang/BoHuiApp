@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 启动页 -->
-    <color name="splash_leave_text_color">@color/sys_color_font_white</color>
+    <!-- App的基础距离值定义，包含两部分，
+        基础值部分:
+            该App所用的所有原始值。
+            目的是为了应变，把系统全值级别的距离值的变更
+        系统部分:
+            具有公用意义的部分。主要是系统及通用的定义
+            该部分值全部来自基础值，具体业务模块大部分引用的是该部分，极特殊没有意义的时候可能会引用基础值。
+            目的是应用系统某一点资源之的变更，例如所有原来为10dp的公共padding变为15dp
+
+        operation部分:
+            在该层的一些公共具体控件的值的定义
+            例如通用对话框的资源值，明确的系统及字号。
+     -->
+
+    <!-- 基础值部分 -->
+    <color name="color_942723">#942723</color>
+    <color name="color_F2F2F2">#F2F2F2</color>
+    <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_E0E0E0">#E0E0E0</color>
+    <color name="color_595757">#595757</color>
+    <color name="color_727171">#727171</color>
+    <color name="color_898989">#898989</color>
+    <color name="color_000000">#000000</color>
+    <color name="color_EFEFEF">#EFEFEF</color>
+
+    <color name="color_00000000">#00000000</color>
+    <color name="color_55F5F5F5">#55F5F5F5</color>
+    <color name="color_80942723">#942723</color>
+
+    <!-- 系统部分 -->
+    <!-- 主基色 -->
+    <color name="sys_color_base">@color/color_942723</color>
+    <!-- 背景色-->
+    <color name="sys_color_bg">@color/color_F2F2F2</color>
+    <!-- 内容背景-->
+    <color name="sys_color_content_bg">@color/color_FFFFFF</color>
+    <!-- 分割线颜色 -->
+    <color name="sys_color_divider">@color/color_E0E0E0</color>
+    <!-- 全透明 -->
+    <color name="sys_color_transparent">@color/color_00000000</color>
+    <!-- 纯白 -->
+    <color name="sys_color_white">@color/color_FFFFFF</color>
+    <!-- 纯黑 -->
+    <color name="sys_color_black">@color/color_FFFFFF</color>
+    <!-- 字体-黑 -->
+    <color name="sys_color_font_black">@color/color_595757</color>
+    <!-- 字体-浅黑 -->
+    <color name="sys_color_font_somber">@color/color_727171</color>
+    <!-- 字体—浅灰-->
+    <color name="sys_color_font_light_gray">@color/color_898989</color>
+    <!--字体—主基色-->
+    <color name="sys_color_font_base">@color/sys_color_base</color>
+    <!--字体-纯白 -->
+    <color name="sys_color_font_white">@color/color_FFFFFF</color>
+    <!-- 系统状态栏颜色 -->
+    <color name="sys_status_bar_color">@color/color_000000</color>
+    <!-- 基础Web页 -->
+    <color name="web_base_bg">@color/color_F2F2F2</color>
+    <!--loading背景-->
+    <color name="sys_color_loading_bg">@color/color_55F5F5F5</color>
+    <!-- 按钮背景-基色 -->
+    <color name="btn_bg_base">@color/sys_color_base</color>
+    <!-- 按钮背景-蓝-按下 -->
+    <color name="btn_bg_base_pressed">@color/color_80942723</color>
+    <!-- 按钮不可点击背景 -->
+    <color name="btn_bg_unable">@color/color_898989</color>
+    <!-- 输入框背景 -->
+    <color name="et_bg">@color/color_EFEFEF</color>
+    <!-- operation部分 -->
+    <!-- 通用对话框 -->
+    <color name="dialog_title_content_color">@color/sys_color_font_black</color>
+    <color name="dialog_divider_color">@color/sys_color_divider</color>
+    <color name="dialog_btn_color">@color/sys_color_font_base</color>
+    <color name="dialog_bg">@color/sys_color_bg</color>
+    <!-- 默认标题 -->
+    <color name="title_bar_bg_color">@color/sys_color_bg</color>
+    <color name="title_bar_main_text_color">@color/sys_color_font_black</color>
+    <color name="title_bar_bottom_divider_color">@color/sys_color_divider</color>
+
+    <!-- 首页 -->
+    <color name="main_bg">@color/sys_color_bg</color>
+    <color name="main_tab_bg">@color/sys_color_white</color>
+    <color name="main_tab_text_selected">@color/sys_color_font_base</color>
+    <color name="main_tab_text_un_selected">@color/sys_color_font_black</color>
+
 </resources>

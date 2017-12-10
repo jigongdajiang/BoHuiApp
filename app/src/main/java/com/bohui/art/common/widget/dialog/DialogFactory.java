@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.framework.core.util.ResUtil;
 import com.bohui.art.R;
+import com.framework.core.util.ResUtil;
 import com.widget.smallelement.dialog.BasePowfullDialog;
 
 
@@ -40,7 +40,6 @@ public class DialogFactory {
             dialog = new BasePowfullDialog.Builder(R.layout.dialog_message, context, fragmentManager)
                     .builder();
             setDialogAttr(context, title, content, leftBtnText, rightBtnText, leftBtnClickListener, rightBtnClickListener, animRes, dialog);
-            dialog.showDialog();
         return dialog;
     }
 
@@ -60,7 +59,7 @@ public class DialogFactory {
             //内容增加15dp的margin
             View contentView = dialog.getInsideView(R.id.tv_dialog_message);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) contentView.getLayoutParams();
-            params.topMargin = ResUtil.getResDimensionPixelOffset(context,R.dimen.dp_15);
+            params.topMargin = ResUtil.getResDimensionPixelOffset(context, R.dimen.dp_15);
             contentView.setLayoutParams(params);
         }
     }

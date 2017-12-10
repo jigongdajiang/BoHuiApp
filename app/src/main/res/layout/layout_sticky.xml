@@ -12,6 +12,6 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/sys_margin"
         android:text=""
-        android:textColor="@color/sys_color_font_blue"
+        android:textColor="@color/sys_color_font_base"
         android:textSize="@dimen/sys_font_size_middle" />
 </LinearLayout>

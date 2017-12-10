@@ -8,5 +8,6 @@ package com.bohui.art.common.app;
  */
 
 
-public class SharePreferenceKey {
+public interface SharePreferenceKey {
+    String HAS_INSTALL_AND_START = "has_install_and_start";
 }

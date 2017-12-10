@@ -37,14 +37,14 @@ public class EToast {
     private Handler mHandler = new Handler();
     private String TOAST_TAG = "EToast_Log";
 
-    private EToast(Context context) {
+    private EToast(Context context, int layoutId) {
         mContext = context;
         container = (ViewGroup) ((Activity) context)
                 .findViewById(android.R.id.content);
         View viewWithTag = container.findViewWithTag(TOAST_TAG);
         if(viewWithTag == null){
             v = ((Activity) context).getLayoutInflater().inflate(
-                    R.layout.etoast, container);
+                    layoutId, container);
             v.setTag(TOAST_TAG);
         }else{
             v = viewWithTag;
@@ -55,11 +55,14 @@ public class EToast {
     }
 
     public static EToast makeText(Context context, CharSequence message, int duration) {
+        return makeText(context,message,duration,R.layout.etoast);
+    }
+    public static EToast makeText(Context context, CharSequence message, int duration,int layoutId) {
         if(result == null){
-            result = new EToast(context);
+            result = new EToast(context,layoutId);
         }else{
             if(!result.mContext.getClass().getName().equals(context.getClass().getName())){
-                result = new EToast(context);
+                result = new EToast(context,layoutId);
             }
         }
         if(duration == Toast.LENGTH_LONG){

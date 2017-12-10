@@ -64,7 +64,7 @@ public class LayoutViewHolder {
     public LayoutViewHolder setTextColor(int viewId, int color) {
         TextView view = getView(viewId);
         if(null != view){
-            view.setTextColor(color);
+            view.setTextColor(ResUtil.getResColor(view.getContext(),color));
         }
         return this;
     }

@@ -19,20 +19,21 @@ package com.framework.core.http.func;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.http.model.ApiResult;
 import com.framework.core.log.PrintLog;
 import com.framework.core.security.AESUtils;
 import com.framework.core.security.P2PSecurityRSACoder;
 import com.framework.core.security.RSAUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 
 import org.json.JSONObject;
 
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
@@ -54,7 +55,7 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
     protected Gson gson;
     protected Context context;
 
-    public ApiResultFunc(Type type,Context context) {
+    public ApiResultFunc(Type type, Context context) {
         gson = new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                 .serializeNulls()
@@ -93,7 +94,7 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
             jsonObject.put("data", returnData);
             if (state == ApiException.FORCE_UPDATE) {
                 ApiException exception = new ApiException("强制更新", ApiException.ERROR.SERVER_FORCE_UPDATE);
-                exception.setExtMessage(returnData.toString());
+                exception.setErrorData(returnData);
                 throw exception;
             } else if (state == ApiResult.OK) {
                 String jsonStr = jsonObject.toString();
@@ -106,6 +107,7 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
             } else {
                 String msg = jsonObject.optString("message");
                 ApiException exception = new ApiException(msg, state);
+                exception.setErrorData(returnData);
                 throw exception;
             }
         } else {

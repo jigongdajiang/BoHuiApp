@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.widget.smallelement.banner.adapter.CBPageAdapter;
 import com.widget.smallelement.banner.listener.OnItemClickListener;
@@ -20,6 +21,7 @@ public class CBLoopViewPager extends ViewPager {
 
     private boolean isCanScroll = true;
     private boolean canLoop = true;
+    private boolean isVertical = false;
 
     public void setAdapter(PagerAdapter adapter, boolean canLoop) {
         mAdapter = (CBPageAdapter) adapter;
@@ -46,12 +48,19 @@ public class CBLoopViewPager extends ViewPager {
         this.isCanScroll = isCanScroll;
     }
 
+    public void setVertical(boolean vertical) {
+        isVertical = vertical;
+    }
+
     private float oldX = 0, newX = 0;
     private static final float sens = 5;
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (isCanScroll) {
+            if (isVertical) {
+                swapXY(ev);
+            }
             if (onItemClickListener != null) {
                 switch (ev.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -76,7 +85,13 @@ public class CBLoopViewPager extends ViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (isCanScroll)
-            return super.onInterceptTouchEvent(ev);
+            if (isVertical) {
+                boolean intercepted = super.onInterceptTouchEvent(swapXY(ev));
+                swapXY(ev); // return touch coordinates to original reference frame for any child views
+                return intercepted;
+            }else {
+                return super.onInterceptTouchEvent(ev);
+            }
         else
             return false;
     }
@@ -107,8 +122,52 @@ public class CBLoopViewPager extends ViewPager {
 
     private void init() {
         super.setOnPageChangeListener(onPageChangeListener);
+        if(isVertical){
+            // The majority of the magic happens here
+            setPageTransformer(true, new VerticalPageTransformer());
+            // The easiest way to get rid of the overscroll drawing that happens on the left and right
+            setOverScrollMode(OVER_SCROLL_NEVER);
+        }
     }
+    private class VerticalPageTransformer implements ViewPager.PageTransformer {
 
+        @Override
+        public void transformPage(View view, float position) {
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0);
+
+            } else if (position <= 1) { // [-1,1]
+                view.setAlpha(1);
+
+                // Counteract the default slide transition
+                view.setTranslationX(view.getWidth() * -position);
+
+                //set Y position to swipe in from top
+                float yPosition = position * view.getHeight();
+                view.setTranslationY(yPosition);
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
+        }
+    }
+    /**
+     * Swaps the X and Y coordinates of your touch event.
+     */
+    private MotionEvent swapXY(MotionEvent ev) {
+        float width = getWidth();
+        float height = getHeight();
+
+        float newX = (ev.getY() / height) * width;
+        float newY = (ev.getX() / width) * height;
+
+        ev.setLocation(newX, newY);
+
+        return ev;
+    }
     private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
         private float mPreviousPosition = -1;
 
