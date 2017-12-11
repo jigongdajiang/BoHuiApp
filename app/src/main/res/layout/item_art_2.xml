@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/sys_color_content_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/sys_padding">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_temp_2" />
+
+    <TextView
+        android:id="@+id/tv_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/sys_margin_small"
+        android:layout_centerVertical="true"
+        android:text="国画山水"
+        android:textColor="@color/sys_color_font_somber"
+        android:textSize="@dimen/sys_font_size_small" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sys_margin">
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginTop="@dimen/sys_margin_small"
+            android:layout_centerVertical="true"
+            android:text="￥8000.00"
+            android:textColor="@color/sys_color_font_base"
+            android:textSize="@dimen/sys_font_size_small" />
+
+        <TextView
+            android:id="@+id/tv_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingBottom="@dimen/dp_2"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="123人浏览"
+            android:textColor="@color/sys_color_font_light_gray"
+            android:textSize="@dimen/sys_font_size_small"
+            android:layout_marginRight="@dimen/dp_5" />
+    </RelativeLayout>
+</LinearLayout>

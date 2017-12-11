@@ -36,7 +36,7 @@ public class BannerAdapter extends BaseAdapter<BannerBeans> {
 
     @Override
     public int geViewType(int position) {
-        return 0x2;
+        return 0x1;
     }
 
     @Override

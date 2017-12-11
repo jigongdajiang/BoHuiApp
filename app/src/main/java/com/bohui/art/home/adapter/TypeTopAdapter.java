@@ -27,7 +27,7 @@ public class TypeTopAdapter extends BaseAdapter<TypeTopBean> {
 
     @Override
     public int geViewType(int position) {
-        return 0x1;
+        return 0x2;
     }
 
     @Override

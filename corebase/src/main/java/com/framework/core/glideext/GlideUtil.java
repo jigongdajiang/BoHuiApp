@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +14,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.lang.ref.WeakReference;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * @author : gaojigong
@@ -99,6 +102,16 @@ public class GlideUtil {
         }
     }
 
+    public static void displayCircle(Object context, ImageView imageView, Object imgSource) {
+        ImageView weakImage = weakImageView(imageView);
+        if(null != weakImage){
+            converRequestManager(context)
+                    .load(imgSource)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(imageView);
+        }
+    }
+
 
 
     protected static RequestManager converRequestManager(Object context) {
@@ -130,4 +143,5 @@ public class GlideUtil {
         final WeakReference<ImageView> imageViewWeakReference = new WeakReference<>(imageView);
         return imageViewWeakReference.get();
     }
+
 }
