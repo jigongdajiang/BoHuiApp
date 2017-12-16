@@ -36,6 +36,7 @@ public class BannerHelper {
     private int turingTime = TURINGTIME;
     private String show;
     private boolean isVertical = false;
+    private boolean showIndicator;
 
     public BannerHelper(ConvenientBanner banner, final Activity context, final String show) {
         this.mBanner = banner;
@@ -73,6 +74,10 @@ public class BannerHelper {
         this.turingTime = turingTime;
     }
 
+    public void setShowIndicator(boolean showIndicator) {
+        this.showIndicator = showIndicator;
+    }
+
     public void refreshBanner(List<BannerBean> bannerBeans) {
         if (mBannerDatas == null || mBannerDatas.size() == 0) {
             mBannerDatas = new ArrayList<>();
@@ -85,9 +90,14 @@ public class BannerHelper {
                 if(isVertical){
                     mBanner.setPages(mCbViewHolderCreator, mBannerDatas); //选中.
                 }else{
-                    mBanner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-                            .setPageIndicator(new int[]{R.drawable.shape_banner_ind_unsel, R.drawable.shape_banner_ind_sel})
-                            .setPages(mCbViewHolderCreator, mBannerDatas); //选中.
+                    if(showIndicator){
+                        mBanner.setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                                .setPageIndicator(new int[]{R.drawable.shape_banner_ind_unsel, R.drawable.shape_banner_ind_sel})
+                                .setPages(mCbViewHolderCreator, mBannerDatas); //选中.
+                    }else{
+                        mBanner.setPages(mCbViewHolderCreator, mBannerDatas); //选中.
+                    }
+
                 }
 
             onResume();

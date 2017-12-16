@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/sys_color_content_bg"
+    android:paddingLeft="@dimen/sys_padding"
+    android:paddingRight="@dimen/sys_padding"
+    android:paddingTop="@dimen/dp_30"
+    android:paddingBottom="@dimen/dp_30">
+
+    <ImageView
+        android:id="@+id/iv_mine_avr"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_centerVertical="true"
+        android:src="@drawable/img_temp_1"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/iv_mine_avr"
+        android:layout_marginLeft="@dimen/sys_margin"
+        android:layout_centerVertical="true"
+        >
+        <TextView
+            android:id="@+id/tv_mine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="济公"
+            android:textSize="@dimen/sys_font_size_middle"
+            android:textColor="@color/sys_color_font_black"/>
+        <TextView
+            android:id="@+id/tv_mine_sample_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="坚持到底就是胜利"
+            android:textSize="@dimen/sys_font_size_small"
+            android:layout_marginTop="@dimen/sys_margin"
+            android:textColor="@color/sys_color_font_light_gray"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_guide_arrow_right"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_right_more"/>
+</RelativeLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_30"
+    android:background="@color/sys_color_content_bg">
+    <TextView
+        android:id="@+id/tv_classify_type_divider_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="热门分类"
+        android:layout_centerInParent="true"/>
+    <View
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/sys_color_divider"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_classify_type_divider_des"
+        android:layout_marginRight="@dimen/sys_margin_small"/>
+    <View
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/sys_color_divider"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_classify_type_divider_des"
+        android:layout_marginLeft="@dimen/sys_margin_small"/>
+</RelativeLayout>

@@ -9,6 +9,7 @@ import com.bohui.art.R;
 import com.bohui.art.common.bean.BannerBean;
 import com.bohui.art.common.bean.BannerBeans;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
+import com.bohui.art.common.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.BannerHelper;
 import com.bohui.art.home.adapter.ArtGridAdapter;
 import com.bohui.art.home.adapter.BannerAdapter;
@@ -16,6 +17,7 @@ import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.adapter.OrgGridAdapter;
 import com.bohui.art.home.adapter.Art1Plus2Adapter;
 import com.bohui.art.home.adapter.TypeTopAdapter;
+import com.bohui.art.home.art1.Art1Activity;
 import com.bohui.art.home.bean.ArtBean;
 import com.bohui.art.home.bean.DesignerBean;
 import com.bohui.art.home.bean.TypeTopBean;
@@ -40,7 +42,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
     RecyclerView rv;
     private View bannerHeader;
     private BannerHelper bannerHelper;
-    String imgs[] = new String[]{
+    public static String imgs[] = new String[]{
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512897042545&di=053c45cd7e7da1412e81221e88c9824d&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fc2cec3fdfc03924589eab7228c94a4c27d1e25bb.jpg"
             ,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512897042545&di=7f002625cee037a453bec91218d26416&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa9d3fd1f4134970a7f507e029ecad1c8a7865dff.jpg"
             ,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512897042544&di=4558d62428b5a41ca639f10455457620&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F9c16fdfaaf51f3dedda391499feef01f3a29798d.jpg"
@@ -157,7 +159,12 @@ public class RecommendFragment extends AbsNetBaseFragment{
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                String a = "a";
+                if(adapter instanceof TypeTopAdapter){
+                    //进入二级艺术品列表页
+                    if(mHelperUtil != null && mHelperUtil instanceof NetBaseHelperUtil){
+                        ((NetBaseHelperUtil)mHelperUtil).startAty(Art1Activity.class);
+                    }
+                }
             }
         });
     }

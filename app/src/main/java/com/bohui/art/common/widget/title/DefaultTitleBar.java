@@ -306,7 +306,7 @@ public class DefaultTitleBar extends AbsTitleBar<DefaultTitleBar.DefaultBuilder.
             public int leftTextColor = R.color.title_bar_main_text_color;//左边文字颜色
 
             public boolean leftImageShow = true;//左按钮是否显示
-            public int leftImageResId = R.mipmap.ic_back_white;//左侧按钮图片
+            public int leftImageResId = R.mipmap.ic_arrow_left;//左侧按钮图片
 
             public String title;//中间标题，为空不显示
             public int titleTextSize = R.dimen.title_bar_title_font_size;//中间标题大小

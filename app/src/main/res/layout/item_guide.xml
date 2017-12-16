@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/sys_guide_height"
+    android:background="@color/sys_color_content_bg"
+    android:paddingLeft="@dimen/sys_padding"
+    android:paddingRight="@dimen/sys_padding">
+    <ImageView
+        android:id="@+id/iv_guide_left"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_art_man"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:id="@+id/tv_guide_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_guide_left"
+        android:text="艺术家"
+        android:textSize="@dimen/sys_font_size_middle"
+        android:textColor="@color/sys_color_font_black"
+        android:layout_marginLeft="@dimen/sys_margin_small"/>
+    <ImageView
+        android:id="@+id/iv_guide_arrow_right"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_arrow_right"/>
+
+</RelativeLayout>

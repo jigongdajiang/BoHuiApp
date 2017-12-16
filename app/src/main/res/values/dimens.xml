@@ -92,6 +92,9 @@
     <!-- 系统内横向导航的间距，例如我的模块 -->
     <dimen name="sys_guide_margin">@dimen/dp_10</dimen>
 
+    <!-- 系统内横向导航的宽 如发现 -->
+    <dimen name="sys_guide_height">@dimen/dp_50</dimen>
+
     <!-- 系统Loading框 -->
     <dimen name="dialog_loading_wh">@dimen/dp_55</dimen>
     <dimen name="dialog_loading_img_margin_bt">@dimen/sys_margin</dimen>

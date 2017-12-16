@@ -84,6 +84,12 @@
         <!-- 基础Web页 -->
         <activity android:name=".common.activity.BaseWebActivity"
             android:screenOrientation="portrait"/>
+        <!-- 艺术品一级列表页 -->
+        <activity android:name=".home.art1.Art1Activity"
+            android:screenOrientation="portrait"/>
+        <!-- 艺术品二级列表页 -->
+        <activity android:name=".home.art2.Art2Activity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"

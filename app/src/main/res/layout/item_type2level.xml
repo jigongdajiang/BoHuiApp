@@ -8,8 +8,8 @@
     android:padding="@dimen/sys_padding">
     <ImageView
         android:id="@+id/iv_2level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
         android:src="@drawable/img_temp_1"
         android:layout_gravity="center_horizontal"
         />

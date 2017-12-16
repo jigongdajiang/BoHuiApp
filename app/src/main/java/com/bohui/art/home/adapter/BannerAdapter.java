@@ -30,6 +30,7 @@ public class BannerAdapter extends BaseAdapter<BannerBeans> {
     private int bannerHeight;//从外部控制高度
     private int bannerMargin;
     private int turingTime;
+    private boolean showIndicator = true;
     public BannerAdapter(Context context) {
         super(context);
     }
@@ -58,6 +59,10 @@ public class BannerAdapter extends BaseAdapter<BannerBeans> {
 
     public void setTuringTime(int turingTime) {
         this.turingTime = turingTime;
+    }
+
+    public void setShowIndicator(boolean showIndicator) {
+        this.showIndicator = showIndicator;
     }
 
     @Override
