@@ -1,12 +1,17 @@
 package com.bohui.art.home;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.RelativeLayout;
 
 import com.bohui.art.R;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
+import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.framework.core.base.BaseHelperUtil;
 import com.framework.core.fragment.BaseFragmentStateAdapter;
 import com.framework.core.util.CollectionUtil;
 
@@ -14,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author : gaojigong
@@ -27,6 +33,8 @@ public class HomeFragment extends AbsNetBaseFragment {
     SlidingTabLayout tab;
     @BindView(R.id.view_pager)
     ViewPager view_pager;
+    @BindView(R.id.rl_search)
+    RelativeLayout rl_search;
 
     private BaseFragmentStateAdapter mAdapter;
     @Override
@@ -36,6 +44,14 @@ public class HomeFragment extends AbsNetBaseFragment {
 
     @Override
     public void initView() {
+        RxViewUtil.addOnClick(mRxManager, rl_search, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                Bundle bundle = new Bundle();
+                bundle.putInt(SearchActivity.SEARCH_TYPE,0);
+                ((BaseHelperUtil)mHelperUtil).startAty(SearchActivity.class,bundle);
+            }
+        });
         List<TypeBean> types = new ArrayList<>();
         types.add(new TypeBean(1,"国画"));
         types.add(new TypeBean(2,"油画"));

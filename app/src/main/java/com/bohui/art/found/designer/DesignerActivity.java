@@ -1,5 +1,6 @@
 package com.bohui.art.found.designer;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.bean.DesignerBean;
+import com.bohui.art.search.SearchActivity;
+import com.framework.core.base.BaseHelperUtil;
 import com.widget.smallelement.dropdown.DropDownMenu;
 
 import java.util.ArrayList;
@@ -51,7 +54,9 @@ public class DesignerActivity extends AbsNetBaseActivity{
                 .setRightImage1ClickListner(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(SearchActivity.SEARCH_TYPE,2);
+                        ((BaseHelperUtil)mHelperUtil).startAty(SearchActivity.class,bundle);
                     }
                 })
                 .builder();

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_color_transparent">
+    <RelativeLayout
+        android:id="@+id/rl_translate"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:background="@color/sys_color_content_bg">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/sys_margin"
+            android:layout_above="@+id/ll_bottom_btn">
+
+        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/ll_bottom_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="重置"
+                android:gravity="center"
+                android:textColor="@color/sys_color_font_black"
+                android:textSize="@dimen/sys_font_size_large"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="重置"
+                android:gravity="center"
+                android:background="@color/sys_color_base"
+                android:textColor="@color/sys_color_font_white"
+                android:textSize="@dimen/sys_font_size_large"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.bohui.art.found.artman;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -9,7 +10,9 @@ import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.home.art1.Art1Fragment;
 import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.framework.core.base.BaseHelperUtil;
 import com.framework.core.fragment.BaseFragmentStateAdapter;
 import com.framework.core.util.CollectionUtil;
 
@@ -45,6 +48,9 @@ public class ArtManActivity extends AbsNetBaseActivity {
                     @Override
                     public void onClick(View v) {
                         //进入搜索页
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(SearchActivity.SEARCH_TYPE,1);
+                        ((BaseHelperUtil)mHelperUtil).startAty(SearchActivity.class,bundle);
                     }
                 })
                 .builder();

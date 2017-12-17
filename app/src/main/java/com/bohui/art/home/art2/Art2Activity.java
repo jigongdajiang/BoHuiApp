@@ -1,6 +1,8 @@
 package com.bohui.art.home.art2;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -9,6 +11,8 @@ import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.search.SearchActivity;
+import com.framework.core.base.BaseHelperUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,14 @@ public class Art2Activity extends AbsNetBaseActivity {
         new DefaultTitleBar.DefaultBuilder(mContext)
                 .setTitle("国画-山水")
                 .setRightImage1(R.mipmap.ic_search)
+                .setRightImage1ClickListner(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(SearchActivity.SEARCH_TYPE,0);
+                        ((BaseHelperUtil)mHelperUtil).startAty(SearchActivity.class,bundle);
+                    }
+                })
                 .builder();
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);

@@ -125,6 +125,12 @@
         <!-- 咨询建议 -->
         <activity android:name=".mine.setting.suggest.SuggestActivity"
             android:screenOrientation="portrait"/>
+        <!-- 搜索页 -->
+        <activity android:name=".search.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 搜索结果页 -->
+        <activity android:name=".search.SearchResultActivity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"
