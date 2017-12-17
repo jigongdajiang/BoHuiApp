@@ -61,11 +61,11 @@ public class RecommendFragment extends AbsNetBaseFragment{
         //Banner
         BannerAdapter bannerAdapter = new BannerAdapter(mContext);
         List<BannerBean> bannerDatas = new ArrayList<>();
-        bannerDatas.add(new BannerBean("banner1","http://baidu.com",imgs[0]
+        bannerDatas.add(new BannerBean("banner1","http://www.baidu.com",imgs[0]
         ));
-        bannerDatas.add(new BannerBean("banner2","http://baidu.com",imgs[1]
+        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",imgs[1]
         ));
-        bannerDatas.add(new BannerBean("banner2","http://baidu.com",imgs[2]
+        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",imgs[2]
         ));
         BannerBeans bannerBeans = new BannerBeans();
         bannerBeans.setBannerBeans(bannerDatas);

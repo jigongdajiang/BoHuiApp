@@ -1,6 +1,7 @@
 package com.bohui.art.mine;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -9,6 +10,14 @@ import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.found.GuideItemAdapter;
 import com.bohui.art.found.GuideItemBean;
 import com.bohui.art.home.RecommendFragment;
+import com.bohui.art.mine.accountedit.AccountEditActivity;
+import com.bohui.art.mine.attention.MyAttentionActivity;
+import com.bohui.art.mine.collect.MyCollectActivity;
+import com.bohui.art.mine.order.MyOrderActivity;
+import com.bohui.art.mine.setting.SettingActivity;
+import com.framework.core.base.BaseHelperUtil;
+import com.widget.grecycleview.adapter.base.BaseAdapter;
+import com.widget.grecycleview.listener.RvClickListenerIml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +49,7 @@ public class MineFragment extends AbsNetBaseFragment {
         userBean.setAvrUrl(RecommendFragment.imgs[0]);
         userBean.setName("济公大奖");
         userBean.setDes("坚持到底就是胜利");
-        MineTopAdapter mineTopAdapter = new MineTopAdapter(mContext,userBean);
+        final MineTopAdapter mineTopAdapter = new MineTopAdapter(mContext,userBean);
         delegateAdapter.addAdapter(mineTopAdapter);
 
         GuideItemAdapter foundItemAdapter = new GuideItemAdapter(mContext);
@@ -67,5 +76,30 @@ public class MineFragment extends AbsNetBaseFragment {
 
         rv_mine.setLayoutManager(layoutManager);
         rv_mine.setAdapter(delegateAdapter);
+
+        rv_mine.addOnItemTouchListener(new RvClickListenerIml(){
+            @Override
+            public void onItemClick(BaseAdapter adapter, View view, int position) {
+                if(adapter instanceof MineTopAdapter){
+                    ((BaseHelperUtil)mHelperUtil).startAty(AccountEditActivity.class);
+                }else if(adapter instanceof GuideItemAdapter){
+                    GuideItemBean itemBean = (GuideItemBean) adapter.getData(position);
+                    switch (itemBean.getTypeId()){
+                        case 0:
+                            ((BaseHelperUtil)mHelperUtil).startAty(MyCollectActivity.class);
+                            break;
+                        case 1:
+                            ((BaseHelperUtil)mHelperUtil).startAty(MyAttentionActivity.class);
+                            break;
+                        case 2:
+                            ((BaseHelperUtil)mHelperUtil).startAty(MyOrderActivity.class);
+                            break;
+                        case 3:
+                            ((BaseHelperUtil)mHelperUtil).startAty(SettingActivity.class);
+                            break;
+                    }
+                }
+            }
+        });
     }
 }

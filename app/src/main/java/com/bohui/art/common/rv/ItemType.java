@@ -21,4 +21,8 @@ public class ItemType {
     public static int MINE_TOP = TYPE_START++;
     //二级列表页
     public static int ART_2 = TYPE_START++;
+    //艺术家列表页item布局
+    public static int ART_MAN_LIST = TYPE_START++;
+    //我的定制列表Item布局
+    public static int My_ORDER_ITEM = TYPE_START++;
 }

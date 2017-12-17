@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 
 import com.bohui.art.R;
 import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
+import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.framework.core.log.PrintLog;
 
 import java.util.List;
@@ -36,24 +37,24 @@ public class BaseWebActivity extends AbsBaseActivity {
     protected WebView webView;//必有的WebView
 
     protected String url_content;//传入的地址
+
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_webview;
     }
 
     @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        url_content = this.getIntent().getStringExtra(WEB_URL_CONTENT);
+    }
+
+    @Override
     public void initView() {
-        getIntentData();//获取外来数据
         initTitle();//有标题是在此方法设置标题
         webSet();
         showPage();
-    }
-    /**
-     * 钩子，用于获取从其它页面进入时的传值，子类重写是要有surper
-     * 默认是有url的获取的
-     */
-    protected void getIntentData() {
-        url_content = this.getIntent().getStringExtra(WEB_URL_CONTENT);
     }
 
     /**

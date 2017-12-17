@@ -25,10 +25,13 @@
     <color name="color_000000">#000000</color>
     <color name="color_EFEFEF">#EFEFEF</color>
     <color name="color_F6AD3C">#F6AD3C</color>
+    <color name="color_9FA0A0">#9FA0A0</color>
+    <color name="color_ED6D46">#ED6D46</color>
 
     <color name="color_00000000">#00000000</color>
     <color name="color_55F5F5F5">#55F5F5F5</color>
-    <color name="color_80942723">#942723</color>
+    <color name="color_80942723">#80942723</color>
+    <color name="color_88888888">#88888888</color>
 
     <!-- 系统部分 -->
     <!-- 主基色 -->
@@ -44,7 +47,7 @@
     <!-- 纯白 -->
     <color name="sys_color_white">@color/color_FFFFFF</color>
     <!-- 纯黑 -->
-    <color name="sys_color_black">@color/color_FFFFFF</color>
+    <color name="sys_color_black">@color/color_000000</color>
     <!-- 字体-黑 -->
     <color name="sys_color_font_black">@color/color_595757</color>
     <!-- 字体-浅黑 -->

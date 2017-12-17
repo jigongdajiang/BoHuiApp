@@ -84,11 +84,46 @@
         <!-- 基础Web页 -->
         <activity android:name=".common.activity.BaseWebActivity"
             android:screenOrientation="portrait"/>
+        <!-- 通用静态Web页 -->
+        <activity android:name=".common.activity.CommonStaticActivity"
+            android:screenOrientation="portrait"/>
         <!-- 艺术品一级列表页 -->
         <activity android:name=".home.art1.Art1Activity"
             android:screenOrientation="portrait"/>
         <!-- 艺术品二级列表页 -->
         <activity android:name=".home.art2.Art2Activity"
+            android:screenOrientation="portrait"/>
+        <!-- 艺术家列表页 -->
+        <activity android:name=".found.artman.ArtManActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 设计是列表页 -->
+        <activity android:name=".found.designer.DesignerActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 定制页 -->
+        <activity android:name=".found.order.OrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <!-- 个人资料编辑页 -->
+        <activity android:name=".mine.accountedit.AccountEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <!-- 我的收藏-->
+        <activity android:name=".mine.collect.MyCollectActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 我的关注-->
+        <activity android:name=".mine.attention.MyAttentionActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 我的定制 -->
+        <activity android:name=".mine.order.MyOrderActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 设置 -->
+        <activity android:name=".mine.setting.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 修改密码 -->
+        <activity android:name=".mine.setting.changepassword.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 咨询建议 -->
+        <activity android:name=".mine.setting.suggest.SuggestActivity"
             android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service

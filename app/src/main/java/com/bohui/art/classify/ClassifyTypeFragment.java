@@ -67,11 +67,11 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment {
         bannerAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_100));
         bannerAdapter.setShowIndicator(false);
         List<BannerBean> bannerDatas = new ArrayList<>();
-        bannerDatas.add(new BannerBean("banner1","http://baidu.com", RecommendFragment.imgs[0]
+        bannerDatas.add(new BannerBean("banner1","http://www.baidu.com", RecommendFragment.imgs[0]
         ));
-        bannerDatas.add(new BannerBean("banner2","http://baidu.com",RecommendFragment.imgs[1]
+        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[1]
         ));
-        bannerDatas.add(new BannerBean("banner2","http://baidu.com",RecommendFragment.imgs[2]
+        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[2]
         ));
         BannerBeans bannerBeans = new BannerBeans();
         bannerBeans.setBannerBeans(bannerDatas);

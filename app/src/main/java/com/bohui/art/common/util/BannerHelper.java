@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bohui.art.R;
 import com.bohui.art.common.activity.BaseWebActivity;
+import com.bohui.art.common.activity.CommonStaticActivity;
 import com.bohui.art.common.bean.BannerBean;
 import com.bumptech.glide.Glide;
 import com.framework.core.glideext.GlideUtil;
@@ -56,8 +57,8 @@ public class BannerHelper {
                     BannerBean bannerBean = mBannerDatas.get(position);
                     if (bannerBean != null && !TextUtils.isEmpty(bannerBean.getUrl())) {
                         Intent intent = new Intent();
-                        intent.setClass(mContext, BaseWebActivity.class);
-                        intent.putExtra(BaseWebActivity.WEB_URL_CONTENT, bannerBean.getUrl());
+                        intent.setClass(mContext, CommonStaticActivity.class);
+                        intent.putExtra(CommonStaticActivity.WEB_URL_CONTENT, bannerBean.getUrl());
                         mContext.startActivity(intent);
                     }
                 }
