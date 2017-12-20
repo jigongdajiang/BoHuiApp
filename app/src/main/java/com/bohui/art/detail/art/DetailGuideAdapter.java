@@ -1,43 +1,38 @@
-package com.bohui.art.search;
+package com.bohui.art.detail.art;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.common.rv.ItemType;
+import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
-import com.widget.smallelement.flowtag.FlowLayout;
-import com.widget.smallelement.flowtag.TagAdapter;
-import com.widget.smallelement.flowtag.TagFlowLayout;
 
 /**
  * @author : gaojigong
- * @date : 2017/12/17
+ * @date : 2017/12/20
  * @description:
  */
 
 
-public class FiltratePriceAdapter extends BaseAdapter<String> {
+public class DetailGuideAdapter extends BaseAdapter<String> {
     private String des;
 
-    public FiltratePriceAdapter(Context context, String des) {
+    public DetailGuideAdapter(Context context, String des) {
         super(context);
         addItem(des);
     }
 
     @Override
     public int geViewType(int position) {
-        return ItemType.SEARCH_FILTRATE_PRICE;
+        return ItemType.ART_DETAIL_GUIDE;
     }
 
     @Override
     public int geLayoutId(int position) {
-        return R.layout.item_filtrate_price;
+        return R.layout.detail_guide;
     }
 
     @Override
@@ -48,6 +43,7 @@ public class FiltratePriceAdapter extends BaseAdapter<String> {
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        singleLayoutHelper.setMarginTop(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.sys_margin_small));
         return singleLayoutHelper;
     }
 }

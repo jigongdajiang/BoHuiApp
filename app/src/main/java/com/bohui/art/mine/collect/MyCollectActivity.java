@@ -1,14 +1,19 @@
 package com.bohui.art.mine.collect;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.home.bean.ArtBean;
+import com.widget.grecycleview.adapter.base.BaseAdapter;
+import com.widget.grecycleview.listener.RvClickListenerIml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,11 @@ public class MyCollectActivity extends AbsNetBaseActivity {
         delegateAdapter.addAdapter(art2Adapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
-
+        rv.addOnItemTouchListener(new RvClickListenerIml(){
+            @Override
+            public void onItemClick(BaseAdapter adapter, View view, int position) {
+                ArtDetailActivity.comeIn(MyCollectActivity.this,new Bundle());
+            }
+        });
     }
 }

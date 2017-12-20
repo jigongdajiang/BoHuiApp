@@ -1,5 +1,6 @@
 package com.bohui.art.home;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -11,6 +12,7 @@ import com.bohui.art.common.bean.BannerBeans;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.common.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.BannerHelper;
+import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.adapter.ArtGridAdapter;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.bohui.art.home.adapter.DesignerAdapter;
@@ -164,6 +166,10 @@ public class RecommendFragment extends AbsNetBaseFragment{
                     if(mHelperUtil != null && mHelperUtil instanceof NetBaseHelperUtil){
                         ((NetBaseHelperUtil)mHelperUtil).startAty(Art1Activity.class);
                     }
+                }else if(adapter instanceof  Art1Plus2Adapter
+                        || adapter instanceof OrgGridAdapter
+                        || adapter instanceof ArtGridAdapter){
+                    ArtDetailActivity.comeIn(getActivity(),new Bundle());
                 }
             }
         });

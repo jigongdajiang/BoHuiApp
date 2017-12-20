@@ -25,10 +25,18 @@ public class ItemType {
     public static int ART_MAN_LIST = TYPE_START++;
     //我的定制列表Item布局
     public static int My_ORDER_ITEM = TYPE_START++;
-    //搜索页热门标签布局
-    public static int SEARCH_TAG = TYPE_START++;
     //搜索筛选的标签布局
     public static int SEARCH_FILTRATE_TAG = TYPE_START++;
     //搜索筛选的价格布局
     public static int SEARCH_FILTRATE_PRICE = TYPE_START++;
+    //艺术品详情-产品布局
+    public static int ART_DETAIL_PRODUCT = TYPE_START++;
+    //艺术品详情-简介布局
+    public static int ART_DETAIL_INTRO = TYPE_START++;
+    //艺术品详情-详情布局
+    public static int ART_DETAIL_DETAIL = TYPE_START++;
+    //艺术品详情-推荐布局
+    public static int ART_DETAIL_RECOMMEND = TYPE_START++;
+    //详情-分割导航布局
+    public static int ART_DETAIL_GUIDE = TYPE_START++;
 }

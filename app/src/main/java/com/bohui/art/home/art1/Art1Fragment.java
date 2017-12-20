@@ -8,6 +8,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
+import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.TypeFragment;
 import com.bohui.art.home.adapter.ArtGridAdapter;
 import com.bohui.art.home.bean.ArtBean;
@@ -61,7 +62,7 @@ public class Art1Fragment extends AbsNetBaseFragment {
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                String a = "a";
+                ArtDetailActivity.comeIn(getActivity(),new Bundle());
             }
         });
     }

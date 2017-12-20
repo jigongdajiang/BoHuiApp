@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_color_content_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+       <TextView
+           android:id="@+id/tv_intro"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="@dimen/sys_margin"
+           android:layout_marginRight="@dimen/sys_margin"
+           android:text="@string/temp_jianjie"
+           android:lineSpacingExtra="@dimen/dp_5"
+           android:textColor="@color/sys_color_font_somber"
+           android:textSize="@dimen/sys_font_size_middle"/>
+    </LinearLayout>
+</ScrollView>

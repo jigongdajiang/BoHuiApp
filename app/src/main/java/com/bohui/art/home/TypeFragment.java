@@ -10,6 +10,7 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.adapter.Art1Plus2Adapter;
 import com.bohui.art.home.adapter.ArtGridAdapter;
 import com.bohui.art.home.adapter.OrgGridAdapter;
@@ -127,6 +128,10 @@ public class TypeFragment extends AbsNetBaseFragment {
                    }else{
                        ((NetBaseHelperUtil)mHelperUtil).startAty(Art2Activity.class);
                    }
+               }else if(adapter instanceof Art1Plus2Adapter
+                       || adapter instanceof OrgGridAdapter
+                       || adapter instanceof ArtGridAdapter){
+                   ArtDetailActivity.comeIn(getActivity(),new Bundle());
                }
             }
         });
