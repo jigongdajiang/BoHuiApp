@@ -75,8 +75,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 启动页 -->
+        <!-- 欢迎页 -->
         <activity android:name=".start.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 登录页 -->
+        <activity android:name=".start.login.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 注册页 -->
+        <activity android:name=".start.reg.RegActivity"
             android:screenOrientation="portrait"/>
         <!-- 主页 -->
         <activity android:name=".start.MainActivity"
@@ -134,6 +140,12 @@
             android:screenOrientation="portrait"/>
         <!-- 艺术品详情页 -->
         <activity android:name=".detail.art.ArtDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 艺术家详情 -->
+        <activity android:name=".detail.artman.ArtManDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 设计师详情 -->
+        <activity android:name=".detail.designer.DesignerDetailActivity"
             android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service

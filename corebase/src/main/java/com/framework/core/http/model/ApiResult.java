@@ -57,7 +57,7 @@ public class ApiResult<T> {
      * @return
      */
     public boolean isOk() {
-        return code == 0;
+        return code == OK;
     }
 
     @Override

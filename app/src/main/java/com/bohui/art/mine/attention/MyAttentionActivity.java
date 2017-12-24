@@ -1,5 +1,6 @@
 package com.bohui.art.mine.attention;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.ArtManListAdapter;
 import com.bohui.art.found.artman.ArtManListItemBean;
 import com.bohui.art.home.RecommendFragment;
@@ -64,7 +66,7 @@ public class MyAttentionActivity extends AbsNetBaseActivity {
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                //艺术家详情
+                ArtManDetailActivity.comeIn(MyAttentionActivity.this,new Bundle());
             }
         });
     }

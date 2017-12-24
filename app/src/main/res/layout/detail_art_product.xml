@@ -81,6 +81,7 @@
             android:layout_marginTop="@dimen/sys_margin"/>
 
         <RelativeLayout
+            android:id="@+id/rl_art_man"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_70"
             android:layout_marginLeft="@dimen/sys_margin"

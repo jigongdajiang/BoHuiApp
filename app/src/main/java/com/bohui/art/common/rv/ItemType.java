@@ -35,8 +35,18 @@ public class ItemType {
     public static int ART_DETAIL_INTRO = TYPE_START++;
     //艺术品详情-详情布局
     public static int ART_DETAIL_DETAIL = TYPE_START++;
-    //艺术品详情-推荐布局
-    public static int ART_DETAIL_RECOMMEND = TYPE_START++;
     //详情-分割导航布局
     public static int ART_DETAIL_GUIDE = TYPE_START++;
+    //艺术家详情-艺术家详情
+    public static int ART_MAN_DETAIL_DETAIL = TYPE_START++;
+    //艺术家详情-作品集
+    public static int ART_MAN_DETAIL_SHOWREEL = TYPE_START++;
+    //艺术家详情-艺术家简介
+    public static int ART_MAN_DETAIL_INTRO = TYPE_START++;
+    //设计师详情-设计师详情
+    public static int DESIGNER_DETAL_DETAIL = TYPE_START++;
+    //设计师详情-案例item
+    public static int DESIGNER_DETAIL_CASE = TYPE_START++;
+    //设计师详情-设计师简介
+    public static int DESIGNER_DETAIL_INTRO = TYPE_START++;
 }

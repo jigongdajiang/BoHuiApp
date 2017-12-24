@@ -77,26 +77,17 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
         apiResult.setCode(-1);
         if (!TextUtils.isEmpty(json)) {
             JSONObject jsonObject = new JSONObject(json);
-            int state = jsonObject.optInt("state");
-            String encrypted = jsonObject.optString("encrypted", "");
-            String encryption = jsonObject.optString("encryption", "");
-            JSONObject returnData;
-            if ("true".equals(encrypted)) {
-                String data = jsonObject.optString("data");
-                byte[] deaescryptKey = P2PSecurityRSACoder.decryptByPublicKey(RSAUtils.decryptBASE64(encryption), PUBLIC_FILE_NAME, context);
-                String aesKey = new String(deaescryptKey, "utf-8");
-                String reponseData = new String(AESUtils.decrypt(RSAUtils.decryptBASE64(data), aesKey));
-                returnData = new JSONObject(reponseData);
-            } else {
-                returnData = jsonObject.optJSONObject("data");
-            }
-            jsonObject.remove("data");
+            int code = jsonObject.optInt("code");
+            String msg = jsonObject.optString("msg");
+            apiResult.setCode(code);
+            apiResult.setMsg(msg);
+            JSONObject returnData = jsonObject.optJSONObject("data");
             jsonObject.put("data", returnData);
-            if (state == ApiException.FORCE_UPDATE) {
+            if (code == ApiException.FORCE_UPDATE) {
                 ApiException exception = new ApiException("强制更新", ApiException.ERROR.SERVER_FORCE_UPDATE);
                 exception.setErrorData(returnData);
                 throw exception;
-            } else if (state == ApiResult.OK) {
+            } else if (code == ApiResult.OK) {
                 String jsonStr = jsonObject.toString();
                 ApiResult result = gson.fromJson(jsonStr, type);
                 if (result != null) {
@@ -105,8 +96,7 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
                     throw new JsonParseException("return ok but fromJson failed");
                 }
             } else {
-                String msg = jsonObject.optString("message");
-                ApiException exception = new ApiException(msg, state);
+                ApiException exception = new ApiException(msg, code);
                 exception.setErrorData(returnData);
                 throw exception;
             }

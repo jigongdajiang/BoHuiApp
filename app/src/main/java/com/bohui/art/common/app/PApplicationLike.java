@@ -87,7 +87,7 @@ public class PApplicationLike extends DefaultApplicationLike {
         EasyHttp.init(getApp());
         EasyHttp.getInstance()
                 .setBaseUrl(AppConfig.getBaseUrl())
-                .setParamConvert(new ParamConvert(getApp(), AppConfig.isEntrypt()))
+                .setParamConvert(new ParamConvert(getApp()))
                 .addInterceptor(new HttpLoggingInterceptor("RequestLog").setLevel(HttpLoggingInterceptor.Level.BODY));
 
     }

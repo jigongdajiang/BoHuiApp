@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/sys_color_content_bg"
+    android:padding="@dimen/sys_padding">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:src="@drawable/img_temp_1"
+        android:scaleType="fitXY"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/sys_padding">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KTV壁画装饰"
+            android:textColor="@color/sys_color_font_black"
+            android:textSize="@dimen/sys_font_size_large"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="欧美风格"
+            android:layout_marginLeft="@dimen/sys_margin"
+            android:textColor="@color/sys_color_font_black"
+            android:textSize="@dimen/sys_font_size_large"/>
+    </LinearLayout>
+
+    <View
+        style="@style/divider_line_full_hor"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/sys_padding">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100cm * 100cm"
+            android:textColor="@color/sys_color_font_light_gray"
+            android:textSize="@dimen/sys_font_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120人浏览"
+            android:layout_marginLeft="@dimen/sys_margin"
+            android:textColor="@color/sys_color_font_light_gray"
+            android:textSize="@dimen/sys_font_size_middle"/>
+    </LinearLayout>
+
+</LinearLayout>

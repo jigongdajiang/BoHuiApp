@@ -1,4 +1,4 @@
-package com.bohui.art.detail.art;
+package com.bohui.art.detail.art.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -73,6 +73,7 @@ public class ProductAdapter extends BaseAdapter<ArtDetailBean> {
 
             }
         });
+        holder.addOnClickListener(R.id.rl_art_man);
     }
     private void showTvNumber(TextView tv,int cn,int numbers){
         tv.setText(cn+"/"+numbers);

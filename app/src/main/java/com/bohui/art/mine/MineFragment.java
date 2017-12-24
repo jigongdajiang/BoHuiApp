@@ -13,9 +13,14 @@ import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.mine.accountedit.AccountEditActivity;
 import com.bohui.art.mine.attention.MyAttentionActivity;
 import com.bohui.art.mine.collect.MyCollectActivity;
+import com.bohui.art.mine.mvp.MineContact;
+import com.bohui.art.mine.mvp.MineModel;
+import com.bohui.art.mine.mvp.MinePresenter;
+import com.bohui.art.mine.mvp.bean.MineInfoResult;
 import com.bohui.art.mine.order.MyOrderActivity;
 import com.bohui.art.mine.setting.SettingActivity;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.log.PrintLog;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -31,7 +36,7 @@ import butterknife.BindView;
  */
 
 
-public class MineFragment extends AbsNetBaseFragment {
+public class MineFragment extends AbsNetBaseFragment<MinePresenter,MineModel>implements MineContact.View{
     @BindView(R.id.rv_mine)
     RecyclerView rv_mine;
 
@@ -101,5 +106,49 @@ public class MineFragment extends AbsNetBaseFragment {
                 }
             }
         });
+    }
+    @Override
+    protected MinePresenter createPresenter() {
+        return new MinePresenter();
+    }
+
+    @Override
+    protected MineModel createModel() {
+        return new MineModel();
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getUserInfo("1");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!this.isHidden()) {
+            refresh();
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            refresh();
+        }
+    }
+
+    private void refresh() {
+        mPresenter.getUserInfo("1");
+    }
+
+    @Override
+    public void getUserInfoSuccess(MineInfoResult result) {
+        PrintLog.e(result.toString());
     }
 }

@@ -4,10 +4,12 @@ import android.widget.RelativeLayout;
 
 import com.bohui.art.R;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.mine.setting.changepassword.ChangePasswordActivity;
 import com.bohui.art.mine.setting.suggest.SuggestActivity;
+import com.bohui.art.start.login.LoginActivity;
 import com.framework.core.base.BaseHelperUtil;
 
 import butterknife.BindView;
@@ -61,7 +63,7 @@ public class SettingActivity extends AbsNetBaseActivity {
         RxViewUtil.addOnClick(mRxManager, rl_exit, new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
-
+                ((NetBaseHelperUtil)mHelperUtil).startAty(LoginActivity.class);
             }
         });
     }

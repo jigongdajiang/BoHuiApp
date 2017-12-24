@@ -12,10 +12,13 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.detail.designer.DesignerDetailActivity;
 import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.bean.DesignerBean;
 import com.bohui.art.search.SearchActivity;
 import com.framework.core.base.BaseHelperUtil;
+import com.widget.grecycleview.adapter.base.BaseAdapter;
+import com.widget.grecycleview.listener.RvClickListenerIml;
 import com.widget.smallelement.dropdown.DropDownMenu;
 
 import java.util.ArrayList;
@@ -113,5 +116,12 @@ public class DesignerActivity extends AbsNetBaseActivity{
         }
         designerAdapter.setDatas(designerBeans);
         delegateAdapter.addAdapter(designerAdapter);
+
+        rv.addOnItemTouchListener(new RvClickListenerIml(){
+            @Override
+            public void onItemClick(BaseAdapter adapter, View view, int position) {
+                DesignerDetailActivity.comeIn(DesignerActivity.this,new Bundle());
+            }
+        });
     }
 }

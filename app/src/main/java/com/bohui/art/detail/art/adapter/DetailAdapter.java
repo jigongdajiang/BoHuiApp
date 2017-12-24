@@ -1,4 +1,4 @@
-package com.bohui.art.detail.art;
+package com.bohui.art.detail.art.adapter;
 
 import android.content.Context;
 import android.webkit.WebSettings;
