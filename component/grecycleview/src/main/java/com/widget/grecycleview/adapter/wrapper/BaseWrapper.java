@@ -29,8 +29,8 @@ import java.util.List;
 
 
 public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
-    private static final int ITEM_TYPE_EMPTY = Integer.MIN_VALUE + 1;
-    private static final int ITEM_TYPE_NET_ERROR = Integer.MIN_VALUE + 2;
+    private static final int ITEM_TYPE_EMPTY =  1;
+    private static final int ITEM_TYPE_NET_ERROR = 2;
 
     protected BaseAdapter<T> mAdapter;
 
@@ -38,8 +38,8 @@ public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
     private ER mNetErrorData;
 
     //Header，Footer的数量基本限制在100个以内  并且Header和Footer的Type一定是负数
-    private final static int ITEM_TYPE_HEEADER_START = Integer.MIN_VALUE+100;
-    private final static int ITEM_TYPE_FOOTER_START = Integer.MIN_VALUE+200;
+    private final static int ITEM_TYPE_HEEADER_START = 100;
+    private final static int ITEM_TYPE_FOOTER_START = 200;
 
     //key为ItemType
     private SparseArray<View> mHeaderViews;
@@ -263,15 +263,31 @@ public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
     }
     public void addHeader(View headerView){
         mHeaderViews.append(ITEM_TYPE_HEEADER_START+ mHeaderViews.size()+1,headerView);
+        notifyDataSetChanged();
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
     public void addFooter(View footerView){
         mFooterViews.append(ITEM_TYPE_FOOTER_START+ mFooterViews.size()+1,footerView);
+        notifyDataSetChanged();
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
     public void removeHeader(View headerView){
         mHeaderViews.removeAt(mHeaderViews.indexOfValue(headerView));
+        notifyDataSetChanged();
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
     public void removeFooter(View footerView){
         mFooterViews.removeAt(mFooterViews.indexOfValue(footerView));
+        notifyDataSetChanged();
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
 
     public boolean isHeaderByPosition(int position){
@@ -325,7 +341,19 @@ public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
         }
         return 0;
     }
+    public boolean isContainHeader(View headerView){
+        return mHeaderViews.indexOfValue(headerView) != -1;
+    }
+    public boolean isContainFooter(View footerView){
+        return mFooterViews.indexOfValue(footerView) != -1;
+    }
 
+    public int getHeaderSize(){
+        return mHeaderViews.size();
+    }
+    public int getFooterSize(){
+        return mFooterViews.size();
+    }
     protected abstract int getEmptyLayoutId();
 
     protected abstract int getNetErrorLayoutId();

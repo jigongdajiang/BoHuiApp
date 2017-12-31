@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
+import com.widget.grecycleview.adapter.wrapper.BaseWrapper;
 import com.widget.grecycleview.manager.CheckItemManager;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -37,6 +38,11 @@ public abstract class BaseAdapter<T> extends DelegateAdapter.Adapter<BaseViewHol
     protected LayoutInflater mLayoutInflater;
     //数据检查器，有Header或者footer时使用
     protected CheckItemManager mCheckItemManager;
+    //持有一个其外层对象
+    protected DelegateAdapter delegateAdapter;
+    //持有一个装饰器对象
+    protected BaseWrapper wrapper;
+
 
     public BaseAdapter(Context context,List<T> datas) {
         this.mContext = context;
@@ -51,6 +57,14 @@ public abstract class BaseAdapter<T> extends DelegateAdapter.Adapter<BaseViewHol
 
     public BaseAdapter(Context context) {
         this(context,null);
+    }
+
+    public void setDelegateAdapter(DelegateAdapter delegateAdapter) {
+        this.delegateAdapter = delegateAdapter;
+    }
+
+    public void setWrapper(BaseWrapper wrapper) {
+        this.wrapper = wrapper;
     }
 
     /**
@@ -154,14 +168,25 @@ public abstract class BaseAdapter<T> extends DelegateAdapter.Adapter<BaseViewHol
 
     public void addItem(T item) {
         getDatas().add(item);
-        notifyItemInserted(getDatas().size() - 1);
+        notifyDataSetChanged();
+        if(wrapper != null){
+            wrapper.notifyDataSetChanged();
+        }
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
 
     public void addItem(int index, T data) {
         if (0 <= index && index < getDatas().size()) {
             getDatas().add(index, data);
-            notifyItemInserted(index);
-            notifyItemRangeChanged(index, getDatas().size() - index);
+            notifyDataSetChanged();
+            if(wrapper != null){
+                wrapper.notifyDataSetChanged();
+            }
+            if(delegateAdapter != null){
+                delegateAdapter.notifyDataSetChanged();
+            }
         } else {
             throw new ArrayIndexOutOfBoundsException("inserted position most greater than 0 and less than data size");
         }
@@ -170,49 +195,96 @@ public abstract class BaseAdapter<T> extends DelegateAdapter.Adapter<BaseViewHol
     public void addItems(List<T> datas) {
         if (datas != null) {
             getDatas().addAll(datas);
-            notifyItemRangeInserted(getDatas().size() - datas.size(), datas.size());
+            notifyDataSetChanged();
+            if(wrapper != null){
+                wrapper.notifyDataSetChanged();
+            }
+            if(delegateAdapter != null){
+                delegateAdapter.notifyDataSetChanged();
+            }
         }
     }
 
     public void addItems(int position, List<T> datas) {
         if (0 <= position && position < getDatas().size()) {
             getDatas().addAll(position, datas);
-            notifyItemInserted(position);
-            notifyItemRangeChanged(position, getDatas().size() - position - datas.size());
-        } else {
+            notifyDataSetChanged();
+            if(wrapper != null){
+                wrapper.notifyDataSetChanged();
+            }
+            if(delegateAdapter != null){
+                delegateAdapter.notifyDataSetChanged();
+            }
             throw new ArrayIndexOutOfBoundsException("inserted position most greater than 0 and less than data size");
         }
     }
 
     public void removeItem(T data) {
         getDatas().remove(data);
-        notifyItemRemoved(getDatas().indexOf(data));
+        notifyDataSetChanged();
+        if(wrapper != null){
+            wrapper.notifyDataSetChanged();
+        }
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
 
     public void removeItem(int position) {
         getDatas().remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();
+        if(wrapper != null){
+            wrapper.notifyDataSetChanged();
+        }
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
 
     public void removeItems(List<T> datas) {
         getDatas().removeAll(datas);
         notifyDataSetChanged();
+        if(wrapper != null){
+            wrapper.notifyDataSetChanged();
+        }
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
 
     public void clear() {
         getDatas().clear();
         notifyDataSetChanged();
+        if(wrapper != null){
+            wrapper.notifyDataSetChanged();
+        }
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
+
     }
 
     public void replaceItem(int position, T item) {
         getDatas().set(position, item);
-        notifyItemChanged(position);
+        notifyDataSetChanged();
+        if(wrapper != null){
+            wrapper.notifyDataSetChanged();
+        }
+        if(delegateAdapter != null){
+            delegateAdapter.notifyDataSetChanged();
+        }
     }
 
     public void replaceAllItem(List<T> items) {
         if (items != null) {
             setDatas(items);
             notifyDataSetChanged();
+            if(wrapper != null){
+                wrapper.notifyDataSetChanged();
+            }
+            if(delegateAdapter != null){
+                delegateAdapter.notifyDataSetChanged();
+            }
         }
     }
 

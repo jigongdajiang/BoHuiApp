@@ -1,7 +1,5 @@
 package com.chanven.lib.cptr.header;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,6 +13,8 @@ import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.PtrUIHandler;
 import com.chanven.lib.cptr.indicator.PtrIndicator;
 import com.chanven.lib.cptr.utils.PtrLocalDisplay;
+
+import java.util.ArrayList;
 
 public class StoreHouseHeader extends View implements PtrUIHandler {
 

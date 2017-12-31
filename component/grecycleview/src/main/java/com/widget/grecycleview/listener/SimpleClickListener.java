@@ -117,7 +117,9 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
 //                            }else{
 //                                onItemChildClick(adapter,childView, position);
 //                            }
-                            onItemChildClick((BaseAdapter)adapter.findAdapterByPosition(position).second,childView, adapter.findOffsetPosition(position));
+                            if(!childView.hasOnClickListeners()){
+                                onItemChildClick((BaseAdapter)adapter.findAdapterByPosition(position).second,childView, adapter.findOffsetPosition(position));
+                            }
                             resetPressedView(pressedView);
                             return true;
                         }
@@ -134,7 +136,9 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
 //                }else{
 //                    onItemClick(adapter,pressedView, position);
 //                }
-                onItemClick((BaseAdapter)adapter.findAdapterByPosition(position).second,pressedView, adapter.findOffsetPosition(position));
+                if(!pressedView.hasOnClickListeners()){
+                    onItemClick((BaseAdapter)adapter.findAdapterByPosition(position).second,pressedView, adapter.findOffsetPosition(position));
+                }
                 resetPressedView(pressedView);
             }
             return false;
@@ -178,7 +182,9 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
 //                            }else{
 //                                onItemChildLongClick(adapter,childView, position);
 //                            }
-                            onItemChildLongClick((BaseAdapter)adapter.findAdapterByPosition(position).second,childView, adapter.findOffsetPosition(position));
+                            if(!childView.hasOnClickListeners()){
+                                onItemChildLongClick((BaseAdapter)adapter.findAdapterByPosition(position).second,childView, adapter.findOffsetPosition(position));
+                            }
                             mPressedView.setPressed(true);
                             mIsShowPress = true;
                             isChildLongClick = true;
@@ -197,7 +203,9 @@ public abstract class SimpleClickListener implements RecyclerView.OnItemTouchLis
 //                    }else{
 //                        onItemLongClick(adapter,mPressedView, position);
 //                    }
-                    onItemLongClick((BaseAdapter)adapter.findAdapterByPosition(position).second,mPressedView, adapter.findOffsetPosition(position));
+                    if(!mPressedView.hasOnClickListeners()){
+                        onItemLongClick((BaseAdapter)adapter.findAdapterByPosition(position).second,mPressedView, adapter.findOffsetPosition(position));
+                    }
                     mPressedView.setPressed(true);
                     mIsShowPress = true;
                 }

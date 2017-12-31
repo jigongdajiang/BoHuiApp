@@ -18,6 +18,13 @@ public class ArtBean implements Serializable{
     private String price;
     private String scanNumber;
 
+    public ArtBean(String title) {
+        this.title = title;
+    }
+
+    public ArtBean() {
+    }
+
     public String getTitle() {
         return title;
     }

@@ -3,5 +3,6 @@ include ':corebase',
         ':component:smallelement',
         ':component:vlayout',
         ':component:grecycleview',
+        ':component:cptr',
         ':operation',
         ':app'

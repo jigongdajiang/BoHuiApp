@@ -1,6 +1,7 @@
 package com.bohui.art.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -23,12 +24,16 @@ import com.bohui.art.home.art1.Art1Activity;
 import com.bohui.art.home.bean.ArtBean;
 import com.bohui.art.home.bean.DesignerBean;
 import com.bohui.art.home.bean.TypeTopBean;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 
@@ -40,15 +45,18 @@ import butterknife.BindView;
 
 
 public class RecommendFragment extends AbsNetBaseFragment{
+    @BindView(R.id.ptr)
+    PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
     RecyclerView rv;
     private View bannerHeader;
     private BannerHelper bannerHelper;
     public static String imgs[] = new String[]{
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512897042545&di=053c45cd7e7da1412e81221e88c9824d&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fc2cec3fdfc03924589eab7228c94a4c27d1e25bb.jpg"
-            ,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512897042545&di=7f002625cee037a453bec91218d26416&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa9d3fd1f4134970a7f507e029ecad1c8a7865dff.jpg"
-            ,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512897042544&di=4558d62428b5a41ca639f10455457620&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F9c16fdfaaf51f3dedda391499feef01f3a29798d.jpg"
-
+        "http://pic48.nipic.com/file/20140912/7487939_223919315000_2.jpg",
+            "http://fd.topitme.com/d/a8/1d/11315383988791da8do.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=3424226810,3788025634&fm=214&gp=0.jpg",
+            "http://image.tianjimedia.com/uploadImages/2014/289/01/IGS09651F94M.jpg",
+            "http://img.sc115.com/mm/mm3/mm112013852nhei3knpfbu.jpg",
     };
     @Override
     public int getLayoutId() {
@@ -61,7 +69,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
         //Banner
-        BannerAdapter bannerAdapter = new BannerAdapter(mContext);
+        final BannerAdapter bannerAdapter = new BannerAdapter(mContext);
         List<BannerBean> bannerDatas = new ArrayList<>();
         bannerDatas.add(new BannerBean("banner1","http://www.baidu.com",imgs[0]
         ));
@@ -72,6 +80,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
         BannerBeans bannerBeans = new BannerBeans();
         bannerBeans.setBannerBeans(bannerDatas);
         bannerAdapter.addItem(bannerBeans);
+        bannerAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(bannerAdapter);
 
         //广告条
@@ -148,7 +157,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
         delegateAdapter.addAdapter(typeTopAdapter5);
 
         //猜你喜欢数据适配器
-        ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
+        final ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
         List<ArtBean> artBeansLikes = new ArrayList<>();
         for(int i=0;i<6;i++){
             artBeansLikes.add(new ArtBean());
@@ -171,6 +180,44 @@ public class RecommendFragment extends AbsNetBaseFragment{
                         || adapter instanceof ArtGridAdapter){
                     ArtDetailActivity.comeIn(getActivity(),new Bundle());
                 }
+            }
+        });
+        ptrClassicFrameLayout.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                ptrClassicFrameLayout.autoRefresh(true);
+            }
+        }, 150);
+        final Handler handler = new Handler();
+        ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<BannerBean> bannerDatas2 = new ArrayList<>();
+                        bannerDatas2.add(new BannerBean("banner1","http://www.baidu.com",imgs[new Random().nextInt(100) % imgs.length]
+                        ));
+                        bannerDatas2.add(new BannerBean("banner1","http://www.baidu.com",imgs[new Random().nextInt(100) % imgs.length]
+                        ));
+                        bannerDatas2.add(new BannerBean("banner1","http://www.baidu.com",imgs[new Random().nextInt(100) % imgs.length]
+                        ));
+                        bannerDatas2.add(new BannerBean("banner1","http://www.baidu.com",imgs[new Random().nextInt(100) % imgs.length]
+                        ));
+                        BannerBeans bannerBeans2 = new BannerBeans();
+                        bannerBeans2.setBannerBeans(bannerDatas2);
+                        bannerAdapter.replaceItem(0,bannerBeans2);
+
+                        List<ArtBean> artBeansLikes2 = new ArrayList<>();
+                        for(int i=0;i<6;i++){
+                            artBeansLikes2.add(new ArtBean("title"+new Random().nextInt()));
+                        }
+                        artGridAdapter.replaceAllItem(artBeansLikes2);
+                        ptrClassicFrameLayout.refreshComplete();
+                    }
+                }, 1500);
             }
         });
     }

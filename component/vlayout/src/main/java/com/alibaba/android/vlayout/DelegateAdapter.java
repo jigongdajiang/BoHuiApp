@@ -31,6 +31,7 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 
@@ -415,6 +416,9 @@ public class DelegateAdapter extends VirtualLayoutAdapter<RecyclerView.ViewHolde
             Adapter targetAdatper = mAdapters.get(adapterIndex).second;
             removeAdapter(targetAdatper);
         }
+    }
+    public Adapter getLastAdapter(){
+        return mAdapters.get(mAdapters.size() - 1).second;
     }
 
     /**

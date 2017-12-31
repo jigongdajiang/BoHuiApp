@@ -12,9 +12,10 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    compile "com.android.support:multidex:1.0.1"
-    //可选，用于生成application类
-    provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
+    compile "com.android.support:multidex:1.0.2"
+    //thinker可选，用于生成application类
+    compileOnly("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
+    annotationProcessor("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
     //内存泄露
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
@@ -56,6 +57,15 @@ android {
         versionCode Integer.parseInt(VERSION)
         versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        //3.0.0以上Tinker的引入需要includeCompileClasspath
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
 
     aaptOptions.cruncherEnabled = false
@@ -82,20 +92,20 @@ android {
             v1SigningEnabled true
             v2SigningEnabled true
             try {
-                storeFile file("jmjf.jks")
-                storePassword "jmjf123456"
-                keyAlias "jimeijinfu"
-                keyPassword "jmjf123456"
+                storeFile file("bhys.jks")
+                storePassword "bhys123456"
+                keyAlias "bhys"
+                keyPassword "bhys123456"
             } catch (ex) {
                 throw new InvalidUserDataException(ex.toString())
             }
         }
         debug {
             try {
-                storeFile file("jmjf.jks")
-                storePassword "jmjf123456"
-                keyAlias "jimeijinfu"
-                keyPassword "jmjf123456"
+                storeFile file("bhys.jks")
+                storePassword "bhys123456"
+                keyAlias "bhys"
+                keyPassword "bhys123456"
             } catch (ex) {
                 throw new InvalidUserDataException(ex.toString())
             }
@@ -108,6 +118,7 @@ android {
         release {
             // release模式下，不显示log
             buildConfigField("boolean", "LOG_DEBUG", "false")
+            debuggable false
             signingConfig signingConfigs.release
             // 开启混淆
             minifyEnabled true
@@ -122,7 +133,6 @@ android {
             // debug模式下，显示log
             buildConfigField("boolean", "LOG_DEBUG", "true")
             debuggable true
-            minifyEnabled false
             signingConfig signingConfigs.debug
             minifyEnabled false
             zipAlignEnabled false
@@ -136,12 +146,13 @@ android {
     }
 
     //渠道打包配置
+    /*
     productFlavors {
         guanfang {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "1"]
         }
 
-        /*xiaomi {
+        xiaomi {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "2"]
         }
 
@@ -219,8 +230,9 @@ android {
 
         mumayi {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "21"]
-        }*/
+        }
     }
+    */
 }
 
 /** 从这以后的配置主要是为了定义生成补丁包用的  **/
@@ -626,7 +638,7 @@ if (buildWithTinker()) {
                         def newFileNamePrefix = hasFlavors ? "${fileNamePrefix}" : "${fileNamePrefix}-${date}"
 
                         def destPath = hasFlavors ? file("${bakPath}/${project.name}-${date}/${variant.flavorName}") : bakPath
-                        from variant.outputs.outputFile
+                        from variant.outputs.first().outputFile
                         into destPath
                         rename { String fileName ->
                             fileName.replace("${fileNamePrefix}.apk", "${newFileNamePrefix}.apk")

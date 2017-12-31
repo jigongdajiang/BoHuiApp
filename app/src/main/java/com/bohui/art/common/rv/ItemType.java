@@ -8,7 +8,7 @@ package com.bohui.art.common.rv;
 
 
 public class ItemType {
-    public static int TYPE_START = 0x10;
+    public static int TYPE_START = 1000;
     //分类左边布局
     public static int CLASSIFY_ITEM_TYPE = TYPE_START++;
     //分类右边项布局

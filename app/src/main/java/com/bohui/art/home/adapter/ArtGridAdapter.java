@@ -33,7 +33,7 @@ public class ArtGridAdapter extends BaseAdapter<ArtBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtBean itemData, int position) {
-
+        holder.setText(R.id.tv_des,itemData.getTitle());
     }
 
     @Override

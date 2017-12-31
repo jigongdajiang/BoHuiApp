@@ -24,14 +24,21 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.FrameLayout;
+import android.widget.GridView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.WrapperListAdapter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
  * A {@link GridView} that supports adding header rows in a
- * very similar way to {@link android.widget.ListView}.
+ * very similar way to {@link ListView}.
  * See {@link GridViewWithHeaderAndFooter#addHeaderView(View, Object, boolean)}
  * See {@link GridViewWithHeaderAndFooter#addFooterView(View, Object, boolean)}
  */
@@ -154,7 +161,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
 
         if (lyp != null) {
             v.setLayoutParams(new FrameLayout.LayoutParams(lyp.width, lyp.height));
-            fl.setLayoutParams(new AbsListView.LayoutParams(lyp.width, lyp.height));
+            fl.setLayoutParams(new LayoutParams(lyp.width, lyp.height));
         }
         fl.addView(v);
         info.view = v;
@@ -187,7 +194,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
 
         if (lyp != null) {
             v.setLayoutParams(new FrameLayout.LayoutParams(lyp.width, lyp.height));
-            fl.setLayoutParams(new AbsListView.LayoutParams(lyp.width, lyp.height));
+            fl.setLayoutParams(new LayoutParams(lyp.width, lyp.height));
         }
         if (null != v.getParent()) {
             ((ViewGroup)v.getParent()).removeView(v);
@@ -321,7 +328,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         int value = 0;
 
         try {
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+            int currentapiVersion = Build.VERSION.SDK_INT;
             if (currentapiVersion < Build.VERSION_CODES.JELLY_BEAN) {
                 Field field = GridView.class.getDeclaredField("mVerticalSpacing");
                 field.setAccessible(true);
@@ -341,7 +348,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         int value = 0;
 
         try {
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+            int currentapiVersion = Build.VERSION.SDK_INT;
             if (currentapiVersion < Build.VERSION_CODES.JELLY_BEAN) {
                 Field field = GridView.class.getDeclaredField("mHorizontalSpacing");
                 field.setAccessible(true);
@@ -369,9 +376,9 @@ public class GridViewWithHeaderAndFooter extends GridView {
         }
         int mColumnWidth = getColumnWidthCompatible();
         View view = getAdapter().getView(numColumns * mHeaderViewInfos.size(), mViewForMeasureRowHeight, this);
-        AbsListView.LayoutParams p = (AbsListView.LayoutParams) view.getLayoutParams();
+        LayoutParams p = (LayoutParams) view.getLayoutParams();
         if (p == null) {
-            p = new AbsListView.LayoutParams(-1, -2, 0);
+            p = new LayoutParams(-1, -2, 0);
             view.setLayoutParams(p);
         }
         int childHeightSpec = getChildMeasureSpec(
@@ -865,7 +872,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         return mItemClickHandler;
     }
 
-    private class ItemClickHandler implements android.widget.AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+    private class ItemClickHandler implements OnItemClickListener, OnItemLongClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

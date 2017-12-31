@@ -2,23 +2,34 @@ package com.chanven.lib.cptr.loadmore;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.chanven.lib.cptr.recyclerview.RecyclerAdapterWithHF;
+import com.alibaba.android.vlayout.DelegateAdapter;
+import com.widget.grecycleview.adapter.wrapper.BaseWrapper;
 
 public class RecyclerViewHandler implements LoadMoreHandler {
 
-    private RecyclerAdapterWithHF mRecyclerAdapter;
+    private static BaseWrapper mRecyclerAdapter;
     private View mFooter;
 
     @Override
     public boolean handleSetAdapter(View contentView, ILoadMoreViewFactory.ILoadMoreView loadMoreView, OnClickListener onClickLoadMoreListener) {
         final RecyclerView recyclerView = (RecyclerView) contentView;
         boolean hasInit = false;
-        mRecyclerAdapter = (RecyclerAdapterWithHF) recyclerView.getAdapter();
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        if(adapter instanceof DelegateAdapter){
+            RecyclerView.Adapter dLastAdapter = ((DelegateAdapter)adapter).getLastAdapter();
+            if(dLastAdapter instanceof BaseWrapper){
+                mRecyclerAdapter = (BaseWrapper) dLastAdapter;
+            }
+        }else{
+            mRecyclerAdapter = (BaseWrapper) recyclerView.getAdapter();
+        }
         if (loadMoreView != null) {
             final Context context = recyclerView.getContext().getApplicationContext();
             loadMoreView.init(new ILoadMoreViewFactory.FootViewAdder() {
@@ -43,14 +54,14 @@ public class RecyclerViewHandler implements LoadMoreHandler {
 
     @Override
     public void addFooter() {
-        if (mRecyclerAdapter.getFootSize() <= 0 && null != mFooter) {
+        if (null != mFooter && !mRecyclerAdapter.isContainFooter(mFooter)) {
             mRecyclerAdapter.addFooter(mFooter);
         }
     }
 
     @Override
     public void removeFooter() {
-        if (mRecyclerAdapter.getFootSize() > 0 && null != mFooter) {
+        if (null != mFooter && mRecyclerAdapter.isContainFooter(mFooter)) {
             mRecyclerAdapter.removeFooter(mFooter);
         }
     }
@@ -86,18 +97,11 @@ public class RecyclerViewHandler implements LoadMoreHandler {
         }
 
         private boolean isCanScollVertically(RecyclerView recyclerView) {
-            if (android.os.Build.VERSION.SDK_INT < 14) {
-                return ViewCompat.canScrollVertically(recyclerView, 1) || recyclerView.getScrollY() < recyclerView.getHeight();
-            } else {
-                return ViewCompat.canScrollVertically(recyclerView, 1);
-            }
+            return recyclerView.canScrollVertically(1);
         }
-
         @Override
         public void onScrolled(android.support.v7.widget.RecyclerView recyclerView, int dx, int dy) {
 
         }
-
     }
-
 }

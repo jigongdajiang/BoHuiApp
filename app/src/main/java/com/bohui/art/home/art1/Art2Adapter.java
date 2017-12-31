@@ -32,6 +32,6 @@ public class Art2Adapter extends BaseAdapter<ArtBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtBean itemData, int position) {
-
+        holder.setText(R.id.tv_art_des,itemData.getTitle());
     }
 }
