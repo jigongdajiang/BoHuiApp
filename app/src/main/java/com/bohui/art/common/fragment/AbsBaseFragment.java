@@ -43,4 +43,26 @@ public abstract class AbsBaseFragment<P extends BasePresenter, M extends BaseMod
     public void initPresenter() {
 
     }
+
+    public void showMsgDialg(String title, String message) {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            ((AbsBaseHelperUtil)mHelperUtil).showMsgDialg(title,message);
+        }
+    }
+
+    public void showMsgDialg(String message) {
+        showMsgDialg("提示", message);
+    }
+
+    public void showLoadingDialog() {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            ((AbsBaseHelperUtil)mHelperUtil).showLoadingDialog();
+        }
+    }
+
+    public void missLoadingDialog() {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            ((AbsBaseHelperUtil)mHelperUtil).missLoadingDialog();
+        }
+    }
 }

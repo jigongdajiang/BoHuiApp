@@ -1,6 +1,7 @@
 package com.bohui.art.common.activity;
 
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.view.View;
 
 import com.bohui.art.R;
@@ -82,5 +83,29 @@ public abstract class AbsBaseActivity<P extends BasePresenter, M extends BaseMod
         defaultStatusBar(topView,1);
     }
 
+
+
+
+    public void showMsgDialg(String title, String message) {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            ((AbsBaseHelperUtil)mHelperUtil).showMsgDialg(title,message);
+        }
+    }
+
+    public void showMsgDialg(String message) {
+        showMsgDialg("提示", message);
+    }
+
+    public void showLoadingDialog() {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            ((AbsBaseHelperUtil)mHelperUtil).showLoadingDialog();
+        }
+    }
+
+    public void missLoadingDialog() {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            ((AbsBaseHelperUtil)mHelperUtil).missLoadingDialog();
+        }
+    }
 
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.KeyEvent;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.start.SplashResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppParams;
 import com.bohui.art.common.app.SharePreferenceKey;
@@ -30,7 +31,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class SplashActivity extends AbsNetBaseActivity {
+public class SplashActivity extends AbsNetBaseActivity<SplashPresenter,SplashModel> implements SplashContact.View {
     @Override
     protected void doBeforeSetContentView() {
         ///确保程序是已启动过的，且没有完全退出
@@ -71,6 +72,21 @@ public class SplashActivity extends AbsNetBaseActivity {
         }));
     }
 
+    @Override
+    protected SplashPresenter createPresenter() {
+        return new SplashPresenter();
+    }
+
+    @Override
+    protected SplashModel createModel() {
+        return new SplashModel();
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
     /**
      * 按返回键无反应
      */
@@ -80,5 +96,10 @@ public class SplashActivity extends AbsNetBaseActivity {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public void splashSuccess(SplashResult result) {
+        //获取广告页图片，更新广告页图片
     }
 }

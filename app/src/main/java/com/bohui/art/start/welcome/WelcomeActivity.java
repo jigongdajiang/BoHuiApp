@@ -10,10 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.start.WelcomeResult;
 import com.bohui.art.common.activity.AbsBaseActivity;
+import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.start.MainActivity;
 import com.framework.core.glideext.GlideUtil;
+import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.StatusBarCompatUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -30,7 +33,10 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class WelcomeActivity extends AbsBaseActivity implements ViewPager.OnPageChangeListener,View.OnClickListener{
+public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,WelcomeModel> implements
+        ViewPager.OnPageChangeListener,
+        View.OnClickListener,
+        WelcomeContact.View{
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     //下边四个点
@@ -59,6 +65,21 @@ public class WelcomeActivity extends AbsBaseActivity implements ViewPager.OnPage
         createPagerViews();
         initViewPager();
         initDots();
+    }
+
+    @Override
+    protected WelcomePresenter createPresenter() {
+        return new WelcomePresenter();
+    }
+
+    @Override
+    protected WelcomeModel createModel() {
+        return new WelcomeModel();
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
     }
 
     private void initDots() {
@@ -170,5 +191,11 @@ public class WelcomeActivity extends AbsBaseActivity implements ViewPager.OnPage
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+    @Override
+    public void welComeSuccess(WelcomeResult result) {
+        //获取广告页数据
+        //更新广告Adapter
     }
 }

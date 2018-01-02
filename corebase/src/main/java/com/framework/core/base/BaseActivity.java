@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.framework.core.rxcore.RxManager;
@@ -200,5 +201,43 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
             }
         }
         return false;
+    }
+
+    public void startAty(Class atyClass,Bundle bundle,boolean isFinish){
+        if(mHelperUtil != null && mHelperUtil instanceof BaseHelperUtil){
+            ((BaseHelperUtil)mHelperUtil).startAty(atyClass,bundle,isFinish);
+        }
+    }
+    public void startAty(Class atyClass,Bundle bundle){
+        startAty(atyClass,bundle,false);
+    }
+    public void startAty(Class atyClass){
+        startAty(atyClass,new Bundle(),false);
+    }
+    public void startAty(Class atyClass,boolean isFinish){
+        startAty(atyClass,new Bundle(),isFinish);
+    }
+    public void startAtyForResult(Class<?> cls, Bundle bundle, int requestCode){
+        if(mHelperUtil != null && mHelperUtil instanceof BaseHelperUtil){
+            ((BaseHelperUtil)mHelperUtil).startAtyForResult(cls,bundle,requestCode);
+        }
+    }
+    public void startAtyForResult(Class<?> cls, int requestCode){
+        startAtyForResult(cls,new Bundle(),requestCode);
+    }
+
+    /**
+     * 吐司功能
+     */
+    public void toast(String content,int duration){
+        if(mHelperUtil != null && mHelperUtil instanceof BaseHelperUtil){
+            ((BaseHelperUtil)mHelperUtil).toast(content,duration);
+        }
+    }
+    public void toastLong(String content){
+        toast(content, Toast.LENGTH_LONG);
+    }
+    public void toastShort(String content){
+        toast(content, Toast.LENGTH_SHORT);
     }
 }
