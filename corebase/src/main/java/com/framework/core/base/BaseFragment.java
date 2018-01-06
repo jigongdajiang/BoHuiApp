@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.framework.core.log.PrintLog;
 import com.framework.core.rxcore.RxManager;
 
 import butterknife.ButterKnife;
@@ -55,25 +56,37 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
     protected AbsHelperUtil mHelperUtil;
     private Unbinder mUnbinder;
 
+    /**
+     * rootView是否初始化标志，防止回调函数在rootView为空的时候触发
+     */
+    protected boolean hasCreateView;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        showLife("onAttach");
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showLife("onCreate");
         mContext = getContext();
         mHelperUtil = createHelperUtil();
         mRxManager=new RxManager();
         doBeforeOnCreateView();
     }
-    /**
-     * 钩子方法
-     * 创建当前层的通用帮助类，主要是将fragment和activity的相同代码统一管理
-     * @return
-     */
-    protected AbsHelperUtil createHelperUtil() {
-        return new BaseHelperUtil(this);
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        showLife("setUserVisibleHint  "+isVisibleToUser);
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        showLife("onCreateView");
         if (rootView == null){
             rootView = inflater.inflate(getLayoutId(), container, false);
         }else {
@@ -89,6 +102,7 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        showLife("onViewCreated");
         mPresenter = createPresenter();
         mModel = createModel();
         if(mPresenter!=null){
@@ -97,7 +111,74 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
         initView();
         initModel();
         initPresenter();
+        hasCreateView = true;
         extraInit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showLife("onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showLife("onResume");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        showLife("onHiddenChanged  "+hidden);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        showLife("onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        showLife("onStop");
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        showLife("onDestroyView");
+        mHelperUtil = null;
+        if (mPresenter != null)
+            mPresenter.onDestroy();
+        if(mRxManager!=null) {
+            mRxManager.clear();
+        }
+        if(mUnbinder != null){
+            mUnbinder.unbind();
+        }
+        hasCreateView = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        showLife("onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        showLife("onDetach");
+    }
+
+    /**
+     * 钩子方法
+     * 创建当前层的通用帮助类，主要是将fragment和activity的相同代码统一管理
+     * @return
+     */
+    protected AbsHelperUtil createHelperUtil() {
+        return new BaseHelperUtil(this);
     }
     /**
      * 钩子方法
@@ -150,22 +231,13 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
      * 钩子方法
      * 扩展初始化
      * 提供其它初始化设置的地方，除了必须的初始化之外的操作重写此方法实现
+     * 例如懒加载的调用
      */
     protected void extraInit(){
 
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mHelperUtil = null;
-        if (mPresenter != null)
-            mPresenter.onDestroy();
-        if(mRxManager!=null) {
-            mRxManager.clear();
-        }
-        if(mUnbinder != null){
-            mUnbinder.unbind();
-        }
+    private void showLife(String method){
+        PrintLog.i("Fragment_Life",this.getClass().getSimpleName()+"---"+method);
     }
 
     public void startAty(Class atyClass,Bundle bundle,boolean isFinish){

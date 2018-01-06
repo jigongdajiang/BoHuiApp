@@ -40,7 +40,8 @@ import java.io.Serializable;
 
 public class BasePowfullDialog extends DialogFragment implements DialogInterface.OnKeyListener {
     public static final String DIALOG_PARAMS_MEMORY_KEY = "dialog_params_key";
-    public static final String DIALOG_TAG = "base_dialog_tag";
+    public static final String DIALOG_TAG = "base_dialog_tag";//默认Tag
+    public static final String LOADING_TAG = "loading_dialog_tag";
     private static final String TAG = "BaseDialog";
 
 
@@ -84,28 +85,24 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         if (null != mParams.backGroundDrawable)
             getDialog().getWindow().setBackgroundDrawable(mParams.backGroundDrawable);
 
+        //与软键盘能共存
+        if(mParams.canExistWidthSoft){
+            getDialog().getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+
         //点击屏幕Dialog是否消失
         getDialog().setCanceledOnTouchOutside(mParams.canceledOnTouchOutside);
 
         //进出时动画
-        if (mParams.dialogAnim > 0)
+        if (mParams.dialogAnim > 0){
             //必须是style不能是anim 否则无效
             getDialog().getWindow().getAttributes().windowAnimations = mParams.dialogAnim;
-//        getDialog().getWindow().setWindowAnimations(mParams.dialogAnim);
-        //键盘点击事件 如果制定了要在外部处理，且 明却指定点击返回取消对话框时
-        if (null != mParams.onKeyListener) {
-            getDialog().setOnKeyListener(mParams.onKeyListener);
-        } else {
-            getDialog().setOnKeyListener(this);
         }
 
-        //消失后的回调
-        getDialog().setOnDismissListener(this);
+        getDialog().setCancelable(mParams.cancelable);
 
-        //取消的回调
-        if (null != mParams.onCancelListener) {
-            getDialog().setOnCancelListener(mParams.onCancelListener);
-        }
         //弹出方向
         if (mParams.gravity == Gravity.LEFT
                 || mParams.gravity == Gravity.TOP
@@ -128,17 +125,15 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (mParams.onDismissListener != null) {
-            mParams.onDismissListener.onDismiss(dialog);
-        }
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         showDialogLife("onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+        //键盘点击事件 如果制定了要在外部处理，且 明却指定点击返回取消对话框时
+        if (null != mParams.onKeyListener) {
+            getDialog().setOnKeyListener(mParams.onKeyListener);
+        } else {
+            getDialog().setOnKeyListener(this);
+        }
     }
 
     @Override
@@ -211,8 +206,35 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         CacheCoreFactory.getMemoryCache().save(DIALOG_PARAMS_MEMORY_KEY, mParams);
     }
 
+    /**
+     * DialogFragment本身实现了两个监听
+     * 如果需要监控onCancel或者onDismiss时从这里回调即可
+     *
+     * DialogFragment是在onActivityCreated中设置的这两个监听
+     * 如果想要自己实现也可在之后重新指定为自己的
+     *
+     * 这里我们采用第一种方式，重写方法进行回调
+     * @param dialog
+     */
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        showDialogLife("onCancel");
+        super.onCancel(dialog);
+        if(mParams.onCancelListener != null){
+            mParams.onCancelListener.onCancel(dialog);
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        showDialogLife("onDismiss");
+        super.onDismiss(dialog);
+        if (mParams.onDismissListener != null) {
+            mParams.onDismissListener.onDismiss(dialog);
+        }
+    }
     private void showDialogLife(String method) {
-        PrintLog.e(TAG, method);
+        PrintLog.i(TAG, method);
     }
 
 
@@ -279,6 +301,17 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         }
         return this;
     }
+    public BasePowfullDialog setDialogOnCancelListener(DialogInterface.OnCancelListener onCancelListener){
+        if(onCancelListener != null){
+            mParams.onCancelListener = onCancelListener;
+        }
+        return this;
+    }
+
+    public BasePowfullDialog setDialogCancelable(boolean cancelable){
+        mParams.cancelable = cancelable;
+        return this;
+    }
 
     /**
      * 获取dialog中的控件，用于在外部进行操作，建议在dialog显示后进行
@@ -298,11 +331,11 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             mParams.fragmentManager.executePendingTransactions();
             FragmentTransaction ft = mParams.fragmentManager.beginTransaction();
             if (mParams.isCanCover) {
-                this.show(ft, DIALOG_TAG);
+                this.show(ft, mParams.dialogTag);
             } else {
-                DialogFragment fragment = (DialogFragment) mParams.fragmentManager.findFragmentByTag(DIALOG_TAG);
+                DialogFragment fragment = (DialogFragment) mParams.fragmentManager.findFragmentByTag(mParams.dialogTag);
                 if (fragment == null || !fragment.isAdded()) {
-                    this.show(ft, DIALOG_TAG);
+                    this.show(ft, mParams.dialogTag);
                 }
             }
         }
@@ -355,6 +388,9 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
 
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+        if(mParams.cancelable){
+            return false;
+        }
         return keyCode == KeyEvent.KEYCODE_BACK;
     }
 
@@ -372,6 +408,11 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         public Builder setTextViewText(int id, String text) {
             if (id > 0)
                 mP.layoutViewHolder.setTextViewText(id, text);
+            return this;
+        }
+        public Builder setImageResId(int id, int resId) {
+            if (id > 0)
+                mP.layoutViewHolder.setImageRes(id, resId);
             return this;
         }
 
@@ -450,6 +491,20 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             }
             return this;
         }
+        public Builder setCancelable(boolean cancelable){
+            mP.cancelable = cancelable;
+            return this;
+        }
+
+        public Builder setDialogTag(String tag){
+            mP.dialogTag = tag;
+            return this;
+        }
+
+        public Builder isCanExistWidthSoft(boolean canExistWidthSoft){
+            mP.canExistWidthSoft = canExistWidthSoft;
+            return this;
+        }
 
         public BasePowfullDialog builder() {
             BasePowfullDialog baseDialog = new BasePowfullDialog();
@@ -474,9 +529,16 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             public int dialogAnim = 0;
             public int gravity;//弹出的位置
             public boolean isCanCover;//是否允许覆盖，默认不允许。
+            public boolean cancelable = false;//按返回键是否可以取消，如果onKeyListener有特殊设置，可能会影响该参数的效果
             public DialogInterface.OnKeyListener onKeyListener;
             public DialogInterface.OnCancelListener onCancelListener;
             public DialogInterface.OnDismissListener onDismissListener;
+            //指定Tag，与isCanCover配合，Tag相同，isCanCover=true 能叠加显示 isCanCover=false不能叠加显示
+            //Tag不同 都能叠加显示
+            //Loading框不能影响信息框的显示
+            public String dialogTag = DIALOG_TAG;
+            //是否能与软键盘共存 默认能
+            public boolean canExistWidthSoft = true;
 
             public Params(int layoutId, Context context, FragmentManager fragmentManager) {
                 this.layoutId = layoutId;

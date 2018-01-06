@@ -26,6 +26,47 @@ public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends Base
         return new NetBaseHelperUtil(this);
     }
 
+    /**
+     * 当前Fragment是否处于可见状态标志，防止因ViewPager的缓存机制而导致回调函数的触发
+     */
+    protected boolean isFragmentVisible;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            isFragmentVisible = true;
+            onVisible();
+            return;
+        }
+        if (isFragmentVisible) {
+            isFragmentVisible = false;
+            onInvisible();
+        }
+    }
+    /**
+     * 可见时
+     */
+    protected void onVisible() {
+        lazyLoad();
+    }
+
+    public void lazyLoad(){
+        //可见，View初始化成功，添加好了
+        if(!isFragmentVisible || !hasCreateView){
+            return;
+        }
+        doLoad();
+    }
+
+    protected void doLoad(){}
+
+    /**
+     * 不可见时
+     */
+    protected void onInvisible() {
+
+    }
     @Override
     public boolean handleException(String apiName,ApiException e) {
         if(childInterceptException(apiName,e)){
