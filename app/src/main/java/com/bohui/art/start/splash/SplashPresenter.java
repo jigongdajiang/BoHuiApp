@@ -1,6 +1,7 @@
 package com.bohui.art.start.splash;
 
 import com.bohui.art.bean.start.SplashResult;
+import com.bohui.art.common.net.AppProgressSubScriber;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.http.subsciber.BaseSubscriber;
 
@@ -15,16 +16,10 @@ public class SplashPresenter extends SplashContact.Presenter {
     @Override
     public void splash() {
         mRxManage.add(mModel.splash()
-                .subscribeWith(new BaseSubscriber<SplashResult>(){
+                .subscribeWith(new AppProgressSubScriber<SplashResult>(mView,SplashContact.TAG_SPLASH,mView){
                     @Override
-                    public void onNext(SplashResult result) {
-                        super.onNext(result);
+                    protected void onResultSuccess(SplashResult result) {
                         mView.splashSuccess(result);
-                    }
-
-                    @Override
-                    public void onError(ApiException e) {
-                        mView.handleException(SplashContact.TAG_SPLASH,e);
                     }
                 }));
     }

@@ -5,12 +5,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.OnePlusNLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.bean.home.ArtBean;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;

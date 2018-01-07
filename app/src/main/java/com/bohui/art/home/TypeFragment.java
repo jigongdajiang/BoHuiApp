@@ -3,13 +3,13 @@ package com.bohui.art.home;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.TypeResult;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.adapter.Art1Plus2Adapter;
 import com.bohui.art.home.adapter.ArtGridAdapter;
@@ -18,10 +18,13 @@ import com.bohui.art.home.adapter.Type2LevelAdapter;
 import com.bohui.art.home.adapter.TypeTopAdapter;
 import com.bohui.art.home.art1.Art1Activity;
 import com.bohui.art.home.art2.Art2Activity;
-import com.bohui.art.home.bean.ArtBean;
-import com.bohui.art.home.bean.Type2LevelBean;
-import com.bohui.art.home.bean.TypeBean;
-import com.bohui.art.home.bean.TypeTopBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.Type2LevelBean;
+import com.bohui.art.bean.home.TypeBean;
+import com.bohui.art.bean.home.TypeTopBean;
+import com.bohui.art.home.mvp.HomeContact;
+import com.bohui.art.home.mvp.TypeModel;
+import com.bohui.art.home.mvp.TypePresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -37,7 +40,7 @@ import butterknife.BindView;
  */
 
 
-public class TypeFragment extends AbsNetBaseFragment {
+public class TypeFragment extends AbsNetBaseFragment<TypePresenter,TypeModel> implements HomeContact.ITypedView {
     @BindView(R.id.rv)
     RecyclerView rv;
     public static final String TYPE = "type";
@@ -135,5 +138,15 @@ public class TypeFragment extends AbsNetBaseFragment {
                }
             }
         });
+    }
+
+    @Override
+    protected void doLoad() {
+        mPresenter.getTypeInfo();
+    }
+
+    @Override
+    public void getTypeInfoSuccess(TypeResult result) {
+
     }
 }

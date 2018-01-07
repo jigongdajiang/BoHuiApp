@@ -89,10 +89,9 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
     }
 
     @Override
-    public void onNext(ResponseBody responseBody) {
+    protected void onResultSuccess(ResponseBody responseBody) {
         PrintLog.d("DownSubscriber:>>>> onNext");
         writeResponseBodyToDisk(path, name, context, responseBody);
-
     }
 
     private boolean writeResponseBodyToDisk(String path, String name, Context context, okhttp3.ResponseBody body) {

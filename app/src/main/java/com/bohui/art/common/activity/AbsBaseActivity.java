@@ -1,11 +1,10 @@
 package com.bohui.art.common.activity;
 
 import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.view.View;
 
 import com.bohui.art.R;
-import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.framework.core.base.AbsHelperUtil;
 import com.framework.core.base.BaseActivity;
 import com.framework.core.base.BaseModel;
@@ -38,16 +37,6 @@ public abstract class AbsBaseActivity<P extends BasePresenter, M extends BaseMod
     @Override
     protected AbsHelperUtil createHelperUtil() {
         return new AbsBaseHelperUtil(this);
-    }
-
-    @Override
-    protected P createPresenter() {
-        return null;
-    }
-
-    @Override
-    protected M createModel() {
-        return null;
     }
 
     @Override

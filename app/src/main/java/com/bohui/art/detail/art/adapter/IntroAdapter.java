@@ -5,8 +5,8 @@ import android.content.Context;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
-import com.bohui.art.detail.art.bean.ArtDetailBean;
+import com.bohui.art.common.widget.rv.ItemType;
+import com.bohui.art.bean.detail.ArtDetailResult;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -17,8 +17,8 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class IntroAdapter extends BaseAdapter<ArtDetailBean> {
-    public IntroAdapter(Context context,ArtDetailBean artDetailBean) {
+public class IntroAdapter extends BaseAdapter<ArtDetailResult> {
+    public IntroAdapter(Context context,ArtDetailResult artDetailBean) {
         super(context);
         addItem(artDetailBean);
     }
@@ -33,7 +33,7 @@ public class IntroAdapter extends BaseAdapter<ArtDetailBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtDetailBean itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
         holder.setText(R.id.tv_intro,itemData.getIntro());
     }
     @Override

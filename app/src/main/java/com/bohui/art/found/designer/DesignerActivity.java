@@ -10,11 +10,12 @@ import android.widget.ListView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.DesignerListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.designer.DesignerDetailActivity;
 import com.bohui.art.home.adapter.DesignerAdapter;
-import com.bohui.art.home.bean.DesignerBean;
+import com.bohui.art.bean.home.DesignerBean;
 import com.bohui.art.search.SearchActivity;
 import com.framework.core.base.BaseHelperUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -35,7 +36,7 @@ import butterknife.BindView;
  */
 
 
-public class DesignerActivity extends AbsNetBaseActivity{
+public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,DesignerListModel> implements DesignerListContact.View{
     @BindView(R.id.dropDownMenu)
     DropDownMenu mDropDownMenu;
 
@@ -123,5 +124,20 @@ public class DesignerActivity extends AbsNetBaseActivity{
                 DesignerDetailActivity.comeIn(DesignerActivity.this,new Bundle());
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getDesignerList();
+    }
+
+    @Override
+    public void getDesignerListSuccess(DesignerListResult result) {
+
     }
 }

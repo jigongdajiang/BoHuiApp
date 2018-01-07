@@ -1,6 +1,7 @@
 package com.bohui.art.start.welcome;
 
 import com.bohui.art.bean.start.WelcomeResult;
+import com.bohui.art.common.net.AppProgressSubScriber;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.http.subsciber.BaseSubscriber;
 
@@ -15,16 +16,10 @@ public class WelcomePresenter extends WelcomeContact.Presenter {
     @Override
     public void welCome() {
         mRxManage.add(mModel.welCome()
-        .subscribeWith(new BaseSubscriber<WelcomeResult>(){
+        .subscribeWith(new AppProgressSubScriber<WelcomeResult>(mView,WelcomeContact.TAG_WELCOME,mView){
             @Override
-            public void onNext(WelcomeResult welcomeResult) {
-                super.onNext(welcomeResult);
-                mView.welComeSuccess(welcomeResult);
-            }
-
-            @Override
-            public void onError(ApiException e) {
-                mView.handleException(WelcomeContact.TAG_WELCOME,e);
+            protected void onResultSuccess(WelcomeResult result) {
+                mView.welComeSuccess(result);
             }
         }));
     }

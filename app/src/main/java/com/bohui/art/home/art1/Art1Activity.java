@@ -6,9 +6,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.classify.ClassifyLevel2Result;
+import com.bohui.art.classify.mvp.ClassifyContact;
+import com.bohui.art.classify.mvp.ClassifyModel;
+import com.bohui.art.classify.mvp.ClassifyPresenter;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
-import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.bean.home.TypeBean;
 import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.framework.core.base.BaseHelperUtil;
@@ -32,7 +36,7 @@ import butterknife.BindView;
  */
 
 
-public class Art1Activity extends AbsNetBaseActivity {
+public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyModel> implements ClassifyContact.View{
     @BindView(R.id.tab)
     SlidingTabLayout tab;
     @BindView(R.id.view_pager)
@@ -80,5 +84,20 @@ public class Art1Activity extends AbsNetBaseActivity {
             }
             tab.setViewPager(view_pager,titles);
         }
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getClassifyLevel2("");
+    }
+
+    @Override
+    public void getClassifyLevel2Success(ClassifyLevel2Result result) {
+        //创建Tab和Fragment
     }
 }

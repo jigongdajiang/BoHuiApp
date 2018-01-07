@@ -15,8 +15,7 @@ import android.webkit.WebViewClient;
 
 
 import com.bohui.art.R;
-import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
-import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.framework.core.log.PrintLog;
 
 import java.util.List;

@@ -11,20 +11,19 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
-import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.detail.art.adapter.DetailAdapter;
 import com.bohui.art.detail.art.adapter.DetailGuideAdapter;
 import com.bohui.art.detail.art.adapter.IntroAdapter;
 import com.bohui.art.detail.art.adapter.ProductAdapter;
-import com.bohui.art.detail.art.bean.ArtDetailBean;
+import com.bohui.art.bean.detail.ArtDetailResult;
+import com.bohui.art.detail.art.mvp.ArtDetailContact;
+import com.bohui.art.detail.art.mvp.ArtDetailModel;
+import com.bohui.art.detail.art.mvp.ArtDetailPesenter;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
-import com.bohui.art.detail.artman.adapter.ShowreelAdapter;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.ArtGridAdapter;
-import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.home.art2.Art2Activity;
-import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.bean.home.ArtBean;
 import com.bohui.art.start.MainActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -46,7 +45,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class ArtDetailActivity extends AbsNetBaseActivity {
+public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtDetailModel> implements ArtDetailContact.View {
     @BindView(R.id.segment_tab)
     SegmentTabLayout segment_tab;
     @BindView(R.id.iv_back)
@@ -68,7 +67,7 @@ public class ArtDetailActivity extends AbsNetBaseActivity {
     public void initView() {
         segment_tab.setTabData(mTabTitles);
 
-        ArtDetailBean artDetailBean = new ArtDetailBean();
+        ArtDetailResult artDetailBean = new ArtDetailResult();
         List<String> imgs = new ArrayList<>();
         for(int i=0;i<5;i++){
             imgs.add(RecommendFragment.imgs[i%RecommendFragment.imgs.length]);
@@ -199,5 +198,20 @@ public class ArtDetailActivity extends AbsNetBaseActivity {
         Intent intent = new Intent(activity,ArtDetailActivity.class);
         intent.putExtras(bundle);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getArtDetail("");
+    }
+
+    @Override
+    public void getArtDetailSuccess(ArtDetailResult result) {
+
     }
 }

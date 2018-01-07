@@ -1,18 +1,16 @@
 package com.bohui.art.start.reg;
 
-import android.view.View;
 import android.widget.TextView;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.start.RegResult;
 import com.bohui.art.bean.start.VerCodeResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.start.MainActivity;
 import com.bohui.art.start.login.LoginActivity;
-import com.squareup.haha.perflib.Main;
 
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
@@ -52,16 +50,6 @@ public class RegActivity extends AbsNetBaseActivity<RegPresenter,RegModel> imple
                 ((NetBaseHelperUtil)mHelperUtil).startAty(LoginActivity.class);
             }
         });
-    }
-
-    @Override
-    protected RegPresenter createPresenter() {
-        return new RegPresenter();
-    }
-
-    @Override
-    protected RegModel createModel() {
-        return new RegModel();
     }
 
     @Override

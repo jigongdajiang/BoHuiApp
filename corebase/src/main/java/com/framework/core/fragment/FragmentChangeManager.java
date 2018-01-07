@@ -86,9 +86,25 @@ public class FragmentChangeManager {
             mFragmentManager.beginTransaction().add(mContainerViewId,fragment,tag).hide(fragment).commitAllowingStateLoss();
         }
     }
+    /**
+     * 添加新Fragment，但是不显示
+     * @param fragment
+     * @param tag
+     */
+    public void addFragment(Fragment fragment,String tag,int position){
+        if(!fragment.isAdded()){
+            mFragments.add(position,fragment);
+            mFragmentTags.add(position,tag);
+            mFragmentManager.beginTransaction().add(mContainerViewId,fragment,tag).hide(fragment).commitAllowingStateLoss();
+        }
+    }
+    public void addFragment(Fragment fragment,int position){
+        String tag = fragment.getClass().getSimpleName()+mFragments.size();
+        addFragment(fragment,tag,position);
+    }
     public void addFragment(Fragment fragment){
         String tag = fragment.getClass().getSimpleName()+mFragments.size();
-        addFragment(fragment,tag);
+        addFragment(fragment,tag,mFragments.size());
     }
     public void removeFragment(int position){
         if(position < 0 || position>=mFragments.size()){

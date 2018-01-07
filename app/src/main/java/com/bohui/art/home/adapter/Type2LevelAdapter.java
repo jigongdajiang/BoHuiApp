@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.home.bean.Type2LevelBean;
+import com.bohui.art.bean.home.Type2LevelBean;
 import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;

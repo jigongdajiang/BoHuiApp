@@ -6,7 +6,8 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
-import com.bohui.art.common.fragment.AbsNetBaseFragment;
+import com.bohui.art.bean.mine.UserBean;
+import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.found.GuideItemAdapter;
 import com.bohui.art.found.GuideItemBean;
 import com.bohui.art.home.RecommendFragment;
@@ -16,7 +17,7 @@ import com.bohui.art.mine.collect.MyCollectActivity;
 import com.bohui.art.mine.mvp.MineContact;
 import com.bohui.art.mine.mvp.MineModel;
 import com.bohui.art.mine.mvp.MinePresenter;
-import com.bohui.art.mine.mvp.bean.MineInfoResult;
+import com.bohui.art.bean.mine.MineInfoResult;
 import com.bohui.art.mine.order.MyOrderActivity;
 import com.bohui.art.mine.setting.SettingActivity;
 import com.framework.core.base.BaseHelperUtil;
@@ -36,7 +37,7 @@ import butterknife.BindView;
  */
 
 
-public class MineFragment extends AbsNetBaseFragment<MinePresenter,MineModel>implements MineContact.View{
+public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> implements MineContact.View{
     @BindView(R.id.rv_mine)
     RecyclerView rv_mine;
 
@@ -107,15 +108,6 @@ public class MineFragment extends AbsNetBaseFragment<MinePresenter,MineModel>imp
             }
         });
     }
-    @Override
-    protected MinePresenter createPresenter() {
-        return new MinePresenter();
-    }
-
-    @Override
-    protected MineModel createModel() {
-        return new MineModel();
-    }
 
     @Override
     public void initPresenter() {
@@ -123,28 +115,14 @@ public class MineFragment extends AbsNetBaseFragment<MinePresenter,MineModel>imp
     }
 
     @Override
-    protected void extraInit() {
+    protected void come() {
         mPresenter.getUserInfo("1");
+
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (!this.isHidden()) {
-            refresh();
-        }
-    }
+    protected void leave() {
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            refresh();
-        }
-    }
-
-    private void refresh() {
-        mPresenter.getUserInfo("1");
     }
 
     @Override

@@ -3,8 +3,8 @@ package com.bohui.art.detail.designer.adapter;
 import android.content.Context;
 
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
-import com.bohui.art.detail.designer.bean.CaseBean;
+import com.bohui.art.common.widget.rv.ItemType;
+import com.bohui.art.bean.detail.CaseBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 

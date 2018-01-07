@@ -8,15 +8,18 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.activity.CommonStaticActivity;
-import com.bohui.art.common.bean.BannerBean;
-import com.bohui.art.common.bean.BannerBeans;
+import com.bohui.art.bean.common.BannerBean;
+import com.bohui.art.bean.common.BannerResult;
+import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.found.artman.ArtManActivity;
 import com.bohui.art.found.designer.DesignerActivity;
+import com.bohui.art.found.mvp.FoundContact;
+import com.bohui.art.found.mvp.FoundModel;
+import com.bohui.art.found.mvp.FoundPresenter;
 import com.bohui.art.found.order.OrderActivity;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
-import com.framework.core.base.AbsHelperUtil;
 import com.framework.core.base.BaseHelperUtil;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -34,7 +37,7 @@ import butterknife.BindView;
  */
 
 
-public class FoundFragment extends AbsNetBaseFragment {
+public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> implements FoundContact.View {
     @BindView(R.id.rv_found)
     RecyclerView rv_found;
 
@@ -57,7 +60,7 @@ public class FoundFragment extends AbsNetBaseFragment {
         ));
         bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[2]
         ));
-        BannerBeans bannerBeans = new BannerBeans();
+        BannerResult bannerBeans = new BannerResult();
         bannerBeans.setBannerBeans(bannerDatas);
         bannerAdapter.addItem(bannerBeans);
         delegateAdapter.addAdapter(bannerAdapter);
@@ -119,4 +122,25 @@ public class FoundFragment extends AbsNetBaseFragment {
             }
         });
     }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void come() {
+        mPresenter.getFoundBanner();
+    }
+
+    @Override
+    protected void leave() {
+
+    }
+
+    @Override
+    public void getFoundBannerSuccess(BannerResult result) {
+
+    }
+
 }

@@ -8,10 +8,10 @@ import android.widget.TextView;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.bean.BannerBean;
-import com.bohui.art.common.rv.ItemType;
+import com.bohui.art.bean.common.BannerBean;
+import com.bohui.art.common.widget.rv.ItemType;
 import com.bohui.art.common.util.BannerHelper;
-import com.bohui.art.detail.art.bean.ArtDetailBean;
+import com.bohui.art.bean.detail.ArtDetailResult;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 import com.widget.smallelement.banner.ConvenientBanner;
@@ -26,8 +26,8 @@ import java.util.List;
  */
 
 
-public class ProductAdapter extends BaseAdapter<ArtDetailBean> {
-    public ProductAdapter(Context context,ArtDetailBean bean) {
+public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
+    public ProductAdapter(Context context,ArtDetailResult bean) {
         super(context);
         addItem(bean);
     }
@@ -43,7 +43,7 @@ public class ProductAdapter extends BaseAdapter<ArtDetailBean> {
 
     private int currentNumber = 1;
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtDetailBean itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
         ConvenientBanner<String> cb_banner = holder.getView(R.id.banner);
         List<BannerBean>  bannerBeans = new ArrayList<>();
         for(String imgUrl : itemData.getImgs()){

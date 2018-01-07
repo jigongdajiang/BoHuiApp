@@ -160,4 +160,26 @@ public class TUtil {
         Type genType = cls.getGenericSuperclass();
         return getGenericType((ParameterizedType) genType, 0);
     }
+
+    /**
+     * 反射创建类中的第几个泛型的实例
+     * @param o
+     * @param i
+     * @param <T>
+     * @return
+     */
+    public static <T> T getT(Object o, int i) {
+        try {
+            return ((Class<T>) ((ParameterizedType) (o.getClass()
+                    .getGenericSuperclass())).getActualTypeArguments()[i])
+                    .newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

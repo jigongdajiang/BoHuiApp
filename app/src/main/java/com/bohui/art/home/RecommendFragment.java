@@ -8,10 +8,11 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
-import com.bohui.art.common.bean.BannerBean;
-import com.bohui.art.common.bean.BannerBeans;
+import com.bohui.art.bean.common.BannerBean;
+import com.bohui.art.bean.common.BannerResult;
+import com.bohui.art.bean.home.RecommendResult;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.BannerHelper;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.adapter.ArtGridAdapter;
@@ -21,9 +22,12 @@ import com.bohui.art.home.adapter.OrgGridAdapter;
 import com.bohui.art.home.adapter.Art1Plus2Adapter;
 import com.bohui.art.home.adapter.TypeTopAdapter;
 import com.bohui.art.home.art1.Art1Activity;
-import com.bohui.art.home.bean.ArtBean;
-import com.bohui.art.home.bean.DesignerBean;
-import com.bohui.art.home.bean.TypeTopBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.DesignerBean;
+import com.bohui.art.bean.home.TypeTopBean;
+import com.bohui.art.home.mvp.HomeContact;
+import com.bohui.art.home.mvp.RecommendModel;
+import com.bohui.art.home.mvp.RecommendPresenter;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
@@ -44,7 +48,7 @@ import butterknife.BindView;
  */
 
 
-public class RecommendFragment extends AbsNetBaseFragment{
+public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,RecommendModel> implements HomeContact.IRecommendView{
     @BindView(R.id.ptr)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -77,7 +81,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
         ));
         bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",imgs[2]
         ));
-        BannerBeans bannerBeans = new BannerBeans();
+        BannerResult bannerBeans = new BannerResult();
         bannerBeans.setBannerBeans(bannerDatas);
         bannerAdapter.addItem(bannerBeans);
         bannerAdapter.setDelegateAdapter(delegateAdapter);
@@ -94,7 +98,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
         ));
         advBannerDatas.add(new BannerBean("banner2","http://baidu.com",imgs[1]
         ));
-        BannerBeans advBannerBeans = new BannerBeans();
+        BannerResult advBannerBeans = new BannerResult();
         advBannerBeans.setBannerBeans(advBannerDatas);
         advAdapter.addItem(advBannerBeans);
         delegateAdapter.addAdapter(advAdapter);
@@ -206,7 +210,7 @@ public class RecommendFragment extends AbsNetBaseFragment{
                         ));
                         bannerDatas2.add(new BannerBean("banner1","http://www.baidu.com",imgs[new Random().nextInt(100) % imgs.length]
                         ));
-                        BannerBeans bannerBeans2 = new BannerBeans();
+                        BannerResult bannerBeans2 = new BannerResult();
                         bannerBeans2.setBannerBeans(bannerDatas2);
                         bannerAdapter.replaceItem(0,bannerBeans2);
 
@@ -223,6 +227,16 @@ public class RecommendFragment extends AbsNetBaseFragment{
     }
 
     @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void doLoad() {
+        mPresenter.getRecommend();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (null != bannerHelper) {
@@ -236,5 +250,10 @@ public class RecommendFragment extends AbsNetBaseFragment{
         if (null != bannerHelper) {
             bannerHelper.onPause();
         }
+    }
+
+    @Override
+    public void getRecommendSuccess(RecommendResult result) {
+        //刷新数据
     }
 }

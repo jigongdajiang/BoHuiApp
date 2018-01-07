@@ -1,6 +1,6 @@
 package com.bohui.art.mine.mvp;
 
-import com.bohui.art.mine.mvp.bean.MineInfoResult;
+import com.bohui.art.bean.mine.MineInfoResult;
 import com.framework.core.base.BaseModel;
 import com.framework.core.base.BasePresenter;
 import com.framework.core.base.BaseView;

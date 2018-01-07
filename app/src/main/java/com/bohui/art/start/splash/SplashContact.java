@@ -1,9 +1,9 @@
 package com.bohui.art.start.splash;
 
 import com.bohui.art.bean.start.SplashResult;
+import com.bohui.art.common.net.mvp.BaseLoadingView;
 import com.framework.core.base.BaseModel;
 import com.framework.core.base.BasePresenter;
-import com.framework.core.base.BaseView;
 
 import io.reactivex.Observable;
 
@@ -21,7 +21,7 @@ public interface SplashContact {
     interface Model extends BaseModel{
         Observable<SplashResult> splash();
     }
-    interface View extends BaseView{
+    interface View extends BaseLoadingView{
         void splashSuccess(SplashResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{

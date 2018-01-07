@@ -14,8 +14,9 @@ import android.widget.RelativeLayout;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
-import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.bean.found.ArtManListResult;
+import com.bohui.art.common.widget.rv.ItemType;
+import com.bohui.art.bean.home.ArtBean;
 import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -29,7 +30,7 @@ import java.util.List;
  */
 
 
-public class ArtManListAdapter extends BaseAdapter<ArtManListItemBean> {
+public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
     public ArtManListAdapter(Context context) {
         super(context);
     }
@@ -45,7 +46,7 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListItemBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtManListItemBean itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, ArtManListResult itemData, int position) {
         ImageView ivAvr = holder.getView(R.id.iv_art_man_avr);
         GlideUtil.displayCircle(mContext, ivAvr,itemData.getArtManAvr());
         GridView gridView = holder.getView(R.id.gv_art_man_arts);

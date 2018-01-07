@@ -1,12 +1,14 @@
 package com.bohui.art.common.activity;
 
 
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.net.mvp.BaseLoadingView;
 import com.framework.core.base.AbsHelperUtil;
 import com.framework.core.base.BaseModel;
 import com.framework.core.base.BasePresenter;
-import com.framework.core.base.BaseView;
 import com.framework.core.http.exception.ApiException;
+import com.widget.smallelement.dialog.BasePowfullDialog;
 
 /**
  * @author : gaojigong
@@ -20,7 +22,7 @@ import com.framework.core.http.exception.ApiException;
  */
 
 
-public abstract class AbsNetBaseActivity<P extends BasePresenter, M extends BaseModel> extends AbsBaseActivity<P,M> implements BaseView {
+public abstract class AbsNetBaseActivity<P extends BasePresenter, M extends BaseModel> extends AbsBaseActivity<P,M> implements BaseLoadingView {
     @Override
     protected AbsHelperUtil createHelperUtil() {
         return new NetBaseHelperUtil(this);
@@ -57,4 +59,11 @@ public abstract class AbsNetBaseActivity<P extends BasePresenter, M extends Base
         return false;
     }
 
+    @Override
+    public BasePowfullDialog getLoadingDialog() {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            return ((AbsBaseHelperUtil)mHelperUtil).getLoadingDialog();
+        }
+        return null;
+    }
 }

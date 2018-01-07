@@ -1,7 +1,6 @@
 package com.bohui.art.mine.mvp;
 
-import com.bohui.art.mine.mvp.bean.MineInfoResult;
-import com.framework.core.http.exception.ApiException;
+import com.bohui.art.bean.mine.MineInfoResult;
 import com.framework.core.http.subsciber.BaseSubscriber;
 
 /**
@@ -15,15 +14,10 @@ public class MinePresenter extends MineContact.Presenter {
     @Override
     public void getUserInfo(String uid) {
         mModel.getUserInfo(uid)
-                .subscribe(new BaseSubscriber<MineInfoResult>() {
+                .subscribe(new BaseSubscriber<MineInfoResult>(mView,MineContact.TAG_MINE_GET_USERINFO) {
                     @Override
-                    public void onNext(MineInfoResult mineInfoResult) {
+                    protected void onResultSuccess(MineInfoResult mineInfoResult) {
                         mView.getUserInfoSuccess(mineInfoResult);
-                    }
-
-                    @Override
-                    public void onError(ApiException e) {
-                        mView.handleException(MineContact.TAG_MINE_GET_USERINFO,e);
                     }
                 });
     }

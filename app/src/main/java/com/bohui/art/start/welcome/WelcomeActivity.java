@@ -11,12 +11,10 @@ import android.widget.TextView;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.start.WelcomeResult;
-import com.bohui.art.common.activity.AbsBaseActivity;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
-import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.start.MainActivity;
 import com.framework.core.glideext.GlideUtil;
-import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.StatusBarCompatUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 

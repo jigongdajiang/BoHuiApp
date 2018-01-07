@@ -7,12 +7,15 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtListResult;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.detail.art.ArtDetailActivity;
-import com.bohui.art.home.TypeFragment;
 import com.bohui.art.home.adapter.ArtGridAdapter;
-import com.bohui.art.home.bean.ArtBean;
-import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.TypeBean;
+import com.bohui.art.home.art1.mvp.ArtListContact;
+import com.bohui.art.home.art1.mvp.ArtListModel;
+import com.bohui.art.home.art1.mvp.ArtListPresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -28,7 +31,7 @@ import butterknife.BindView;
  */
 
 
-public class Art1Fragment extends AbsNetBaseFragment {
+public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListModel> implements ArtListContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
     public static final String TYPE = "type";
@@ -65,5 +68,20 @@ public class Art1Fragment extends AbsNetBaseFragment {
                 ArtDetailActivity.comeIn(getActivity(),new Bundle());
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void doLoad() {
+        mPresenter.getArtList("1",1,10);
+    }
+
+    @Override
+    public void getArtListSuccess(ArtListResult result) {
+
     }
 }

@@ -5,8 +5,8 @@ import android.content.Context;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
-import com.bohui.art.detail.artman.bean.ShowreelBean;
+import com.bohui.art.common.widget.rv.ItemType;
+import com.bohui.art.bean.detail.ShowreelBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 

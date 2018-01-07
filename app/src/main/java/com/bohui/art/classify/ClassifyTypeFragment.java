@@ -7,16 +7,18 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
-import com.bohui.art.common.bean.BannerBean;
-import com.bohui.art.common.bean.BannerBeans;
+import com.bohui.art.bean.classify.ClassifyLevel2Result;
+import com.bohui.art.bean.common.BannerBean;
+import com.bohui.art.bean.common.BannerResult;
+import com.bohui.art.classify.mvp.ClassifyContact;
+import com.bohui.art.classify.mvp.ClassifyModel;
+import com.bohui.art.classify.mvp.ClassifyPresenter;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.home.RecommendFragment;
-import com.bohui.art.home.TypeFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.bohui.art.home.art2.Art2Activity;
-import com.bohui.art.home.bean.Type2LevelBean;
-import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.bean.home.Type2LevelBean;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
@@ -33,7 +35,7 @@ import butterknife.BindView;
  */
 
 
-public class ClassifyTypeFragment extends AbsNetBaseFragment {
+public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,ClassifyModel> implements ClassifyContact.View {
     @BindView(R.id.rv_classify_type)
     RecyclerView rv_classify_type;
 
@@ -73,7 +75,7 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment {
         ));
         bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[2]
         ));
-        BannerBeans bannerBeans = new BannerBeans();
+        BannerResult bannerBeans = new BannerResult();
         bannerBeans.setBannerBeans(bannerDatas);
         bannerAdapter.addItem(bannerBeans);
         delegateAdapter.addAdapter(bannerAdapter);
@@ -96,5 +98,20 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment {
                 ((NetBaseHelperUtil)mHelperUtil).startAty(Art2Activity.class);
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void doLoad() {
+        mPresenter.getClassifyLevel2("1");
+    }
+
+    @Override
+    public void getClassifyLevel2Success(ClassifyLevel2Result result) {
+
     }
 }

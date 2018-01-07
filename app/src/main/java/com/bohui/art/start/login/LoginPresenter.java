@@ -1,6 +1,7 @@
 package com.bohui.art.start.login;
 
 import com.bohui.art.bean.start.LoginResult;
+import com.bohui.art.common.net.AppProgressSubScriber;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.http.subsciber.BaseSubscriber;
 
@@ -15,16 +16,10 @@ public class LoginPresenter extends LoginContact.Presenter {
     @Override
     public void login(String phone, String pwd) {
         mRxManage.add(mModel.login(phone,pwd)
-        .subscribeWith(new BaseSubscriber<LoginResult>(){
+        .subscribeWith(new AppProgressSubScriber<LoginResult>(mView,LoginContact.TAG_LOGIN,mView){
             @Override
-            public void onNext(LoginResult result) {
-                super.onNext(result);
+            protected void onResultSuccess(LoginResult result) {
                 mView.loginSuccess(result);
-            }
-
-            @Override
-            public void onError(ApiException e) {
-                mView.handleException(LoginContact.TAG_LOGIN,e);
             }
         }));
     }

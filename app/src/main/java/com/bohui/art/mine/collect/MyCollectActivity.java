@@ -7,11 +7,15 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.mine.MyCollectResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.mine.collect.mvp.MyCollectContact;
+import com.bohui.art.mine.collect.mvp.MyCollectModel;
+import com.bohui.art.mine.collect.mvp.MyCollectPresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -27,7 +31,7 @@ import butterknife.BindView;
  */
 
 
-public class MyCollectActivity extends AbsNetBaseActivity {
+public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyCollectModel> implements MyCollectContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
     @Override
@@ -57,5 +61,20 @@ public class MyCollectActivity extends AbsNetBaseActivity {
                 ArtDetailActivity.comeIn(MyCollectActivity.this,new Bundle());
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.myCollectList();
+    }
+
+    @Override
+    public void myCollectListSuccess(MyCollectResult result) {
+
     }
 }

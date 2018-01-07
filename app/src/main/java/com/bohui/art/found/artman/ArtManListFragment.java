@@ -7,11 +7,15 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
+import com.bohui.art.found.artman.mvp.ArtManListContact;
+import com.bohui.art.found.artman.mvp.ArtManListModel;
+import com.bohui.art.found.artman.mvp.ArtManListPresenter;
 import com.bohui.art.home.RecommendFragment;
-import com.bohui.art.home.bean.ArtBean;
-import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.TypeBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -28,7 +32,7 @@ import butterknife.BindView;
  */
 
 
-public class ArtManListFragment extends AbsNetBaseFragment{
+public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,ArtManListModel> implements ArtManListContact.IArtManListView{
     @BindView(R.id.rv)
     RecyclerView rv;
     public static final String TYPE = "type";
@@ -51,9 +55,9 @@ public class ArtManListFragment extends AbsNetBaseFragment{
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //猜你喜欢数据适配器
         ArtManListAdapter artManListAdapter = new ArtManListAdapter(mContext);
-        List<ArtManListItemBean> artManListItemBeans = new ArrayList<>();
+        List<ArtManListResult> artManListItemBeans = new ArrayList<>();
         for(int j=0;j<20;j++){
-            ArtManListItemBean artManListItemBean = new ArtManListItemBean();
+            ArtManListResult artManListItemBean = new ArtManListResult();
             artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
             List<ArtBean> artBeans = new ArrayList<>();
             for(int m=0; m<10;m++ ){
@@ -74,5 +78,20 @@ public class ArtManListFragment extends AbsNetBaseFragment{
                 ArtManDetailActivity.comeIn(getActivity(),new Bundle());
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getArtManList();
+    }
+
+    @Override
+    public void getArtManListSuccess(ArtManListResult result) {
+
     }
 }

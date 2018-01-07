@@ -1,17 +1,16 @@
 package com.bohui.art.start;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.bohui.art.R;
 import com.bohui.art.classify.ClassifyFragment;
-import com.bohui.art.common.activity.AbsBaseActivity;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.found.FoundFragment;
 import com.bohui.art.home.HomeFragment;
 import com.bohui.art.mine.MineFragment;
@@ -20,8 +19,8 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.flyco.tablayout.listener.TabEntity;
 import com.framework.core.fragment.FragmentChangeManager;
+import com.framework.core.log.PrintLog;
 import com.framework.core.util.ResUtil;
-import com.framework.core.util.StatusBarCompatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,7 @@ public class MainActivity extends AbsNetBaseActivity {
     private int currentPosition;
     // 双击返回键 退出时 时间记录间隔
     long exitTime = 0;
+    private MineFragment mineFragment;//单独管理，防止重复添加
 
     @Override
     public int getLayoutId() {
@@ -79,9 +79,11 @@ public class MainActivity extends AbsNetBaseActivity {
         fragments.add(foundFragment);
         fTags.add(FoundFragment.class.getSimpleName());
 
-        MineFragment mineFragment = new MineFragment();
-        fragments.add(mineFragment);
-        fTags.add(MineFragment.class.getSimpleName());
+//        if (AppFuntion.isLogin(this)) {//是否登陆
+            mineFragment = new MineFragment();
+            fragments.add(mineFragment);
+            fTags.add(MineFragment.class.getSimpleName());
+//        }
 
         mFragmentChangeManager = new FragmentChangeManager(getSupportFragmentManager(), R.id.container, fragments, fTags);
     }
@@ -113,20 +115,7 @@ public class MainActivity extends AbsNetBaseActivity {
         mTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                switch (position) {
-                    case 0:
-                        changeTab(0);
-                        break;
-                    case 1:
-                        changeTab(1);
-                        break;
-                    case 2:
-                        changeTab(2);
-                        break;
-                    case 3:
-                        changeTab(3);
-                        break;
-                }
+                changeTab(position);
             }
 
             @Override
@@ -138,14 +127,35 @@ public class MainActivity extends AbsNetBaseActivity {
 
     /**
      * 切换Tab
-     *
-     * @param position
      */
+    private int backPosition = 0;
+
     private void changeTab(int position) {
-        if (position < mFragmentChangeManager.getSize()) {
-            mFragmentChangeManager.showFragment(position);
-            mTabLayout.setCurrentTab(position);
-            currentPosition = position;
+        backPosition = position;
+        switch (position) {
+            case 0:
+                mFragmentChangeManager.showFragment(position);
+                mTabLayout.setCurrentTab(position);
+                break;
+            case 1:
+                mFragmentChangeManager.showFragment(position);
+                mTabLayout.setCurrentTab(position);
+                break;
+            case 2:
+                mFragmentChangeManager.showFragment(position);
+                mTabLayout.setCurrentTab(position);
+                break;
+            case 3:
+//                if (AppFuntion.isLogin(mContext)) {
+                    mFragmentChangeManager.showFragment(position);
+                    mTabLayout.setCurrentTab(position);
+//                } else {
+//                    mTabLayout.setCurrentTab(mFragmentChangeManager.getCurrentPosition());
+//                    if (mHelperUtil != null && mHelperUtil instanceof NetBaseHelperUtil) {
+//                        ((NetBaseHelperUtil) mHelperUtil).startAty(LoginActivity.class);
+//                    }
+//                }
+                break;
         }
     }
 
@@ -166,5 +176,32 @@ public class MainActivity extends AbsNetBaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        PrintLog.d("onNewIntent", intent.toString());
+        boolean loginSuccess = intent.getBooleanExtra("login_success", false);
+        if (loginSuccess) {
+            if (mFragmentChangeManager != null && (mineFragment == null || !fragments.contains(mineFragment))) {
+                mineFragment = new MineFragment();
+                mFragmentChangeManager.addFragment(mineFragment);
+                //更新首页防止闪
+                mFragmentChangeManager.removeFragment(0);
+                mFragmentChangeManager.addFragment(new HomeFragment(),0);
+                changeTab(backPosition);
+            }
+        }
+        //手动退出登录时回到主页
+        boolean logout = intent.getBooleanExtra("logout", false);
+        if (logout) {
+            if (mFragmentChangeManager != null && mineFragment != null && fragments.contains(mineFragment)) {
+                mFragmentChangeManager.removeFragment(3);
+                mineFragment = null;
+                mFragmentChangeManager.removeFragment(0);
+                mFragmentChangeManager.addFragment(new HomeFragment(),0);
+                changeTab(0);
+            }
+        }
     }
 }

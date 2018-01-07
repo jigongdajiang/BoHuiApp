@@ -6,9 +6,14 @@ import android.support.v4.view.ViewPager;
 import android.widget.RelativeLayout;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ClassifyLevelResult;
+import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.common.util.RxViewUtil;
-import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.bean.home.TypeBean;
+import com.bohui.art.home.mvp.HomeContact;
+import com.bohui.art.home.mvp.HomeModel;
+import com.bohui.art.home.mvp.HomePresenter;
 import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.framework.core.base.BaseHelperUtil;
@@ -25,10 +30,12 @@ import io.reactivex.functions.Consumer;
  * @author : gaojigong
  * @date : 2017/12/9
  * @description:
+ * 首页碎片容器
+ * 包含推荐页和各个首页
  */
 
 
-public class HomeFragment extends AbsNetBaseFragment {
+public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> implements HomeContact.IHomeView {
     @BindView(R.id.tab)
     SlidingTabLayout tab;
     @BindView(R.id.view_pager)
@@ -78,5 +85,25 @@ public class HomeFragment extends AbsNetBaseFragment {
             }
             tab.setViewPager(view_pager,titles);
         }
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    public void getClassifyLevel1Success(ClassifyLevelResult result) {
+        //初始化Tab，创建Fragment
+    }
+
+    @Override
+    protected void come() {
+        mPresenter.getClassifyLevel1();
+    }
+
+    @Override
+    protected void leave() {
+
     }
 }

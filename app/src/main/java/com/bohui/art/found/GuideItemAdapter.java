@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
+import com.bohui.art.common.widget.rv.ItemType;
 import com.framework.core.glideext.GlideUtil;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;

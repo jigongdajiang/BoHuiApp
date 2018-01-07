@@ -2,6 +2,7 @@ package com.bohui.art.start.reg;
 
 import com.bohui.art.bean.start.RegResult;
 import com.bohui.art.bean.start.VerCodeResult;
+import com.bohui.art.common.net.AppProgressSubScriber;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.http.subsciber.BaseSubscriber;
 
@@ -16,16 +17,10 @@ public class RegPresenter extends RegContact.Presenter {
     @Override
     public void getCode(String phone) {
         mRxManage.add(mModel.getCode(phone)
-        .subscribeWith(new BaseSubscriber<VerCodeResult>(){
+        .subscribeWith(new AppProgressSubScriber<VerCodeResult>(mView,RegContact.TAG_REG_GET_CODE,mView){
             @Override
-            public void onNext(VerCodeResult result) {
-                super.onNext(result);
+            protected void onResultSuccess(VerCodeResult result) {
                 mView.getCodeSuccess(result);
-            }
-
-            @Override
-            public void onError(ApiException e) {
-                mView.handleException(RegContact.TAG_REG_GET_CODE,e);
             }
         }));
     }
@@ -33,16 +28,10 @@ public class RegPresenter extends RegContact.Presenter {
     @Override
     public void reg(String phone, String code) {
         mRxManage.add(mModel.reg(phone,code)
-        .subscribeWith(new BaseSubscriber<RegResult>(){
+        .subscribeWith(new AppProgressSubScriber<RegResult>(mView,RegContact.TAG_REG,mView){
             @Override
-            public void onNext(RegResult regResult) {
-                super.onNext(regResult);
+            protected void onResultSuccess(RegResult regResult) {
                 mView.regSuccess(regResult);
-            }
-
-            @Override
-            public void onError(ApiException e) {
-                mView.handleException(RegContact.TAG_REG,e);
             }
         }));
     }

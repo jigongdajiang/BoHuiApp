@@ -2,15 +2,14 @@ package com.bohui.art.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.bean.BannerBean;
-import com.bohui.art.common.bean.BannerBeans;
+import com.bohui.art.bean.common.BannerBean;
+import com.bohui.art.bean.common.BannerResult;
 import com.bohui.art.common.util.BannerHelper;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -24,7 +23,7 @@ import com.widget.smallelement.banner.ConvenientBanner;
  */
 
 
-public class BannerAdapter extends BaseAdapter<BannerBeans> {
+public class BannerAdapter extends BaseAdapter<BannerResult> {
     private BannerHelper bannerHelper;
     private boolean isVertical;//控制横竖
     private int bannerHeight;//从外部控制高度
@@ -66,7 +65,7 @@ public class BannerAdapter extends BaseAdapter<BannerBeans> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, BannerBeans itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, BannerResult itemData, int position) {
         View bannerHeader = holder.getConvertView();
         ConvenientBanner<BannerBean> cb_banner= bannerHeader.findViewById(R.id.cb_banner);
         if(bannerHeight > 0){

@@ -6,10 +6,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.found.ArtManLevelResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
-import com.bohui.art.home.art1.Art1Fragment;
-import com.bohui.art.home.bean.TypeBean;
+import com.bohui.art.bean.home.TypeBean;
+import com.bohui.art.found.artman.mvp.ArtManLevelModel;
+import com.bohui.art.found.artman.mvp.ArtManLevelPresenter;
+import com.bohui.art.found.artman.mvp.ArtManListContact;
 import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.framework.core.base.BaseHelperUtil;
@@ -28,7 +31,7 @@ import butterknife.BindView;
  */
 
 
-public class ArtManActivity extends AbsNetBaseActivity {
+public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtManLevelModel> implements ArtManListContact.IArtManLevelView {
     @BindView(R.id.tab)
     SlidingTabLayout tab;
     @BindView(R.id.view_pager)
@@ -75,5 +78,20 @@ public class ArtManActivity extends AbsNetBaseActivity {
             }
             tab.setViewPager(view_pager,titles);
         }
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getArtManLevel();
+    }
+
+    @Override
+    public void getArtManLevelSuccess(ArtManLevelResult result) {
+
     }
 }

@@ -10,9 +10,12 @@ import com.bohui.art.common.app.AppParams;
 import com.bohui.art.common.app.SharePreferenceKey;
 import com.bohui.art.start.MainActivity;
 import com.bohui.art.start.welcome.WelcomeActivity;
+import com.bumptech.glide.Glide;
 import com.framework.core.base.AbsHelperUtil;
 import com.framework.core.base.BaseHelperUtil;
 import com.framework.core.cache.core.CacheCoreFactory;
+import com.framework.core.glideext.GlideUtil;
+import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.StatusBarCompatUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -47,8 +50,6 @@ public class SplashActivity extends AbsNetBaseActivity<SplashPresenter,SplashMod
         }
         AppParams.getInstance().splashStarted = true;
         super.doBeforeSetContentView();
-        //全屏
-        new StatusBarCompatUtil.Builder(this).setSupportType(2).builder().apply();
     }
 
     @Override
@@ -58,28 +59,14 @@ public class SplashActivity extends AbsNetBaseActivity<SplashPresenter,SplashMod
 
     @Override
     public void initView() {
-        mRxManager.add(Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(new Consumer<Long>() {
-            @Override
-            public void accept(Long aLong) throws Exception {
-            boolean hasInstallAndStart = CacheCoreFactory.getPreferenceCache(mContext).load(Boolean.class, SharePreferenceKey.HAS_INSTALL_AND_START);
-            if(hasInstallAndStart){
-                ((BaseHelperUtil)mHelperUtil).startAty(MainActivity.class,true);
-            }else{
-                CacheCoreFactory.getPreferenceCache(mContext).save(SharePreferenceKey.HAS_INSTALL_AND_START,true);
-                ((BaseHelperUtil)mHelperUtil).startAty(WelcomeActivity.class,true);
-            }
-            }
-        }));
+        //全屏
+        new StatusBarCompatUtil.Builder(this).setSupportType(2).builder().apply();
     }
 
     @Override
-    protected SplashPresenter createPresenter() {
-        return new SplashPresenter();
-    }
-
-    @Override
-    protected SplashModel createModel() {
-        return new SplashModel();
+    protected void extraInit() {
+//        mPresenter.splash();
+        jumpAfter();
     }
 
     @Override
@@ -99,7 +86,32 @@ public class SplashActivity extends AbsNetBaseActivity<SplashPresenter,SplashMod
     }
 
     @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        if(SplashContact.TAG_SPLASH.equals(apiName)){
+            //启动结果返回错误，直接进入主页
+            jumpAfter();
+        }
+        return true;
+    }
+
+    @Override
     public void splashSuccess(SplashResult result) {
         //获取广告页图片，更新广告页图片
+        //倒计时后进入主页
+        jumpAfter();
+    }
+    private void jumpAfter() {
+        mRxManager.add(Observable.timer(3000, TimeUnit.MILLISECONDS).subscribe(new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) throws Exception {
+                boolean hasInstallAndStart = CacheCoreFactory.getPreferenceCache(mContext).load(Boolean.class, SharePreferenceKey.HAS_INSTALL_AND_START);
+                if(hasInstallAndStart){
+                    ((BaseHelperUtil)mHelperUtil).startAty(MainActivity.class,true);
+                }else{
+                    CacheCoreFactory.getPreferenceCache(mContext).save(SharePreferenceKey.HAS_INSTALL_AND_START,true);
+                    ((BaseHelperUtil)mHelperUtil).startAty(WelcomeActivity.class,true);
+                }
+            }
+        }));
     }
 }

@@ -1,12 +1,14 @@
 package com.bohui.art.common.fragment;
 
 
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.net.mvp.BaseLoadingView;
 import com.framework.core.base.AbsHelperUtil;
 import com.framework.core.base.BaseModel;
 import com.framework.core.base.BasePresenter;
-import com.framework.core.base.BaseView;
 import com.framework.core.http.exception.ApiException;
+import com.widget.smallelement.dialog.BasePowfullDialog;
 
 /**
  * @author : gaojigong
@@ -17,10 +19,11 @@ import com.framework.core.http.exception.ApiException;
  *
  *  主要处理网络请求回来后的一些通用逻辑
  *  1.异常逻辑处理
+ *  2.具备ViewPager配套的懒加载机制
  */
 
 
-public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends BaseModel> extends AbsBaseFragment<P,M> implements BaseView {
+public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends BaseModel> extends AbsBaseFragment<P,M> implements BaseLoadingView {
     @Override
     protected AbsHelperUtil createHelperUtil() {
         return new NetBaseHelperUtil(this);
@@ -51,6 +54,10 @@ public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends Base
         lazyLoad();
     }
 
+    @Override
+    protected void extraInit() {
+        lazyLoad();
+    }
     public void lazyLoad(){
         //可见，View初始化成功，添加好了
         if(!isFragmentVisible || !hasCreateView){
@@ -96,5 +103,13 @@ public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends Base
 
     protected boolean childHandlerException(String apiName, ApiException e) {
         return false;
+    }
+
+    @Override
+    public BasePowfullDialog getLoadingDialog() {
+        if(mHelperUtil != null && mHelperUtil instanceof AbsBaseHelperUtil){
+            return ((AbsBaseHelperUtil)mHelperUtil).getLoadingDialog();
+        }
+        return null;
     }
 }

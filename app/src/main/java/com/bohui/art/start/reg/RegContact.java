@@ -2,9 +2,9 @@ package com.bohui.art.start.reg;
 
 import com.bohui.art.bean.start.RegResult;
 import com.bohui.art.bean.start.VerCodeResult;
+import com.bohui.art.common.net.mvp.BaseLoadingView;
 import com.framework.core.base.BaseModel;
 import com.framework.core.base.BasePresenter;
-import com.framework.core.base.BaseView;
 
 import io.reactivex.Observable;
 
@@ -24,7 +24,7 @@ public interface RegContact {
         Observable<VerCodeResult> getCode(String phone);
         Observable<RegResult> reg(String phone,String code);
     }
-    interface View extends BaseView{
+    interface View extends BaseLoadingView{
         void getCodeSuccess(VerCodeResult result);
         void regSuccess(RegResult result);
     }

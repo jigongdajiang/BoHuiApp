@@ -1,7 +1,7 @@
 package com.bohui.art.common.fragment;
 
 
-import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.framework.core.base.AbsHelperUtil;
 import com.framework.core.base.BaseFragment;
 import com.framework.core.base.BaseModel;
@@ -14,7 +14,7 @@ import com.framework.core.base.BasePresenter;
  */
 
 
-public abstract class AbsBaseFragment<P extends BasePresenter, M extends BaseModel> extends BaseFragment<P,M> {
+public abstract class AbsBaseFragment<P extends BasePresenter, M extends BaseModel> extends BaseFragment<P,M>  {
 
     @Override
     protected void doBeforeOnCreateView() {
@@ -23,15 +23,6 @@ public abstract class AbsBaseFragment<P extends BasePresenter, M extends BaseMod
     @Override
     protected AbsHelperUtil createHelperUtil() {
         return new AbsBaseHelperUtil(this);
-    }
-    @Override
-    protected P createPresenter() {
-        return null;
-    }
-
-    @Override
-    protected M createModel() {
-        return null;
     }
 
     @Override

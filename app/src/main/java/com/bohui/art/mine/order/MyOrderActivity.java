@@ -6,9 +6,14 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.mine.MyOrderBean;
+import com.bohui.art.bean.mine.MyOrderListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.found.order.OrderActivity;
+import com.bohui.art.mine.order.mvp.MyOrderContact;
+import com.bohui.art.mine.order.mvp.MyOrderModel;
+import com.bohui.art.mine.order.mvp.MyOrderPresenter;
 import com.framework.core.base.BaseHelperUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
@@ -25,7 +30,7 @@ import butterknife.BindView;
  */
 
 
-public class MyOrderActivity extends AbsNetBaseActivity {
+public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrderModel> implements MyOrderContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
     @Override
@@ -57,6 +62,21 @@ public class MyOrderActivity extends AbsNetBaseActivity {
                 ((BaseHelperUtil)mHelperUtil).startAty(OrderActivity.class);
             }
         });
+
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.myOrder();
+    }
+
+    @Override
+    public void myOrderSuccess(MyOrderListResult result) {
 
     }
 }

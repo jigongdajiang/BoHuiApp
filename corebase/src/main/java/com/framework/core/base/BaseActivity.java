@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 
 import com.framework.core.rxcore.RxManager;
+import com.framework.core.util.TUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -106,13 +107,17 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
      * 钩子方法
      * 规范MVP架构  创建P
      */
-    protected abstract P createPresenter();
+    protected  P createPresenter(){
+        return TUtil.getT(this,0);
+    }
 
     /**
      * 钩子方法
      * 规范MVP架构  创建M
      */
-    protected abstract M createModel();
+    protected  M createModel(){
+        return TUtil.getT(this,1);
+    }
 
     /**
      * 钩子方法

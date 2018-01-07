@@ -5,7 +5,7 @@ import android.content.Context;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.home.bean.TypeTopBean;
+import com.bohui.art.bean.home.TypeTopBean;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;

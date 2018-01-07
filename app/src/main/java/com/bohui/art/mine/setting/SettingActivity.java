@@ -3,11 +3,16 @@ package com.bohui.art.mine.setting;
 import android.widget.RelativeLayout;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.mine.CheckVersionResult;
+import com.bohui.art.bean.mine.LogoutResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
-import com.bohui.art.common.helperutil.NetBaseHelperUtil;
+import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.mine.setting.changepassword.ChangePasswordActivity;
+import com.bohui.art.mine.setting.mvp.SettingContact;
+import com.bohui.art.mine.setting.mvp.SettingModel;
+import com.bohui.art.mine.setting.mvp.SettingPresenter;
 import com.bohui.art.mine.setting.suggest.SuggestActivity;
 import com.bohui.art.start.login.LoginActivity;
 import com.framework.core.base.BaseHelperUtil;
@@ -22,7 +27,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class SettingActivity extends AbsNetBaseActivity {
+public class SettingActivity extends AbsNetBaseActivity<SettingPresenter,SettingModel> implements SettingContact.View {
     @BindView(R.id.rl_password_change)
     RelativeLayout rl_password_change;
     @BindView(R.id.rl_suggest)
@@ -57,14 +62,30 @@ public class SettingActivity extends AbsNetBaseActivity {
         RxViewUtil.addOnClick(mRxManager, rl_update, new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
-
+                mPresenter.checkVersion();
             }
         });
         RxViewUtil.addOnClick(mRxManager, rl_exit, new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
+                mPresenter.logout();
                 ((NetBaseHelperUtil)mHelperUtil).startAty(LoginActivity.class);
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    public void checkVersionSuccess(CheckVersionResult result) {
+
+    }
+
+    @Override
+    public void logoutSuccess(LogoutResult result) {
+
     }
 }

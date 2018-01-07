@@ -7,13 +7,21 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.mine.MyAttentionResult;
+import com.bohui.art.bean.mine.MyCollectResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.ArtManListAdapter;
-import com.bohui.art.found.artman.ArtManListItemBean;
+import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.home.RecommendFragment;
-import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.mine.attention.mvp.MyAttentionContact;
+import com.bohui.art.mine.attention.mvp.MyAttentionModel;
+import com.bohui.art.mine.attention.mvp.MyAttentionPresenter;
+import com.bohui.art.mine.collect.mvp.MyCollectContact;
+import com.bohui.art.mine.collect.mvp.MyCollectModel;
+import com.bohui.art.mine.collect.mvp.MyCollectPresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -29,7 +37,7 @@ import butterknife.BindView;
  */
 
 
-public class MyAttentionActivity extends AbsNetBaseActivity {
+public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter,MyAttentionModel> implements MyAttentionContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
     @Override
@@ -46,9 +54,9 @@ public class MyAttentionActivity extends AbsNetBaseActivity {
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //猜你喜欢数据适配器
         ArtManListAdapter artManListAdapter = new ArtManListAdapter(mContext);
-        List<ArtManListItemBean> artManListItemBeans = new ArrayList<>();
+        List<ArtManListResult> artManListItemBeans = new ArrayList<>();
         for(int j=0;j<20;j++){
-            ArtManListItemBean artManListItemBean = new ArtManListItemBean();
+            ArtManListResult artManListItemBean = new ArtManListResult();
             artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
             List<ArtBean> artBeans = new ArrayList<>();
             for(int m=0; m<10;m++ ){
@@ -69,5 +77,20 @@ public class MyAttentionActivity extends AbsNetBaseActivity {
                 ArtManDetailActivity.comeIn(MyAttentionActivity.this,new Bundle());
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.myAttention();
+    }
+
+    @Override
+    public void myAttentionSuccess(MyAttentionResult result) {
+
     }
 }

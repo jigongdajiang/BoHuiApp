@@ -1,19 +1,13 @@
 package com.bohui.art.search;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
+import com.bohui.art.common.widget.rv.ItemType;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
-import com.widget.smallelement.flowtag.FlowLayout;
-import com.widget.smallelement.flowtag.TagAdapter;
-import com.widget.smallelement.flowtag.TagFlowLayout;
 
 /**
  * @author : gaojigong

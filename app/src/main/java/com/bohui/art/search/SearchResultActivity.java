@@ -17,12 +17,12 @@ import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.found.artman.ArtManListAdapter;
-import com.bohui.art.found.artman.ArtManListItemBean;
+import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.home.bean.ArtBean;
-import com.bohui.art.home.bean.DesignerBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.DesignerBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.smallelement.dialog.BasePowfullDialog;
 
@@ -120,9 +120,9 @@ public class SearchResultActivity extends AbsNetBaseActivity {
                 break;
             case 1:
                 contentAdapter = new ArtManListAdapter(mContext);
-                List<ArtManListItemBean> artManListItemBeans = new ArrayList<>();
+                List<ArtManListResult> artManListItemBeans = new ArrayList<>();
                 for(int j=0;j<20;j++){
-                    ArtManListItemBean artManListItemBean = new ArtManListItemBean();
+                    ArtManListResult artManListItemBean = new ArtManListResult();
                     artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
                     List<ArtBean> artBeans2 = new ArrayList<>();
                     for(int m=0; m<10;m++ ){

@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bohui.art.R;
-import com.bohui.art.common.activity.BaseWebActivity;
 import com.bohui.art.common.activity.CommonStaticActivity;
-import com.bohui.art.common.bean.BannerBean;
+import com.bohui.art.bean.common.BannerBean;
 import com.bumptech.glide.Glide;
 import com.framework.core.glideext.GlideUtil;
 import com.widget.smallelement.banner.ConvenientBanner;

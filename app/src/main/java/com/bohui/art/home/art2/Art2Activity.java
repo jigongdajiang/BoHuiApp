@@ -3,19 +3,21 @@ package com.bohui.art.home.art2;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
-import com.bohui.art.common.rv.adapter.NormalWrapAdapter;
+import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.home.bean.ArtBean;
+import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.home.art1.mvp.ArtListContact;
+import com.bohui.art.home.art1.mvp.ArtListModel;
+import com.bohui.art.home.art1.mvp.ArtListPresenter;
 import com.bohui.art.search.SearchActivity;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
@@ -23,7 +25,6 @@ import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.framework.core.base.BaseHelperUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
-import com.widget.grecycleview.adapter.wrapper.BaseWrapper;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import butterknife.BindView;
  */
 
 
-public class Art2Activity extends AbsNetBaseActivity {
+public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListModel> implements ArtListContact.View {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -124,5 +125,20 @@ public class Art2Activity extends AbsNetBaseActivity {
                 }, 1000);
             }
         });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getArtList("",1,1);
+    }
+
+    @Override
+    public void getArtListSuccess(ArtListResult result) {
+
     }
 }

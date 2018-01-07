@@ -4,33 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
-import com.bohui.art.common.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
-import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.detail.art.adapter.DetailGuideAdapter;
-import com.bohui.art.detail.artman.ArtManDetailActivity;
-import com.bohui.art.detail.artman.adapter.ShowreelAdapter;
-import com.bohui.art.detail.artman.bean.ArtMainDetailResult;
 import com.bohui.art.detail.designer.adapter.CaseAdapter;
 import com.bohui.art.detail.designer.adapter.DetailAdapter;
 import com.bohui.art.detail.designer.adapter.IntroAdapter;
-import com.bohui.art.detail.designer.bean.CaseBean;
-import com.bohui.art.detail.designer.bean.DesignerDetailResult;
-import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.home.art2.Art2Activity;
+import com.bohui.art.bean.detail.CaseBean;
+import com.bohui.art.bean.detail.DesignerDetailResult;
+import com.bohui.art.detail.designer.mvp.DesignerDetailContact;
+import com.bohui.art.detail.designer.mvp.DesignerDetailModel;
+import com.bohui.art.detail.designer.mvp.DesignerDetailPresenter;
 import com.bohui.art.start.MainActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.framework.core.log.PrintLog;
-import com.widget.grecycleview.adapter.base.BaseAdapter;
-import com.widget.grecycleview.listener.RvClickListenerIml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +38,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class DesignerDetailActivity extends AbsNetBaseActivity {
+public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPresenter,DesignerDetailModel> implements DesignerDetailContact.View {
     @BindView(R.id.segment_tab)
     SegmentTabLayout segment_tab;
     @BindView(R.id.iv_back)
@@ -174,5 +167,20 @@ public class DesignerDetailActivity extends AbsNetBaseActivity {
         Intent intent = new Intent(activity,DesignerDetailActivity.class);
         intent.putExtras(bundle);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getDesignerDetail("");
+    }
+
+    @Override
+    public void getDesignerDetailSuccess(DesignerDetailResult result) {
+
     }
 }

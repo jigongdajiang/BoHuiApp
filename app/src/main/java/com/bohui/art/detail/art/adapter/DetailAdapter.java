@@ -8,8 +8,8 @@ import android.webkit.WebViewClient;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.common.rv.ItemType;
-import com.bohui.art.detail.art.bean.ArtDetailBean;
+import com.bohui.art.common.widget.rv.ItemType;
+import com.bohui.art.bean.detail.ArtDetailResult;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -20,8 +20,8 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class DetailAdapter extends BaseAdapter<ArtDetailBean> {
-    public DetailAdapter(Context context, ArtDetailBean artDetailBean) {
+public class DetailAdapter extends BaseAdapter<ArtDetailResult> {
+    public DetailAdapter(Context context, ArtDetailResult artDetailBean) {
         super(context);
         addItem(artDetailBean);
     }
@@ -39,7 +39,7 @@ public class DetailAdapter extends BaseAdapter<ArtDetailBean> {
     private WebSettings webSettings;
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtDetailBean itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
         WebView wv_detail = holder.getView(R.id.webView);
         wv_detail.setFocusable(false);
         wv_detail.loadUrl(itemData.getDetailUrl());

@@ -64,8 +64,7 @@ public class CallBackSubsciber<T> extends BaseSubscriber<T> {
     }
 
     @Override
-    public void onNext(@NonNull T t) {
-        super.onNext(t);
+    protected void onResultSuccess(T t) {
         if (mCallBack != null) {
             mCallBack.onSuccess(t);
         }
