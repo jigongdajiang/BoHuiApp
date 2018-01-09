@@ -18,6 +18,11 @@ public class AppParams {
      */
     public boolean isfirst2mian;
 
+    /**
+     * 是否开启过相机或相册
+     */
+    public boolean hasStartCarma;
+
 
     private static AppParams mInstance;
 

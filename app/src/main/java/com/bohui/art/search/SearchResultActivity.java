@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.search.SearchResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
@@ -23,6 +24,9 @@ import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.bean.home.ArtBean;
 import com.bohui.art.bean.home.DesignerBean;
+import com.bohui.art.search.mvp.SearchContact;
+import com.bohui.art.search.mvp.SearchDetailModel;
+import com.bohui.art.search.mvp.SearchDetailPresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.smallelement.dialog.BasePowfullDialog;
 
@@ -43,7 +47,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class SearchResultActivity extends AbsNetBaseActivity {
+public class SearchResultActivity extends AbsNetBaseActivity<SearchDetailPresenter,SearchDetailModel> implements SearchContact.ISearchDetailView {
     @BindView(R.id.ll_sequence)
     LinearLayout ll_sequence;
     @BindView(R.id.rl_common)
@@ -256,5 +260,25 @@ public class SearchResultActivity extends AbsNetBaseActivity {
         }
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.searchByTag();
+    }
+
+    @Override
+    public void searchByTagSuccess(SearchResult result) {
+
+    }
+
+    @Override
+    public void filtrateSuccess(SearchResult result) {
+
     }
 }

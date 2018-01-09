@@ -9,8 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.search.SearchResult;
+import com.bohui.art.bean.search.SearchTagResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.RxViewUtil;
+import com.bohui.art.search.mvp.SearchContact;
+import com.bohui.art.search.mvp.SearchModel;
+import com.bohui.art.search.mvp.SearchPresenter;
 import com.framework.core.base.BaseHelperUtil;
 import com.widget.smallelement.flowtag.FlowLayout;
 import com.widget.smallelement.flowtag.TagAdapter;
@@ -33,7 +38,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class SearchActivity extends AbsNetBaseActivity {
+public class SearchActivity extends AbsNetBaseActivity<SearchPresenter,SearchModel> implements SearchContact.ISearchView {
     @BindView(R.id.iv_back)
     ImageView iv_back;
     @BindView(R.id.et_search)
@@ -90,6 +95,11 @@ public class SearchActivity extends AbsNetBaseActivity {
         });
     }
 
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
     private List<String> getTags() {
         List<String> tags = new ArrayList<>();
         switch (mType){
@@ -110,5 +120,10 @@ public class SearchActivity extends AbsNetBaseActivity {
                 break;
         }
         return tags;
+    }
+
+    @Override
+    public void getSearchTagSuccess(SearchTagResult result) {
+        //更新Tag
     }
 }

@@ -81,7 +81,6 @@ import io.reactivex.exceptions.Exceptions;
 public final class RxCache {
     private final Context context;              //上下文
     private final CacheCore cacheCore;          //缓存的核心管理类
-    private final BaseCache cache;              //缓存方式(例如内存缓存，磁盘缓存等)，默认LruCache
     private final String cacheKey;              //缓存的key
     private final long cacheTime;               //缓存的时间 单位:秒
     private final IDiskConverter diskConverter; //缓存的转换器
@@ -105,8 +104,7 @@ public final class RxCache {
         this.appVersion = builder.appVersion;
         this.diskMaxSize = builder.diskMaxSize;
         this.diskConverter = builder.diskConverter;
-        this.cache = builder.cache;
-        cacheCore = new CacheCore(cache);
+        cacheCore = new CacheCore(new LruDiskCache(context,diskConverter, diskDir, appVersion, diskMaxSize));
     }
 
     public Builder newBuilder() {
@@ -326,7 +324,6 @@ public final class RxCache {
             this.context = rxCache.context;
             this.cachekey = rxCache.cacheKey;
             this.cacheTime = rxCache.cacheTime;
-            this.cache = rxCache.cache;
         }
 
         public Builder init(Context context) {
@@ -406,13 +403,7 @@ public final class RxCache {
 
             appVersion = Math.max(1, this.appVersion);
 
-            if(cache == null){
-                cache = new LruDiskCache(context,diskConverter, diskDir, appVersion, diskMaxSize);
-            }
-
             return new RxCache(this);
         }
-
-
     }
 }

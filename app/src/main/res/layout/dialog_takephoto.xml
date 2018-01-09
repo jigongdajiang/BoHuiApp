@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/line_popup"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_20"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_corner"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/takpe_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginTop="@dimen/dp_2"
+            android:gravity="center"
+            android:text="@string/photo"
+            android:textColor="@color/sys_color_font_base"
+            android:textSize="@dimen/sp_17" />
+
+        <View style="@style/divider_line_full_hor_thin" />
+
+        <TextView
+            android:id="@+id/select_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp_44"
+            android:gravity="center"
+            android:text="@string/album"
+            android:textColor="@color/sys_color_font_base"
+            android:textSize="@dimen/sp_17" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
+        android:background="@drawable/shape_white_corner"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/sys_color_font_somber"
+        android:textSize="@dimen/sp_17" />
+</LinearLayout>

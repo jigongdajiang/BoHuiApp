@@ -11,4 +11,5 @@ package com.bohui.art.common.app;
 public interface SharePreferenceKey {
     String HAS_INSTALL_AND_START = "has_install_and_start";
     String TICKET = "ticket";
+    String ACCOUNT_HEAD_URL = "user_avaurl";
 }

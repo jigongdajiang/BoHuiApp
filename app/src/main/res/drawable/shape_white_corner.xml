@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/dp_8" />
+    <!-- 圆角半径 -->
+    <stroke
+        android:width="0dp"
+        android:color="@color/sys_color_transparent" />
+    <!-- 矩形的边线 -->
+    <solid android:color="@color/sys_color_white" />
+</shape>

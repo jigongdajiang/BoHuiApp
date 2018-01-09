@@ -1,5 +1,9 @@
 package com.framework.core.base;
 
+import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+
 /**
  * @author : gaojigong
  * @date : 2017/11/16
@@ -44,6 +48,35 @@ public class AbsHelperUtil {
     protected BaseFragment change2Fragment(){
         if(isBaseFragment()){
             return (BaseFragment) mBaseContext;
+        }
+        return null;
+    }
+
+    protected Context getContext(){
+        if(isBaseActivity()){
+            return (BaseActivity) mBaseContext;
+        }
+        if(isBaseFragment()){
+            return ((BaseFragment) mBaseContext).getContext();
+        }
+        return null;
+    }
+
+    protected FragmentActivity getActivity(){
+        if(isBaseActivity()){
+            return (BaseActivity) mBaseContext;
+        }
+        if(isBaseFragment()){
+            return ((BaseFragment) mBaseContext).getActivity();
+        }
+        return null;
+    }
+    protected FragmentManager getSupportFragmentManager(){
+        if(isBaseActivity()){
+            return ((BaseActivity) mBaseContext).getSupportFragmentManager();
+        }
+        if(isBaseFragment()){
+            return ((BaseFragment) mBaseContext).getChildFragmentManager();
         }
         return null;
     }

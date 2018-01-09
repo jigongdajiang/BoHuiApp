@@ -15,7 +15,8 @@
     <string name="main_tab_found">发现</string>
     <string name="main_tab_mine">我的</string>
 
-
+    <string name="photo">照相机</string>
+    <string name="album">相册</string>
     <!-- temp -->
     <string name="temp_jianjie">山水画，简称“山水”。中国画的一种。描写山川自然景色为主体的绘画。在魏晋、南北朝已逐渐发展，
         但仍附属于人物画，作为背景的居多；隋唐始独立，如展子虔的设色山水，李思训的金碧山水，王维的水墨山水，王洽的泼墨山水等；
