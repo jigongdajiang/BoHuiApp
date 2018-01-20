@@ -18,7 +18,7 @@ public class AppConfig extends BaseAppConfig {
         if(IS_PUBLISH_VERSION){
             return "https://restv2.jimeijinfu.com/rest/";
         }else{
-            return "http://192.168.31.191:8080/";//武强电脑
+            return "http://118.190.149.169:8080/";//武强电脑
         }
     }
 
