@@ -35,6 +35,7 @@ import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.CollectionUtil;
+import com.framework.core.util.StrOperationUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -90,7 +91,9 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 if (adapter instanceof Type2LevelAdapter) {
-                    ((NetBaseHelperUtil) mHelperUtil).startAty(Art2Activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Art2Activity.TYPE,((Type2LevelAdapter) adapter).getData(position));
+                    startAty(Art2Activity.class,bundle);
                 } else if (adapter instanceof TypeTopAdapter) {
                     ClassifyLevelBean bean = ((TypeTopAdapter) adapter).getData(position);
                     if (bean.getPid() == 0) {
@@ -115,7 +118,7 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
 
     @Override
     public void initPresenter() {
-        mPresenter.setMV(mModel,this);
+        mPresenter.setMV(mModel, this);
     }
 
     @Override
@@ -133,10 +136,8 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
     public void getTypeInfoSuccess(TypeResult result) {
         mPtrClassicFrameLayout.refreshComplete();
         //刷新数据
-        if (mResult == null || (result != null && !mResult.toString().equals(result.toString()))) {
-            mResult = result;
-            refreshData();
-        }
+        mResult = result;
+        refreshData();
     }
 
     private void refreshData() {
@@ -158,12 +159,11 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
         if (!CollectionUtil.isEmpty(type2LevelBeans)) {
             Type2LevelAdapter type2LevelAdapter = new Type2LevelAdapter(mContext);
             type2LevelAdapter.setDatas(type2LevelBeans);
-            type2LevelAdapter.setDelegateAdapter(mDelegateAdapter);
             adapters.add(type2LevelAdapter);
         }
         //大类推荐
         RecommendListItemBean level1Recommend = mResult.getBoutique();
-        if(level1Recommend != null){
+        if (level1Recommend != null) {
             List<ArtCoverItemBean> level1RecommendList = level1Recommend.getList();
             if (!CollectionUtil.isEmpty(level1RecommendList)) {
                 String typeName = level1Recommend.getName();
@@ -185,11 +185,11 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
 
         //该大类下的机构推荐
         RecommendMechanismBean recommendMechanismBean = mResult.getMechanism();
-        if(recommendMechanismBean != null){
-            TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext,new ClassifyLevelBean(recommendMechanismBean.getName(),3));
+        if (recommendMechanismBean != null) {
+            TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendMechanismBean.getName(), 3));
             adapters.add(jigouTopAdapter);
             List<ArtItemBean> list = recommendMechanismBean.getList();
-            if(!CollectionUtil.isEmpty(list)){
+            if (!CollectionUtil.isEmpty(list)) {
                 ArtGridAdapter mechanisAdapter = new ArtGridAdapter(mContext);
                 mechanisAdapter.setDatas(list);
                 adapters.add(mechanisAdapter);
@@ -197,16 +197,21 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
         }
         //各二级子分类推荐
         List<Type2ListItemBean> chird = mResult.getChird();
-        if(!CollectionUtil.isEmpty(chird)){
+        if (!CollectionUtil.isEmpty(chird)) {
             int size = chird.size();
-            for(int i=0;i<size;i++) {
+            for (int i = 0; i < size; i++) {
                 String typeName = chird.get(i).getName();
-                long typeId = chird.get(i).getId();
-                TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId,1));
-                adapters.add(typeTopAdapter);
-                ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
-                artGridAdapter.setDatas(chird.get(i).getList());
-                adapters.add(artGridAdapter);
+                if (!StrOperationUtil.isEmpty(typeName)) {
+                    long typeId = chird.get(i).getId();
+                    TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId, 1));
+                    adapters.add(typeTopAdapter);
+                    List<ArtItemBean> list = chird.get(i).getList();
+                    if (!CollectionUtil.isEmpty(list)) {
+                        ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
+                        artGridAdapter.setDatas(list);
+                        adapters.add(artGridAdapter);
+                    }
+                }
             }
         }
         mDelegateAdapter.setAdapters(adapters);

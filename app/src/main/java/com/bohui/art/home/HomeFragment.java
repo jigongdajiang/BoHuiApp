@@ -16,6 +16,7 @@ import com.bohui.art.home.mvp.HomePresenter;
 import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.fragment.BaseFragmentAdapter;
 import com.framework.core.fragment.BaseFragmentStateAdapter;
 import com.framework.core.util.CollectionUtil;
 
@@ -106,7 +107,7 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
             for (int j=0; j<titles.length;j++){
                 titles[j] = types.get(j).getName();
             }
-            BaseFragmentStateAdapter adapter = new BaseFragmentStateAdapter(getChildFragmentManager(),fragments);
+            BaseFragmentAdapter adapter = new BaseFragmentAdapter(getChildFragmentManager(),fragments);
             view_pager.setAdapter(adapter);
             tab.setViewPager(view_pager,titles);
         }

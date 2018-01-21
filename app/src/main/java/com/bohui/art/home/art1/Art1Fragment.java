@@ -7,15 +7,17 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtListParam;
+import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.home.ArtItemBean;
-import com.bohui.art.bean.home.ArtListResult;
 import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
+import com.bohui.art.common.mvp.ArtListContact;
+import com.bohui.art.common.mvp.ArtListModel;
+import com.bohui.art.common.mvp.ArtListPresenter;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.adapter.ArtGridAdapter;
-import com.bohui.art.home.art1.mvp.ArtListContact;
-import com.bohui.art.home.art1.mvp.ArtListModel;
-import com.bohui.art.home.art1.mvp.ArtListPresenter;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -36,6 +38,7 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
     RecyclerView rv;
     public static final String TYPE = "type";
     private ClassifyLevelBean mType;
+    private ArtGridAdapter artGridAdapter;
     public static Art1Fragment newInstance(ClassifyLevelBean type){
         Bundle bundle = new Bundle();
         bundle.putSerializable(TYPE,type);
@@ -43,6 +46,13 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    protected void doBeforeOnCreateView() {
+        super.doBeforeOnCreateView();
+        mType = (ClassifyLevelBean) getArguments().getSerializable(TYPE);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.layout_common_rv;
@@ -52,13 +62,8 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
     public void initView() {
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getActivity());
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        //猜你喜欢数据适配器
-        ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
-        List<ArtItemBean> artBeansLikes = new ArrayList<>();
-        for(int j=0;j<20;j++){
-            artBeansLikes.add(new ArtItemBean());
-        }
-        artGridAdapter.setDatas(artBeansLikes);
+        artGridAdapter = new ArtGridAdapter(mContext);
+        artGridAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(artGridAdapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
@@ -77,11 +82,22 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
 
     @Override
     protected void doLoad() {
-        mPresenter.getArtList("1",1,10);
+        ArtListParam param = new ArtListParam();
+        List<Long> oneClass = new ArrayList<>();
+        oneClass.add(mType.getPid());
+        param.setOneclass(oneClass);
+
+        List<Long> towClass = new ArrayList<>();
+        towClass.add(mType.getId());
+        param.setTowclass(towClass);
+        mPresenter.getArtList(param);
     }
 
     @Override
     public void getArtListSuccess(ArtListResult result) {
-
+        if(result != null && !CollectionUtil.isEmpty(result.getPaintingList())){
+            List<ArtItemBean> artBeansLikes = result.getPaintingList();
+            artGridAdapter.replaceAllItem(artBeansLikes);
+        }
     }
 }

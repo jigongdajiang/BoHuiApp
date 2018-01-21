@@ -13,9 +13,12 @@ import android.widget.TextView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.home.ArtItemBean;
-import com.bohui.art.bean.search.SearchResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.mvp.ArtListContact;
+import com.bohui.art.common.mvp.ArtListModel;
+import com.bohui.art.common.mvp.ArtListPresenter;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.found.artman.ArtManListAdapter;
@@ -25,9 +28,6 @@ import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.bean.home.RecommendDesignerBean;
-import com.bohui.art.search.mvp.SearchContact;
-import com.bohui.art.search.mvp.SearchDetailModel;
-import com.bohui.art.search.mvp.SearchDetailPresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.smallelement.dialog.BasePowfullDialog;
 
@@ -48,7 +48,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class SearchResultActivity extends AbsNetBaseActivity<SearchDetailPresenter,SearchDetailModel> implements SearchContact.ISearchDetailView {
+public class SearchResultActivity extends AbsNetBaseActivity<ArtListPresenter,ArtListModel> implements ArtListContact.View {
     @BindView(R.id.ll_sequence)
     LinearLayout ll_sequence;
     @BindView(R.id.rl_common)
@@ -270,16 +270,12 @@ public class SearchResultActivity extends AbsNetBaseActivity<SearchDetailPresent
 
     @Override
     protected void extraInit() {
-        mPresenter.searchByTag();
+        mPresenter.getArtList(null);
     }
 
-    @Override
-    public void searchByTagSuccess(SearchResult result) {
-
-    }
 
     @Override
-    public void filtrateSuccess(SearchResult result) {
+    public void getArtListSuccess(ArtListResult result) {
 
     }
 }

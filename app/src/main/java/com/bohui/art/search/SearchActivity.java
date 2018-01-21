@@ -1,7 +1,6 @@
 package com.bohui.art.search;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -9,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bohui.art.R;
-import com.bohui.art.bean.search.SearchResult;
 import com.bohui.art.bean.search.SearchTagResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.RxViewUtil;

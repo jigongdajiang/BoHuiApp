@@ -41,7 +41,16 @@ public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyM
     SlidingTabLayout tab;
     @BindView(R.id.view_pager)
     ViewPager view_pager;
-    private BaseFragmentStateAdapter mAdapter;
+
+    private ClassifyLevelBean level1;
+    public static final String CLASSIFY_LEVEL1 = "CLASSIFY_LEVEL1";
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        level1 = (ClassifyLevelBean) getIntent().getSerializableExtra(CLASSIFY_LEVEL1);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_art1;
@@ -62,28 +71,6 @@ public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyM
                     }
                 })
                 .builder();
-        List<ClassifyLevelBean> types = new ArrayList<>();
-        types.add(new ClassifyLevelBean("山水",1));
-        types.add(new ClassifyLevelBean("花鸟",2));
-        types.add(new ClassifyLevelBean("人物",3));
-        types.add(new ClassifyLevelBean("机构国画",4));
-        refresh(types);
-    }
-
-    private void refresh(List<ClassifyLevelBean> types) {
-        List<Fragment> fragments = new ArrayList<>();
-        if(!CollectionUtil.isEmpty(types)){
-            for(int i=0; i<types.size(); i++){
-                fragments.add(Art1Fragment.newInstance(types.get(i)));
-            }
-            mAdapter = new BaseFragmentStateAdapter(getSupportFragmentManager(),fragments);
-            view_pager.setAdapter(mAdapter);
-            String[] titles = new String[types.size()];
-            for (int j=0; j<titles.length;j++){
-                titles[j] = types.get(j).getName();
-            }
-            tab.setViewPager(view_pager,titles);
-        }
     }
 
     @Override
@@ -93,11 +80,30 @@ public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyM
 
     @Override
     protected void extraInit() {
-        mPresenter.getClassifyLevel2("");
+        mPresenter.getClassifyLevel2(String.valueOf(level1.getId()));
     }
 
     @Override
     public void getClassifyLevel2Success(ClassifyLevel2Result result) {
         //创建Tab和Fragment
+        if(result != null && !CollectionUtil.isEmpty(result.getTwoClass())){
+            refresh(result.getTwoClass());
+        }
+    }
+
+    private void refresh(List<ClassifyLevelBean> types) {
+        if(!CollectionUtil.isEmpty(types)){
+            List<Fragment> fragments = new ArrayList<>();
+            for(int i=0; i<types.size(); i++){
+                fragments.add(Art1Fragment.newInstance(types.get(i)));
+            }
+            BaseFragmentStateAdapter adapter = new BaseFragmentStateAdapter(getSupportFragmentManager(),fragments);
+            view_pager.setAdapter(adapter);
+            String[] titles = new String[types.size()];
+            for (int j=0; j<titles.length;j++){
+                titles[j] = types.get(j).getName();
+            }
+            tab.setViewPager(view_pager,titles);
+        }
     }
 }

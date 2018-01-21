@@ -51,7 +51,7 @@ import butterknife.BindView;
  */
 
 
-public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,RecommendModel> implements HomeContact.IRecommendView{
+public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, RecommendModel> implements HomeContact.IRecommendView {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout mPtrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -60,12 +60,13 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
     private RecommendResult mResult;
     private DelegateAdapter mDelegateAdapter;
     public static String imgs[] = new String[]{
-        "http://pic48.nipic.com/file/20140912/7487939_223919315000_2.jpg",
+            "http://pic48.nipic.com/file/20140912/7487939_223919315000_2.jpg",
             "http://fd.topitme.com/d/a8/1d/11315383988791da8do.jpg",
             "http://img0.imgtn.bdimg.com/it/u=3424226810,3788025634&fm=214&gp=0.jpg",
             "http://image.tianjimedia.com/uploadImages/2014/289/01/IGS09651F94M.jpg",
             "http://img.sc115.com/mm/mm3/mm112013852nhei3knpfbu.jpg",
     };
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_recommend;
@@ -77,18 +78,18 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
         mDelegateAdapter = new DelegateAdapter(virtualLayoutManager);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(mDelegateAdapter);
-        rv.addOnItemTouchListener(new RvClickListenerIml(){
+        rv.addOnItemTouchListener(new RvClickListenerIml() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                if(adapter instanceof TypeTopAdapter){
+                if (adapter instanceof TypeTopAdapter) {
                     //进入二级艺术品列表页
-                    if(mHelperUtil != null && mHelperUtil instanceof NetBaseHelperUtil){
-                        ((NetBaseHelperUtil)mHelperUtil).startAty(Art1Activity.class);
-                    }
-                }else if(adapter instanceof  Art1Plus2Adapter
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Art1Activity.CLASSIFY_LEVEL1, ((TypeTopAdapter) adapter).getData(position));
+                    startAty(Art1Activity.class, bundle);
+                } else if (adapter instanceof Art1Plus2Adapter
                         || adapter instanceof OrgGridAdapter
-                        || adapter instanceof ArtGridAdapter){
-                    ArtDetailActivity.comeIn(getActivity(),new Bundle());
+                        || adapter instanceof ArtGridAdapter) {
+                    ArtDetailActivity.comeIn(getActivity(), new Bundle());
                 }
             }
         });
@@ -102,7 +103,7 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
 
     @Override
     public void initPresenter() {
-        mPresenter.setMV(mModel,this);
+        mPresenter.setMV(mModel, this);
     }
 
     @Override
@@ -114,10 +115,8 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
     public void getRecommendSuccess(RecommendResult result) {
         mPtrClassicFrameLayout.refreshComplete();
         //刷新数据
-        if(mResult == null || (result != null && !mResult.toString().equals(result.toString()))){
-            mResult = result;
-            refreshData();
-        }
+        mResult = result;
+        refreshData();
     }
 
     @Override
@@ -131,7 +130,7 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
 
         //Banner
         List<BannerBean> bannerList = mResult.getBannerList();
-        if(!CollectionUtil.isEmpty(bannerList)){
+        if (!CollectionUtil.isEmpty(bannerList)) {
             BannerResult bannerBeans = new BannerResult();
             bannerBeans.setBannerBeans(bannerList);
 
@@ -142,11 +141,11 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
         }
         //Adv
         List<BannerBean> advList = mResult.getAdList();
-        if(!CollectionUtil.isEmpty(advList)){
+        if (!CollectionUtil.isEmpty(advList)) {
             BannerAdapter advAdapter = new BannerAdapter(mContext);
             advAdapter.setVertical(true);
-            advAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_100));
-            advAdapter.setBannerMargin(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.sys_margin_small));
+            advAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext, R.dimen.dp_100));
+            advAdapter.setBannerMargin(ResUtil.getResDimensionPixelOffset(mContext, R.dimen.sys_margin_small));
             advAdapter.setTuringTime(8000);
             BannerResult advBannerBeans = new BannerResult();
             advBannerBeans.setBannerBeans(advList);
@@ -156,21 +155,21 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
 
         //一级分类推荐列表
         List<RecommendListItemBean> remomerList = mResult.getRemomerList();
-        if(!CollectionUtil.isEmpty(remomerList)){
+        if (!CollectionUtil.isEmpty(remomerList)) {
             int size = remomerList.size();
-            for(int i=0;i<size;i++){
+            for (int i = 0; i < size; i++) {
                 String typeName = remomerList.get(i).getName();
                 long typeId = remomerList.get(i).getId();
                 List<ArtCoverItemBean> list = remomerList.get(i).getList();
-                TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext,new ClassifyLevelBean(typeName,typeId));
+                TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId));
                 adapters.add(typeTopAdapter);
-                if(list != null && list.size() > 0){
+                if (list != null && list.size() > 0) {
                     int listSize = list.size();
-                    if(listSize == 3){
+                    if (listSize == 3) {
                         Art1Plus2Adapter onePuls2adapter = new Art1Plus2Adapter(getActivity());
                         onePuls2adapter.setDatas(list);
                         adapters.add(onePuls2adapter);
-                    }else{
+                    } else {
                         OrgGridAdapter org2ItemAdapter = new OrgGridAdapter(mContext);
                         org2ItemAdapter.setDatas(list);
                         adapters.add(org2ItemAdapter);
@@ -180,11 +179,11 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
         }
         //机构推荐
         RecommendMechanismBean recommendMechanismBean = mResult.getMechanism();
-        if(recommendMechanismBean != null){
-            TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext,new ClassifyLevelBean(recommendMechanismBean.getName(),3));
+        if (recommendMechanismBean != null) {
+            TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendMechanismBean.getName(), 3));
             adapters.add(jigouTopAdapter);
             List<ArtItemBean> list = recommendMechanismBean.getList();
-            if(!CollectionUtil.isEmpty(list)){
+            if (!CollectionUtil.isEmpty(list)) {
                 ArtGridAdapter mechanisAdapter = new ArtGridAdapter(mContext);
                 mechanisAdapter.setDatas(list);
                 adapters.add(mechanisAdapter);
@@ -193,11 +192,11 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
 
         //设计师推荐
         RecommendDesignerBean recommendDesignerBean = mResult.getDesigner();
-        if(recommendDesignerBean != null){
-            TypeTopAdapter designerTopAdapter = new TypeTopAdapter(mContext,new ClassifyLevelBean(recommendDesignerBean.getName(),4));
+        if (recommendDesignerBean != null) {
+            TypeTopAdapter designerTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendDesignerBean.getName(), 4));
             adapters.add(designerTopAdapter);
             List<DesignerItemBean> list = recommendDesignerBean.getList();
-            if(!CollectionUtil.isEmpty(list)){
+            if (!CollectionUtil.isEmpty(list)) {
                 DesignerAdapter designerAdapter = new DesignerAdapter(mContext);
                 designerAdapter.setDatas(list);
                 adapters.add(designerAdapter);
@@ -206,8 +205,8 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter,Rec
 
         //猜你喜欢
         List<ArtItemBean> guessLike = mResult.getGuessLike();
-        if(!CollectionUtil.isEmpty(guessLike)){
-            TypeTopAdapter guessLikeTopAdapter = new TypeTopAdapter(mContext,new ClassifyLevelBean("猜你喜欢",5));
+        if (!CollectionUtil.isEmpty(guessLike)) {
+            TypeTopAdapter guessLikeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean("猜你喜欢", 5));
             adapters.add(guessLikeTopAdapter);
             ArtGridAdapter guessLikeAdapter = new ArtGridAdapter(mContext);
             guessLikeAdapter.setDatas(guessLike);

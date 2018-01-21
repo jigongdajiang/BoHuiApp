@@ -36,7 +36,7 @@ import butterknife.BindView;
  */
 
 
-public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,ClassifyModel> implements ClassifyContact.View {
+public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, ClassifyModel> implements ClassifyContact.View {
     @BindView(R.id.rv_classify_type)
     RecyclerView rv_classify_type;
 
@@ -46,9 +46,9 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
 
     private DelegateAdapter mDelegateAdapter;
 
-    public static ClassifyTypeFragment newInstance(ClassifyLevelBean type){
+    public static ClassifyTypeFragment newInstance(ClassifyLevelBean type) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TYPE,type);
+        bundle.putSerializable(TYPE, type);
         ClassifyTypeFragment fragment = new ClassifyTypeFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -71,30 +71,28 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
         mDelegateAdapter = new DelegateAdapter(layoutManager);
         rv_classify_type.setLayoutManager(layoutManager);
         rv_classify_type.setAdapter(mDelegateAdapter);
-        rv_classify_type.addOnItemTouchListener(new RvClickListenerIml(){
+        rv_classify_type.addOnItemTouchListener(new RvClickListenerIml() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ((NetBaseHelperUtil)mHelperUtil).startAty(Art2Activity.class);
+                ((NetBaseHelperUtil) mHelperUtil).startAty(Art2Activity.class);
             }
         });
     }
 
     @Override
     public void initPresenter() {
-        mPresenter.setMV(mModel,this);
+        mPresenter.setMV(mModel, this);
     }
 
     @Override
     protected void doLoad() {
-        mPresenter.getClassifyLevel2(""+mType.getId());
+        mPresenter.getClassifyLevel2("" + mType.getId());
     }
 
     @Override
     public void getClassifyLevel2Success(ClassifyLevel2Result result) {
-        if(mResult == null || (result != null && !mResult.toString().equals(result.toString()))){
-            mResult = result;
-            refreshData();
-        }
+        mResult = result;
+        refreshData();
     }
 
     private void refreshData() {
@@ -111,9 +109,9 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
 //            adapters.add(bannerAdapter);
 //        }
         List<ClassifyLevelBean> classifyLevelBeans = mResult.getTwoClass();
-        if(!CollectionUtil.isEmpty(classifyLevelBeans)){
+        if (!CollectionUtil.isEmpty(classifyLevelBeans)) {
             //二级分类
-            ClassTypeDeiverAdapter classTypeDeiverAdapter = new ClassTypeDeiverAdapter(mContext,mType);
+            ClassTypeDeiverAdapter classTypeDeiverAdapter = new ClassTypeDeiverAdapter(mContext, mType);
             adapters.add(classTypeDeiverAdapter);
             ClassifyTypeDetailAdapter classifyTypeDetailAdapter = new ClassifyTypeDetailAdapter(mContext);
             classifyTypeDetailAdapter.setDatas(classifyLevelBeans);

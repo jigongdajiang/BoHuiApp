@@ -8,23 +8,26 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtListParam;
+import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.home.ArtItemBean;
-import com.bohui.art.bean.home.ArtListResult;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.mvp.ArtListContact;
+import com.bohui.art.common.mvp.ArtListModel;
+import com.bohui.art.common.mvp.ArtListPresenter;
 import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.bean.home.ArtCoverItemBean;
-import com.bohui.art.home.art1.mvp.ArtListContact;
-import com.bohui.art.home.art1.mvp.ArtListModel;
-import com.bohui.art.home.art1.mvp.ArtListPresenter;
 import com.bohui.art.search.SearchActivity;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.http.exception.ApiException;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -50,11 +53,20 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
     public int getLayoutId() {
         return R.layout.activity_art2;
     }
+    public static final String TYPE = "TYPE";
+    private ClassifyLevelBean mType;
+    private Art2Adapter art2Adapter;
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        mType = (ClassifyLevelBean) getIntent().getSerializableExtra(TYPE);
+    }
 
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("国画-山水")
+                .setTitle(mType.getName())
                 .setRightImage1(R.mipmap.ic_search)
                 .setRightImage1ClickListner(new View.OnClickListener() {
                     @Override
@@ -67,11 +79,8 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
                 .builder();
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        final Art2Adapter art2Adapter = new Art2Adapter(mContext);
+        art2Adapter = new Art2Adapter(mContext);
         List<ArtItemBean> artBeans = new ArrayList<>();
-//        for(int i=0;i<20;i++){
-//            artBeans.add(new ArtBean("title"+i));
-//        }
         art2Adapter.setDatas(artBeans);
         art2Adapter.setDelegateAdapter(delegateAdapter);
         NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,art2Adapter);
@@ -93,37 +102,18 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
                 ptrClassicFrameLayout.autoRefresh(true);
             }
         }, 150);
-        final Handler handler = new Handler();
         ptrClassicFrameLayout.setAutoLoadMoreEnable(false);
         ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<ArtItemBean> artBeansLikes2 = new ArrayList<>();
-                        for(int i=0;i<6;i++){
-                            artBeansLikes2.add(new ArtItemBean("title"+new Random().nextInt(100)));
-                        }
-                        art2Adapter.replaceAllItem(artBeansLikes2);
-                        ptrClassicFrameLayout.refreshComplete();
-                        ptrClassicFrameLayout.setLoadMoreEnable(true);
-                    }
-                }, 1500);
+                request();
             }
         });
         ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void loadMore() {
-                handler.postDelayed(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        art2Adapter.addItem(new ArtItemBean("title_add"+new Random().nextInt(1000)));
-                        ptrClassicFrameLayout.loadMoreComplete(true);
-                    }
-                }, 1000);
             }
         });
     }
@@ -133,13 +123,28 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
         mPresenter.setMV(mModel,this);
     }
 
+    private void request() {
+        ArtListParam param = new ArtListParam();
+        List<Long> oneClass = new ArrayList<>();
+        oneClass.add(mType.getPid());
+        param.setOneclass(oneClass);
+
+        List<Long> towClass = new ArrayList<>();
+        towClass.add(mType.getId());
+        param.setTowclass(towClass);
+        mPresenter.getArtList(param);
+    }
+
     @Override
-    protected void extraInit() {
-        mPresenter.getArtList("",1,1);
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        ptrClassicFrameLayout.refreshComplete();
+        return super.childInterceptException(apiName, e);
     }
 
     @Override
     public void getArtListSuccess(ArtListResult result) {
-
+        art2Adapter.replaceAllItem(result.getPaintingList());
+        ptrClassicFrameLayout.refreshComplete();
+        ptrClassicFrameLayout.setLoadMoreEnable(true);
     }
 }

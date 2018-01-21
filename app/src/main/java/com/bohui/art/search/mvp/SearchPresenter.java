@@ -1,6 +1,5 @@
 package com.bohui.art.search.mvp;
 
-import com.bohui.art.bean.search.SearchResult;
 import com.bohui.art.bean.search.SearchTagResult;
 import com.bohui.art.common.net.AppProgressSubScriber;
 

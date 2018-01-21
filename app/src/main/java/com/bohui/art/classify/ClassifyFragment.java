@@ -63,6 +63,7 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
         List<DelegateAdapter.Adapter> adapters = new ArrayList<>();
         adapters.add(classifyTypeAdapter);
         mDelegateAdapter.setAdapters(adapters);
+        mDelegateAdapter.notifyDataSetChanged();
 
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(mDelegateAdapter);
@@ -121,7 +122,7 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
             beanRm.setChecked(true);
             oneClass.add(0,beanRm);
             classifyTypeAdapter.replaceAllItem(oneClass);
-
+            rollCtrlViewPager.setOffscreenPageLimit(oneClass.size());
             mFragments.clear();
             for(ClassifyLevelBean bean :oneClass){
                 mFragments.add(ClassifyTypeFragment.newInstance(bean));
