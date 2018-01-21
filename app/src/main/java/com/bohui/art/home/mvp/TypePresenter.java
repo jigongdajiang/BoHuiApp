@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class TypePresenter extends HomeContact.AbsTypedPresenter {
     @Override
-    public void getTypeInfo() {
-        mRxManage.add(mModel.getTypeInfo().subscribeWith(new AppProgressSubScriber<TypeResult>(mView, HomeContact.TAG_GET_TYPE) {
+    public void getTypeInfo(long classType) {
+        mRxManage.add(mModel.getTypeInfo(classType).subscribeWith(new AppProgressSubScriber<TypeResult>(mView, HomeContact.TAG_GET_TYPE) {
             @Override
             protected void onResultSuccess(TypeResult result) {
                 mView.getTypeInfoSuccess(result);

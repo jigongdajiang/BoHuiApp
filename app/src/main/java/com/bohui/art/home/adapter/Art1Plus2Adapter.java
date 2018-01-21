@@ -11,6 +11,7 @@ import com.alibaba.android.vlayout.layout.OnePlusNLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.framework.core.util.ResUtil;
+import com.framework.core.util.StrOperationUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -56,7 +57,7 @@ public class Art1Plus2Adapter extends BaseAdapter<ArtCoverItemBean> {
             itemViewLayoutParams.topMargin = 2;
         }
         itemView.setLayoutParams(itemViewLayoutParams);
-
+        holder.setText(R.id.tv_des,itemData.getName());
     }
 
     @Override

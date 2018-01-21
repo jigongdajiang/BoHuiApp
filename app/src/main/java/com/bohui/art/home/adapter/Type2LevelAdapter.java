@@ -36,11 +36,13 @@ public class Type2LevelAdapter extends BaseAdapter<ClassifyLevelBean> {
     @Override
     public void bindViewHolder(BaseViewHolder holder, ClassifyLevelBean itemData, int position) {
         GlideUtil.displayCircle(mContext,(ImageView) holder.getView(R.id.iv_2level),itemData.getLogo());
+        holder.setText(R.id.tv_des,itemData.getName());
     }
 
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(4);
+        gridLayoutHelper.setAutoExpand(false);
         return gridLayoutHelper;
     }
 }

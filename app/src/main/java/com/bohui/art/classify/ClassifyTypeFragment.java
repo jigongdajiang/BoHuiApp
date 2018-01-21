@@ -19,6 +19,7 @@ import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.bohui.art.home.art2.Art2Activity;
+import com.framework.core.util.CollectionUtil;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
@@ -41,6 +42,10 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
 
     public static final String TYPE = "type";
     private ClassifyLevelBean mType;
+    private ClassifyLevel2Result mResult;
+
+    private DelegateAdapter mDelegateAdapter;
+
     public static ClassifyTypeFragment newInstance(ClassifyLevelBean type){
         Bundle bundle = new Bundle();
         bundle.putSerializable(TYPE,type);
@@ -63,35 +68,9 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
     @Override
     public void initView() {
         VirtualLayoutManager layoutManager = new VirtualLayoutManager(mContext);
-        DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager);
-        //Banner
-        BannerAdapter bannerAdapter = new BannerAdapter(mContext);
-        bannerAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_100));
-        bannerAdapter.setShowIndicator(false);
-        List<BannerBean> bannerDatas = new ArrayList<>();
-        bannerDatas.add(new BannerBean("banner1","http://www.baidu.com", RecommendFragment.imgs[0]
-        ));
-        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[1]
-        ));
-        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[2]
-        ));
-        BannerResult bannerBeans = new BannerResult();
-        bannerBeans.setBannerBeans(bannerDatas);
-        bannerAdapter.addItem(bannerBeans);
-        delegateAdapter.addAdapter(bannerAdapter);
-
-        ClassTypeDeiverAdapter classTypeDeiverAdapter = new ClassTypeDeiverAdapter(mContext,mType);
-        delegateAdapter.addAdapter(classTypeDeiverAdapter);
-        //二级子类
-        List<ClassifyLevelBean> type2LevelBeans = new ArrayList<>();
-        for (int i=0;i<8;i++){
-            type2LevelBeans.add(new ClassifyLevelBean(RecommendFragment.imgs[i%3],mType.getName()+i,i));
-        }
-        ClassifyTypeDetailAdapter classifyTypeDetailAdapter = new ClassifyTypeDetailAdapter(mContext);
-        classifyTypeDetailAdapter.setDatas(type2LevelBeans);
-        delegateAdapter.addAdapter(classifyTypeDetailAdapter);
+        mDelegateAdapter = new DelegateAdapter(layoutManager);
         rv_classify_type.setLayoutManager(layoutManager);
-        rv_classify_type.setAdapter(delegateAdapter);
+        rv_classify_type.setAdapter(mDelegateAdapter);
         rv_classify_type.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
@@ -107,11 +86,39 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
 
     @Override
     protected void doLoad() {
-        mPresenter.getClassifyLevel2("1");
+        mPresenter.getClassifyLevel2(""+mType.getId());
     }
 
     @Override
     public void getClassifyLevel2Success(ClassifyLevel2Result result) {
+        if(mResult == null || (result != null && !mResult.toString().equals(result.toString()))){
+            mResult = result;
+            refreshData();
+        }
+    }
 
+    private void refreshData() {
+        List<DelegateAdapter.Adapter> adapters = new ArrayList<>();
+        //Banner
+//        List<BannerBean> bannerBeans = mResult.getBannerList();
+//        if(!CollectionUtil.isEmpty(bannerBeans)){
+//            BannerAdapter bannerAdapter = new BannerAdapter(mContext);
+//            bannerAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_100));
+//            bannerAdapter.setShowIndicator(false);
+//            BannerResult bannerResult = new BannerResult();
+//            bannerResult.setBannerBeans(bannerBeans);
+//            bannerAdapter.addItem(bannerResult);
+//            adapters.add(bannerAdapter);
+//        }
+        List<ClassifyLevelBean> classifyLevelBeans = mResult.getTwoClass();
+        if(!CollectionUtil.isEmpty(classifyLevelBeans)){
+            //二级分类
+            ClassTypeDeiverAdapter classTypeDeiverAdapter = new ClassTypeDeiverAdapter(mContext,mType);
+            adapters.add(classTypeDeiverAdapter);
+            ClassifyTypeDetailAdapter classifyTypeDetailAdapter = new ClassifyTypeDetailAdapter(mContext);
+            classifyTypeDetailAdapter.setDatas(classifyLevelBeans);
+            adapters.add(classifyTypeDetailAdapter);
+        }
+        mDelegateAdapter.setAdapters(adapters);
     }
 }

@@ -40,6 +40,7 @@ public class OrgGridAdapter extends BaseAdapter<ArtCoverItemBean> {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
         params.height = ResUtil.getResDimensionPixelOffset(mContext, R.dimen.dp_180);
         imageView.setLayoutParams(params);
+        holder.setText(R.id.tv_des,itemData.getName());
     }
 
     @Override

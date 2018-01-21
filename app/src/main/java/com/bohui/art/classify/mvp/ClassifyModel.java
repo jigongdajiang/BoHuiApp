@@ -1,6 +1,8 @@
 package com.bohui.art.classify.mvp;
 
 import com.bohui.art.bean.classify.ClassifyLevel2Result;
+import com.bohui.art.home.mvp.HomeContact;
+import com.framework.core.cache.stategy.CacheMode;
 import com.framework.core.http.EasyHttp;
 
 import io.reactivex.Observable;
@@ -16,7 +18,9 @@ public class ClassifyModel implements ClassifyContact.Model {
     @Override
     public Observable<ClassifyLevel2Result> getClassifyLevel2(String level1) {
         return EasyHttp.post(ClassifyContact.URL_GET_CLASSIFY_LEVEL2)
-                .params("level1",level1)
+                .cacheKey(ClassifyContact.TAG_GET_CLASSIFY_LEVEL2)
+                .cacheMode(CacheMode.CACHEANDREMOTEDISTINCT)
+                .params("classType",level1)
                 .execute(ClassifyLevel2Result.class);
     }
 }

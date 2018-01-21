@@ -42,10 +42,10 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
     @BindView(R.id.rl_search)
     RelativeLayout rl_search;
 
-    private BaseFragmentStateAdapter mAdapter;
+//    private BaseFragmentStateAdapter mAdapter;
     private ClassifyLevelResult mResult;
-    private List<ClassifyLevelBean> mTypes;
-    private List<Fragment> mFragments;
+//    private List<ClassifyLevelBean> mTypes;
+//    private List<Fragment> mFragments;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
@@ -61,10 +61,10 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
                 ((BaseHelperUtil)mHelperUtil).startAty(SearchActivity.class,bundle);
             }
         });
-        mTypes = new ArrayList<>();
-        mFragments = new ArrayList<>();
-        mAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(),mFragments);
-        view_pager.setAdapter(mAdapter);
+//        mTypes = new ArrayList<>();
+//        mFragments = new ArrayList<>();
+//        mAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(),mFragments);
+//        view_pager.setAdapter(mAdapter);
     }
 
     @Override
@@ -84,25 +84,30 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
 
     private void refreshTabs() {
         if(mResult != null && !CollectionUtil.isEmpty(mResult.getOneClass())){
-            mTypes.clear();
-            mFragments.clear();
+            List<ClassifyLevelBean> types = new ArrayList<>();
+            List<Fragment> fragments = new ArrayList<>();
+//            mTypes.clear();
+//            mFragments.clear();
 
             List<ClassifyLevelBean> results = mResult.getOneClass();
-            mTypes.addAll(results);
+            types.addAll(results);
+
+            fragments.add(new RecommendFragment());
+            int size = types.size();
+            for(int i=0;i<size;i++){
+                fragments.add(TypeFragment.newInstance(types.get(i)));
+            }
 
             ClassifyLevelBean recommendType = new ClassifyLevelBean();
             recommendType.setName("推荐");
             recommendType.setId(0);
-            mFragments.add(new RecommendFragment());
-            int size = mTypes.size();
-            for(int i=0;i<size;i++){
-                mFragments.add(TypeFragment.newInstance(mTypes.get(i)));
-            }
-            mTypes.add(0,recommendType);
-            String[] titles = new String[mTypes.size()];
+            types.add(0,recommendType);
+            String[] titles = new String[types.size()];
             for (int j=0; j<titles.length;j++){
-                titles[j] = mTypes.get(j).getName();
+                titles[j] = types.get(j).getName();
             }
+            BaseFragmentStateAdapter adapter = new BaseFragmentStateAdapter(getChildFragmentManager(),fragments);
+            view_pager.setAdapter(adapter);
             tab.setViewPager(view_pager,titles);
         }
     }

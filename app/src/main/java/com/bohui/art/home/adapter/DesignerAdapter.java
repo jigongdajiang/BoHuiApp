@@ -1,10 +1,12 @@
 package com.bohui.art.home.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.home.DesignerItemBean;
 import com.bohui.art.bean.home.RecommendDesignerBean;
+import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -32,6 +34,8 @@ public class DesignerAdapter extends BaseAdapter<DesignerItemBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, DesignerItemBean itemData, int position) {
-
+        ImageView iv = holder.getView(R.id.iv_designer_logo);
+        GlideUtil.display(mContext,iv,itemData.getCover());
+        holder.setText(R.id.tv_designer_name,itemData.getName());
     }
 }

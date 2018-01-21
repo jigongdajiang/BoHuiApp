@@ -15,10 +15,11 @@ import io.reactivex.Observable;
 
 public class TypeModel implements HomeContact.ITypedModel {
     @Override
-    public Observable<TypeResult> getTypeInfo() {
+    public Observable<TypeResult> getTypeInfo(long classType) {
         return EasyHttp.post(HomeContact.URL_GET_TYPE)
                 .cacheKey(HomeContact.URL_GET_TYPE)
                 .cacheMode(CacheMode.CACHEANDREMOTEDISTINCT)
+                .params("classType",String.valueOf(classType))
                 .execute(TypeResult.class);
     }
 }

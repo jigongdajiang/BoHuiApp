@@ -48,12 +48,12 @@ public interface HomeContact {
     }
 
     interface ITypedModel extends BaseModel{
-        Observable<TypeResult> getTypeInfo();
+        Observable<TypeResult> getTypeInfo(long classType);
     }
     interface ITypedView extends BaseLoadingView{
         void getTypeInfoSuccess(TypeResult result);
     }
     abstract class AbsTypedPresenter extends BasePresenter<ITypedModel,ITypedView>{
-        public abstract void getTypeInfo();
+        public abstract void getTypeInfo(long classType);
     }
 }

@@ -113,7 +113,7 @@ public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
             ApiException apiException = ApiException.handleException(e);
             PrintLog.e("--> e !instanceof ApiException err:" + e);
             if (baseViewWeakReference != null && baseViewWeakReference.get() != null) {
-                baseViewWeakReference.get().handleException(apiTag,(ApiException) e);
+                baseViewWeakReference.get().handleException(apiTag,apiException);
             }else{
                 onError(apiException);
             }

@@ -33,6 +33,7 @@ import com.bohui.art.home.mvp.TypePresenter;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
+import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
@@ -113,8 +114,19 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
     }
 
     @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
     protected void doLoad() {
-        mPresenter.getTypeInfo();
+        mPresenter.getTypeInfo(mType.getId());
+    }
+
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        mPtrClassicFrameLayout.refreshComplete();
+        return super.childInterceptException(apiName, e);
     }
 
     @Override
@@ -146,6 +158,7 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
         if (!CollectionUtil.isEmpty(type2LevelBeans)) {
             Type2LevelAdapter type2LevelAdapter = new Type2LevelAdapter(mContext);
             type2LevelAdapter.setDatas(type2LevelBeans);
+            type2LevelAdapter.setDelegateAdapter(mDelegateAdapter);
             adapters.add(type2LevelAdapter);
         }
         //大类推荐

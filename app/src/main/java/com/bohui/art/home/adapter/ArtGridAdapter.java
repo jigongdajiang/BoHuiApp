@@ -1,12 +1,14 @@
 package com.bohui.art.home.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
+import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -34,7 +36,12 @@ public class ArtGridAdapter extends BaseAdapter<ArtItemBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtItemBean itemData, int position) {
+        ImageView iv = holder.getView(R.id.iv_img);
+        GlideUtil.display(mContext,iv,itemData.getCover());
+
         holder.setText(R.id.tv_des,itemData.getName());
+        holder.setText(R.id.tv_price,"￥"+itemData.getSalePrice());
+        holder.setText(R.id.tv_tab,itemData.getLookNum()+"人浏览");
     }
 
     @Override

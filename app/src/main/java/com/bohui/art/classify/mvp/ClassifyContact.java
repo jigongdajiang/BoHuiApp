@@ -17,7 +17,7 @@ import io.reactivex.Observable;
 
 
 public interface ClassifyContact {
-    String URL_GET_CLASSIFY_LEVEL2 = "";
+    String URL_GET_CLASSIFY_LEVEL2 = "home/twoClass";
     String TAG_GET_CLASSIFY_LEVEL2 = "tag_get_classify_level2";
     interface  Model extends BaseModel{
         Observable<ClassifyLevel2Result> getClassifyLevel2(String level1);

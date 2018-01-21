@@ -38,10 +38,11 @@
             android:paddingTop="@dimen/dp_2"
             android:paddingBottom="@dimen/dp_2"
             android:layout_alignParentRight="true"
-            android:text="名品"
+            android:text=""
             android:textColor="@color/sys_color_font_white"
             android:textSize="@dimen/sys_font_size_small"
             android:layout_marginRight="@dimen/dp_5"
-            android:background="@drawable/shape_lable_bg"/>
+            android:background="@drawable/shape_lable_bg"
+            android:visibility="gone"/>
     </RelativeLayout>
 </LinearLayout>
