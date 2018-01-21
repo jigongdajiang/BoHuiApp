@@ -16,8 +16,8 @@ import io.reactivex.Observable;
 
 
 public interface SplashContact {
-    String URL_SPLASH = "";
-    String TAG_SPLASH = "";
+    String URL_SPLASH = "user/startUp";
+    String TAG_SPLASH = "tag_splash";
     interface Model extends BaseModel{
         Observable<SplashResult> splash();
     }

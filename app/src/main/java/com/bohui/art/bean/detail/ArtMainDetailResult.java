@@ -1,7 +1,6 @@
 package com.bohui.art.bean.detail;
 
-import com.bohui.art.bean.home.ArtBean;
-import com.bohui.art.bean.home.Type2LevelBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 
 import java.util.List;
 
@@ -13,14 +12,14 @@ import java.util.List;
 
 
 public class ArtMainDetailResult {
-    private List<ArtBean> arts;
-    private List<Type2LevelBean> artTyes;
+    private List<ArtCoverItemBean> arts;
+    private List<ArtManLevelBean> artTyes;
 
-    public List<ArtBean> getArts() {
+    public List<ArtCoverItemBean> getArts() {
         return arts;
     }
 
-    public List<Type2LevelBean> getArtTyes() {
+    public List<ArtManLevelBean> getArtTyes() {
         return artTyes;
     }
 }

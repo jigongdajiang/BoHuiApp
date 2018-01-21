@@ -16,7 +16,7 @@ public class SplashPresenter extends SplashContact.Presenter {
     @Override
     public void splash() {
         mRxManage.add(mModel.splash()
-                .subscribeWith(new AppProgressSubScriber<SplashResult>(mView,SplashContact.TAG_SPLASH,mView){
+                .subscribeWith(new AppProgressSubScriber<SplashResult>(mView,SplashContact.TAG_SPLASH){
                     @Override
                     protected void onResultSuccess(SplashResult result) {
                         mView.splashSuccess(result);

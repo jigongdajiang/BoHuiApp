@@ -6,11 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.widget.RelativeLayout;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.bean.home.ClassifyLevelResult;
 import com.bohui.art.common.fragment.AbsMianFragment;
-import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.common.util.RxViewUtil;
-import com.bohui.art.bean.home.TypeBean;
 import com.bohui.art.home.mvp.HomeContact;
 import com.bohui.art.home.mvp.HomeModel;
 import com.bohui.art.home.mvp.HomePresenter;
@@ -44,6 +43,9 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
     RelativeLayout rl_search;
 
     private BaseFragmentStateAdapter mAdapter;
+    private ClassifyLevelResult mResult;
+    private List<ClassifyLevelBean> mTypes;
+    private List<Fragment> mFragments;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
@@ -59,32 +61,10 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
                 ((BaseHelperUtil)mHelperUtil).startAty(SearchActivity.class,bundle);
             }
         });
-        List<TypeBean> types = new ArrayList<>();
-        types.add(new TypeBean(1,"国画"));
-        types.add(new TypeBean(2,"油画"));
-        types.add(new TypeBean(3,"版画"));
-        types.add(new TypeBean(4,"书法"));
-        types.add(new TypeBean(5,"壁画"));
-        types.add(new TypeBean(6,"其它"));
-        refresh(types);
-    }
-    private void refresh(List<TypeBean> types){
-        TypeBean recommendType = new TypeBean(0,"推荐");
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new RecommendFragment());
-        if(!CollectionUtil.isEmpty(types)){
-            for(int i=0; i<types.size(); i++){
-                fragments.add(TypeFragment.newInstance(types.get(i)));
-            }
-            mAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(),fragments);
-            view_pager.setAdapter(mAdapter);
-            types.add(0,recommendType);
-            String[] titles = new String[types.size()];
-            for (int j=0; j<titles.length;j++){
-                titles[j] = types.get(j).getType();
-            }
-            tab.setViewPager(view_pager,titles);
-        }
+        mTypes = new ArrayList<>();
+        mFragments = new ArrayList<>();
+        mAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(),mFragments);
+        view_pager.setAdapter(mAdapter);
     }
 
     @Override
@@ -95,6 +75,36 @@ public class HomeFragment extends AbsMianFragment<HomePresenter,HomeModel> imple
     @Override
     public void getClassifyLevel1Success(ClassifyLevelResult result) {
         //初始化Tab，创建Fragment
+        if(mResult == null || !mResult.toString().equals(result.toString())){
+            //重新创建刷新
+            mResult = result;
+            refreshTabs();
+        }
+    }
+
+    private void refreshTabs() {
+        if(mResult != null && !CollectionUtil.isEmpty(mResult.getOneClass())){
+            mTypes.clear();
+            mFragments.clear();
+
+            List<ClassifyLevelBean> results = mResult.getOneClass();
+            mTypes.addAll(results);
+
+            ClassifyLevelBean recommendType = new ClassifyLevelBean();
+            recommendType.setName("推荐");
+            recommendType.setId(0);
+            mFragments.add(new RecommendFragment());
+            int size = mTypes.size();
+            for(int i=0;i<size;i++){
+                mFragments.add(TypeFragment.newInstance(mTypes.get(i)));
+            }
+            mTypes.add(0,recommendType);
+            String[] titles = new String[mTypes.size()];
+            for (int j=0; j<titles.length;j++){
+                titles[j] = mTypes.get(j).getName();
+            }
+            tab.setViewPager(view_pager,titles);
+        }
     }
 
     @Override

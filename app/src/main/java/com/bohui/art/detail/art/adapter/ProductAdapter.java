@@ -48,7 +48,7 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
         List<BannerBean>  bannerBeans = new ArrayList<>();
         for(String imgUrl : itemData.getImgs()){
             BannerBean bannerBean = new BannerBean();
-            bannerBean.setImgUrl(imgUrl);
+            bannerBean.setImage(imgUrl);
             bannerBeans.add(bannerBean);
         }
         BannerHelper bannerHelper = new BannerHelper(cb_banner,(Activity) mContext,"");

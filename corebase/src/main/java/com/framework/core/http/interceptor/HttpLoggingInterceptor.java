@@ -105,7 +105,7 @@ public class HttpLoggingInterceptor implements Interceptor {
         }
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
 
-        //Logc.e(tag, "+++++++++++++++++++++++++++end+++++++++++耗时:" + tookMs + "毫秒");
+        log("+++++++++++++++++++++++++++end+++++++++++耗时:" + tookMs + "毫秒");
 
         //响应日志拦截
         return logForResponse(response, tookMs);

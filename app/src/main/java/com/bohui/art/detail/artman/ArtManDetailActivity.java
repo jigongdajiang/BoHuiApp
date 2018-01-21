@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
@@ -22,7 +23,7 @@ import com.bohui.art.bean.detail.ArtMainDetailResult;
 import com.bohui.art.bean.detail.ShowreelBean;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.home.art2.Art2Activity;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.start.MainActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -80,9 +81,9 @@ public class ArtManDetailActivity extends AbsNetBaseActivity {
         delegateAdapter.addAdapter(detailGuideAdapter);
         dbzPosition = 1;
         //代表艺术品 2+
-        List<ArtBean> artBeans = new ArrayList<>();
+        List<ArtItemBean> artBeans = new ArrayList<>();
         for(int i=0;i<20;i++){
-            artBeans.add(new ArtBean());
+            artBeans.add(new ArtItemBean());
         }
         Art2Adapter art2Adapter = new Art2Adapter(mContext);
         art2Adapter.setDatas(artBeans);

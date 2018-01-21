@@ -15,8 +15,9 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.found.ArtManListResult;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.widget.rv.ItemType;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -56,7 +57,7 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
     private int imgWh = 0;//要动态指定ImageView的高度
 
     /**设置GirdView参数，绑定数据*/
-    private void setGridView(GridView gridView,List<ArtBean> artBeans) {
+    private void setGridView(GridView gridView,List<ArtItemBean> artBeans) {
         int size = artBeans.size();
         int length = 100;//gridView每个item的宽度
         DisplayMetrics dm = new DisplayMetrics();
@@ -82,8 +83,8 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
     /**GirdView 数据适配器*/
     public class GridViewAdapter extends android.widget.BaseAdapter {
         Context context;
-        List<ArtBean> list;
-        public GridViewAdapter(Context _context, List<ArtBean> _list) {
+        List<ArtItemBean> list;
+        public GridViewAdapter(Context _context, List<ArtItemBean> _list) {
             this.list = _list;
             this.context = _context;
         }
@@ -113,8 +114,8 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
             params.width = imgWh;
             params.height = imgWh;
             imageView.setLayoutParams(params);
-            ArtBean artBean = list.get(position);
-            GlideUtil.display(context, imageView,artBean.getImgUrl());
+            ArtItemBean artBean = list.get(position);
+            GlideUtil.display(context, imageView,artBean.getCover());
             return convertView;
         }
     }

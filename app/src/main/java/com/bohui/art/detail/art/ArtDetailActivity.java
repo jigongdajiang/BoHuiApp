@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.detail.art.adapter.DetailAdapter;
@@ -23,7 +24,7 @@ import com.bohui.art.detail.art.mvp.ArtDetailPesenter;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.ArtGridAdapter;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.start.MainActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -98,9 +99,9 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
         delegateAdapter.addAdapter(detailGuideAdapterRecommend);
         //推荐 6+
         ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
-        List<ArtBean> artBeansLikes = new ArrayList<>();
+        List<ArtItemBean> artBeansLikes = new ArrayList<>();
         for(int i=0;i<6;i++){
-            artBeansLikes.add(new ArtBean());
+            artBeansLikes.add(new ArtItemBean());
         }
         artGridAdapter.setDatas(artBeansLikes);
         delegateAdapter.addAdapter(artGridAdapter);

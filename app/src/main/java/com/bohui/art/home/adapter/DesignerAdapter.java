@@ -3,7 +3,8 @@ package com.bohui.art.home.adapter;
 import android.content.Context;
 
 import com.bohui.art.R;
-import com.bohui.art.bean.home.DesignerBean;
+import com.bohui.art.bean.home.DesignerItemBean;
+import com.bohui.art.bean.home.RecommendDesignerBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -14,7 +15,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class DesignerAdapter extends BaseAdapter<DesignerBean> {
+public class DesignerAdapter extends BaseAdapter<DesignerItemBean> {
     public DesignerAdapter(Context context) {
         super(context);
     }
@@ -30,7 +31,7 @@ public class DesignerAdapter extends BaseAdapter<DesignerBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, DesignerBean itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, DesignerItemBean itemData, int position) {
 
     }
 }

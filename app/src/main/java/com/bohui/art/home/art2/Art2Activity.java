@@ -8,13 +8,14 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.home.ArtListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.home.art1.mvp.ArtListContact;
 import com.bohui.art.home.art1.mvp.ArtListModel;
 import com.bohui.art.home.art1.mvp.ArtListPresenter;
@@ -67,7 +68,7 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         final Art2Adapter art2Adapter = new Art2Adapter(mContext);
-        List<ArtBean> artBeans = new ArrayList<>();
+        List<ArtItemBean> artBeans = new ArrayList<>();
 //        for(int i=0;i<20;i++){
 //            artBeans.add(new ArtBean("title"+i));
 //        }
@@ -101,9 +102,9 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        List<ArtBean> artBeansLikes2 = new ArrayList<>();
+                        List<ArtItemBean> artBeansLikes2 = new ArrayList<>();
                         for(int i=0;i<6;i++){
-                            artBeansLikes2.add(new ArtBean("title"+new Random().nextInt(100)));
+                            artBeansLikes2.add(new ArtItemBean("title"+new Random().nextInt(100)));
                         }
                         art2Adapter.replaceAllItem(artBeansLikes2);
                         ptrClassicFrameLayout.refreshComplete();
@@ -119,7 +120,7 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
 
                     @Override
                     public void run() {
-                        art2Adapter.addItem(new ArtBean("title_add"+new Random().nextInt(1000)));
+                        art2Adapter.addItem(new ArtItemBean("title_add"+new Random().nextInt(1000)));
                         ptrClassicFrameLayout.loadMoreComplete(true);
                     }
                 }, 1000);

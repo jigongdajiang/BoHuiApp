@@ -7,12 +7,12 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.home.ArtListResult;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.adapter.ArtGridAdapter;
-import com.bohui.art.bean.home.ArtBean;
-import com.bohui.art.bean.home.TypeBean;
 import com.bohui.art.home.art1.mvp.ArtListContact;
 import com.bohui.art.home.art1.mvp.ArtListModel;
 import com.bohui.art.home.art1.mvp.ArtListPresenter;
@@ -35,8 +35,8 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
     @BindView(R.id.rv)
     RecyclerView rv;
     public static final String TYPE = "type";
-    private TypeBean mType;
-    public static Art1Fragment newInstance(TypeBean type){
+    private ClassifyLevelBean mType;
+    public static Art1Fragment newInstance(ClassifyLevelBean type){
         Bundle bundle = new Bundle();
         bundle.putSerializable(TYPE,type);
         Art1Fragment fragment = new Art1Fragment();
@@ -54,9 +54,9 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //猜你喜欢数据适配器
         ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
-        List<ArtBean> artBeansLikes = new ArrayList<>();
+        List<ArtItemBean> artBeansLikes = new ArrayList<>();
         for(int j=0;j<20;j++){
-            artBeansLikes.add(new ArtBean());
+            artBeansLikes.add(new ArtItemBean());
         }
         artGridAdapter.setDatas(artBeansLikes);
         delegateAdapter.addAdapter(artGridAdapter);

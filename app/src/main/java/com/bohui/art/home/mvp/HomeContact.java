@@ -17,13 +17,13 @@ import io.reactivex.Observable;
 
 
 public interface HomeContact {
-    String URL_GET_CLASSIFY_LEVET1 = "";
+    String URL_GET_CLASSIFY_LEVET1 = "home/oneClass";
     String TAG_GET_CLASSIFY_LEVET1 = "url_get_classify_levet1";
 
-    String URL_GET_RECOMMEND = "";
+    String URL_GET_RECOMMEND = "home/recomedList";
     String TAG_GET_RECOMMEND = "tag_get_recommend";
 
-    String URL_GET_TYPE = "";
+    String URL_GET_TYPE = "home/category";
     String TAG_GET_TYPE = "TAG_GET_TYPE";
 
     interface IHomeModel extends BaseModel{

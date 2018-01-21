@@ -7,12 +7,12 @@ import android.view.View;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.classify.ClassifyLevel2Result;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.classify.mvp.ClassifyContact;
 import com.bohui.art.classify.mvp.ClassifyModel;
 import com.bohui.art.classify.mvp.ClassifyPresenter;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
-import com.bohui.art.bean.home.TypeBean;
 import com.bohui.art.search.SearchActivity;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.framework.core.base.BaseHelperUtil;
@@ -62,15 +62,15 @@ public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyM
                     }
                 })
                 .builder();
-        List<TypeBean> types = new ArrayList<>();
-        types.add(new TypeBean(1,"山水"));
-        types.add(new TypeBean(2,"花鸟"));
-        types.add(new TypeBean(3,"人物"));
-        types.add(new TypeBean(4,"机构国画"));
+        List<ClassifyLevelBean> types = new ArrayList<>();
+        types.add(new ClassifyLevelBean("山水",1));
+        types.add(new ClassifyLevelBean("花鸟",2));
+        types.add(new ClassifyLevelBean("人物",3));
+        types.add(new ClassifyLevelBean("机构国画",4));
         refresh(types);
     }
 
-    private void refresh(List<TypeBean> types) {
+    private void refresh(List<ClassifyLevelBean> types) {
         List<Fragment> fragments = new ArrayList<>();
         if(!CollectionUtil.isEmpty(types)){
             for(int i=0; i<types.size(); i++){
@@ -80,7 +80,7 @@ public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyM
             view_pager.setAdapter(mAdapter);
             String[] titles = new String[types.size()];
             for (int j=0; j<titles.length;j++){
-                titles[j] = types.get(j).getType();
+                titles[j] = types.get(j).getName();
             }
             tab.setViewPager(view_pager,titles);
         }

@@ -1,6 +1,7 @@
 package com.bohui.art.home.mvp;
 
 import com.bohui.art.bean.home.RecommendResult;
+import com.framework.core.cache.stategy.CacheMode;
 import com.framework.core.http.EasyHttp;
 
 import io.reactivex.Observable;
@@ -16,6 +17,8 @@ public class RecommendModel implements HomeContact.IRecommendModel {
     @Override
     public Observable<RecommendResult> getRecommend() {
         return EasyHttp.post(HomeContact.URL_GET_RECOMMEND)
+                .cacheKey(HomeContact.URL_GET_RECOMMEND)
+                .cacheMode(CacheMode.CACHEANDREMOTEDISTINCT)
                 .execute(RecommendResult.class);
     }
 }

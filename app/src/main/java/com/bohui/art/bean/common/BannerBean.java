@@ -10,25 +10,42 @@ import java.io.Serializable;
 
 
 public class BannerBean implements Serializable{
-    private String title;
+    private long id;
+    private String image;
+    private String name;
     private String url;
-    private String imgUrl;
 
     public BannerBean() {
     }
 
-    public BannerBean(String title, String url, String imgUrl) {
-        this.title = title;
+    public BannerBean(String image, String name, String url) {
+        this.image = image;
+        this.name = name;
         this.url = url;
-        this.imgUrl = imgUrl;
     }
 
-    public String getTitle() {
-        return title;
+    public long getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUrl() {
@@ -39,11 +56,13 @@ public class BannerBean implements Serializable{
         this.url = url;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    @Override
+    public String toString() {
+        return "BannerBean{" +
+                "id=" + id +
+                ", image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

@@ -1,15 +1,15 @@
-package com.bohui.art.bean.start;
+package com.bohui.art.bean.home;
 
 /**
  * @author : gaojigong
- * @date : 2018/1/2
+ * @date : 2018/1/20
  * @description:
  */
 
 
-public class SplashResult {
+public class DesignerItemBean {
     private String cover;
-    private String linkurl;
+    private String did;
 
     public String getCover() {
         return cover;
@@ -19,19 +19,19 @@ public class SplashResult {
         this.cover = cover;
     }
 
-    public String getLinkurl() {
-        return linkurl;
+    public String getDid() {
+        return did;
     }
 
-    public void setLinkurl(String linkurl) {
-        this.linkurl = linkurl;
+    public void setDid(String did) {
+        this.did = did;
     }
 
     @Override
     public String toString() {
-        return "SplashResult{" +
+        return "DesignerItemBean{" +
                 "cover='" + cover + '\'' +
-                ", linkurl='" + linkurl + '\'' +
+                ", did='" + did + '\'' +
                 '}';
     }
 }

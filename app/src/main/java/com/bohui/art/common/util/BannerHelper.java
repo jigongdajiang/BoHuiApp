@@ -141,13 +141,13 @@ public class BannerHelper {
 
         @Override
         public void UpdateUI(Context context, final int position, BannerBean bean) {
-            if (TextUtils.isEmpty(bean.getImgUrl())) {
+            if (TextUtils.isEmpty(bean.getImage())) {
                 Glide.with(mContext)
                         .load(R.drawable.img_nothing)
                         .into(imageView);
                 return;
             }
-            GlideUtil.display(mContext,imageView,bean.getImgUrl(),R.drawable.img_nothing,R.drawable.img_nothing,R.drawable.img_nothing);
+            GlideUtil.display(mContext,imageView,bean.getImage(),R.drawable.img_nothing,R.drawable.img_nothing,R.drawable.img_nothing);
         }
     }
 }

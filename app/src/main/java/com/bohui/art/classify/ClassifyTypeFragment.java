@@ -10,6 +10,7 @@ import com.bohui.art.R;
 import com.bohui.art.bean.classify.ClassifyLevel2Result;
 import com.bohui.art.bean.common.BannerBean;
 import com.bohui.art.bean.common.BannerResult;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.classify.mvp.ClassifyContact;
 import com.bohui.art.classify.mvp.ClassifyModel;
 import com.bohui.art.classify.mvp.ClassifyPresenter;
@@ -18,7 +19,6 @@ import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.bohui.art.home.art2.Art2Activity;
-import com.bohui.art.bean.home.Type2LevelBean;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
@@ -40,8 +40,8 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
     RecyclerView rv_classify_type;
 
     public static final String TYPE = "type";
-    private ClassifyTypeBean mType;
-    public static ClassifyTypeFragment newInstance(ClassifyTypeBean type){
+    private ClassifyLevelBean mType;
+    public static ClassifyTypeFragment newInstance(ClassifyLevelBean type){
         Bundle bundle = new Bundle();
         bundle.putSerializable(TYPE,type);
         ClassifyTypeFragment fragment = new ClassifyTypeFragment();
@@ -52,7 +52,7 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
     @Override
     protected void doBeforeOnCreateView() {
         super.doBeforeOnCreateView();
-        mType = (ClassifyTypeBean) getArguments().getSerializable(TYPE);
+        mType = (ClassifyLevelBean) getArguments().getSerializable(TYPE);
     }
 
     @Override
@@ -83,9 +83,9 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter,C
         ClassTypeDeiverAdapter classTypeDeiverAdapter = new ClassTypeDeiverAdapter(mContext,mType);
         delegateAdapter.addAdapter(classTypeDeiverAdapter);
         //二级子类
-        List<Type2LevelBean> type2LevelBeans = new ArrayList<>();
+        List<ClassifyLevelBean> type2LevelBeans = new ArrayList<>();
         for (int i=0;i<8;i++){
-            type2LevelBeans.add(new Type2LevelBean(RecommendFragment.imgs[i%3],mType.getType()+i,i));
+            type2LevelBeans.add(new ClassifyLevelBean(RecommendFragment.imgs[i%3],mType.getName()+i,i));
         }
         ClassifyTypeDetailAdapter classifyTypeDetailAdapter = new ClassifyTypeDetailAdapter(mContext);
         classifyTypeDetailAdapter.setDatas(type2LevelBeans);

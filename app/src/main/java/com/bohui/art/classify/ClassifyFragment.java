@@ -9,6 +9,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.classify.ClassifyLevel2Result;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.bean.home.ClassifyLevelResult;
 import com.bohui.art.classify.mvp.ClassifyContact;
 import com.bohui.art.classify.mvp.ClassifyModel;
@@ -19,6 +20,7 @@ import com.bohui.art.home.mvp.HomeContact;
 import com.bohui.art.home.mvp.HomeModel;
 import com.bohui.art.home.mvp.HomePresenter;
 import com.framework.core.fragment.BaseFragmentAdapter;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 import com.widget.smallelement.viewpager.RollCtrlViewPager;
@@ -41,6 +43,13 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
     @BindView(R.id.vp_classify)
     RollCtrlViewPager rollCtrlViewPager;
 
+    private DelegateAdapter mDelegateAdapter;
+    private ClassifyTypeAdapter classifyTypeAdapter;
+    private BaseFragmentAdapter mFragmentAdapter;
+    private List<Fragment> mFragments;
+
+    private ClassifyLevelResult mResult;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_classify;
@@ -49,38 +58,25 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
     @Override
     public void initView() {
         VirtualLayoutManager layoutManager = new VirtualLayoutManager(mContext);
-        final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager);
-        ClassifyTypeAdapter classifyTypeAdapter = new ClassifyTypeAdapter(mContext);
-        List<ClassifyTypeBean> classifyTypeBeans = new ArrayList<>();
-        ClassifyTypeBean beanRm = new ClassifyTypeBean();
-        beanRm.setType("热门分类");
-        beanRm.setTypeId(0);
-        beanRm.setChecked(true);
-        classifyTypeBeans.add(beanRm);
-        for(int i=1;i<16;i++){
-            ClassifyTypeBean bean = new ClassifyTypeBean();
-            bean.setType("分类"+i);
-            bean.setTypeId(i);
-            bean.setChecked(false);
-            classifyTypeBeans.add(bean);
-        }
-        classifyTypeAdapter.setDatas(classifyTypeBeans);
-        delegateAdapter.addAdapter(classifyTypeAdapter);
-        rv.setLayoutManager(layoutManager);
-        rv.setAdapter(delegateAdapter);
+        mDelegateAdapter = new DelegateAdapter(layoutManager);
+        classifyTypeAdapter = new ClassifyTypeAdapter(mContext);
+        List<DelegateAdapter.Adapter> adapters = new ArrayList<>();
+        adapters.add(classifyTypeAdapter);
+        mDelegateAdapter.setAdapters(adapters);
 
-        List<Fragment> fragments = new ArrayList<>();
-        for(ClassifyTypeBean bean :classifyTypeBeans){
-            fragments.add(ClassifyTypeFragment.newInstance(bean));
-        }
-        BaseFragmentAdapter fragmentAdapter = new BaseFragmentAdapter(getChildFragmentManager(),fragments);
-        rollCtrlViewPager.setAdapter(fragmentAdapter);
-        rollCtrlViewPager.setCurrentItem(0);
+        rv.setLayoutManager(layoutManager);
+        rv.setAdapter(mDelegateAdapter);
+
+        mFragments = new ArrayList<>();
+        mFragmentAdapter = new BaseFragmentAdapter(getChildFragmentManager(),mFragments);
+        rollCtrlViewPager.setAdapter(mFragmentAdapter);
+
+
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 rollCtrlViewPager.setCurrentItem(position);
-                List<ClassifyTypeBean> datas = adapter.getDatas();
+                List<ClassifyLevelBean> datas = adapter.getDatas();
                 for(int i=0;i<datas.size();i++){
                     if(position == i){
                         datas.get(i).setChecked(true);
@@ -88,7 +84,7 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
                         datas.get(i).setChecked(false);
                     }
                 }
-                delegateAdapter.notifyDataSetChanged();
+                mDelegateAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -110,6 +106,27 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
 
     @Override
     public void getClassifyLevel1Success(ClassifyLevelResult result) {
-        //创建或者刷新
+        if(mResult == null || (result != null && !mResult.toString().equals(result.toString()))){
+            mResult = result;
+            refreshData();
+        }
+    }
+
+    private void refreshData() {
+        List<ClassifyLevelBean> oneClass = mResult.getOneClass();
+        if(!CollectionUtil.isEmpty(oneClass)){
+            ClassifyLevelBean beanRm = new ClassifyLevelBean();
+            beanRm.setName("热门分类");
+            beanRm.setId(0);
+            beanRm.setChecked(true);
+            oneClass.add(0,beanRm);
+            classifyTypeAdapter.replaceAllItem(oneClass);
+
+            mFragments.clear();
+            for(ClassifyLevelBean bean :oneClass){
+                mFragments.add(ClassifyTypeFragment.newInstance(bean));
+            }
+            mFragmentAdapter.notifyDataSetChanged();
+        }
     }
 }

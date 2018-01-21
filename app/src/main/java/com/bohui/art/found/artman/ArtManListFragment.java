@@ -7,15 +7,16 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.detail.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtManListResult;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.mvp.ArtManListContact;
 import com.bohui.art.found.artman.mvp.ArtManListModel;
 import com.bohui.art.found.artman.mvp.ArtManListPresenter;
 import com.bohui.art.home.RecommendFragment;
-import com.bohui.art.bean.home.ArtBean;
-import com.bohui.art.bean.home.TypeBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -36,8 +37,8 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
     @BindView(R.id.rv)
     RecyclerView rv;
     public static final String TYPE = "type";
-    private TypeBean mType;
-    public static ArtManListFragment newInstance(TypeBean type){
+    private ArtManLevelBean mType;
+    public static ArtManListFragment newInstance(ArtManLevelBean type){
         Bundle bundle = new Bundle();
         bundle.putSerializable(TYPE,type);
         ArtManListFragment fragment = new ArtManListFragment();
@@ -59,10 +60,10 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
         for(int j=0;j<20;j++){
             ArtManListResult artManListItemBean = new ArtManListResult();
             artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
-            List<ArtBean> artBeans = new ArrayList<>();
+            List<ArtItemBean> artBeans = new ArrayList<>();
             for(int m=0; m<10;m++ ){
-                ArtBean artBean = new ArtBean();
-                artBean.setImgUrl(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
+                ArtItemBean artBean = new ArtItemBean();
+                artBean.setCover(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
                 artBeans.add(artBean);
             }
             artManListItemBean.setArtBeans(artBeans);

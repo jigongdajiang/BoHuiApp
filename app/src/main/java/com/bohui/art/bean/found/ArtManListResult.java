@@ -1,6 +1,7 @@
 package com.bohui.art.bean.found;
 
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
+import com.bohui.art.bean.home.ArtItemBean;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ArtManListResult {
     private String artManAvr;
-    private List<ArtBean> artBeans;
+    private List<ArtItemBean> artBeans;
 
     public String getArtManAvr() {
         return artManAvr;
@@ -23,11 +24,11 @@ public class ArtManListResult {
         this.artManAvr = artManAvr;
     }
 
-    public List<ArtBean> getArtBeans() {
+    public List<ArtItemBean> getArtBeans() {
         return artBeans;
     }
 
-    public void setArtBeans(List<ArtBean> artBeans) {
+    public void setArtBeans(List<ArtItemBean> artBeans) {
         this.artBeans = artBeans;
     }
 }

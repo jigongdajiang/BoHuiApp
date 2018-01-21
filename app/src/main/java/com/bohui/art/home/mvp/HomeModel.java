@@ -1,6 +1,7 @@
 package com.bohui.art.home.mvp;
 
 import com.bohui.art.bean.home.ClassifyLevelResult;
+import com.framework.core.cache.stategy.CacheMode;
 import com.framework.core.http.EasyHttp;
 
 import io.reactivex.Observable;
@@ -16,6 +17,8 @@ public class HomeModel implements HomeContact.IHomeModel {
     @Override
     public Observable<ClassifyLevelResult> getClassifyLevel1() {
         return EasyHttp.post(HomeContact.URL_GET_CLASSIFY_LEVET1)
+                .cacheKey(HomeContact.URL_GET_CLASSIFY_LEVET1)
+                .cacheMode(CacheMode.CACHEANDREMOTEDISTINCT)
                 .execute(ClassifyLevelResult.class);
     }
 }

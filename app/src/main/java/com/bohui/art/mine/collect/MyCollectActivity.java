@@ -7,12 +7,13 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.mine.MyCollectResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.mine.collect.mvp.MyCollectContact;
 import com.bohui.art.mine.collect.mvp.MyCollectModel;
 import com.bohui.art.mine.collect.mvp.MyCollectPresenter;
@@ -47,9 +48,9 @@ public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyC
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         Art2Adapter art2Adapter = new Art2Adapter(mContext);
-        List<ArtBean> artBeans = new ArrayList<>();
+        List<ArtItemBean> artBeans = new ArrayList<>();
         for(int i=0;i<20;i++){
-            artBeans.add(new ArtBean());
+            artBeans.add(new ArtItemBean());
         }
         art2Adapter.setDatas(artBeans);
         delegateAdapter.addAdapter(art2Adapter);

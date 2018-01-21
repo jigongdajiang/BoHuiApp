@@ -5,8 +5,8 @@ import android.content.Context;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.common.widget.rv.ItemType;
-import com.bohui.art.bean.home.Type2LevelBean;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -18,7 +18,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class ClassifyTypeDetailAdapter extends BaseAdapter<Type2LevelBean> {
+public class ClassifyTypeDetailAdapter extends BaseAdapter<ClassifyLevelBean> {
     public ClassifyTypeDetailAdapter(Context context) {
         super(context);
     }
@@ -34,8 +34,8 @@ public class ClassifyTypeDetailAdapter extends BaseAdapter<Type2LevelBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, Type2LevelBean itemData, int position) {
-        holder.setText(R.id.tv_classify_type_detail,itemData.getType());
+    public void bindViewHolder(BaseViewHolder holder, ClassifyLevelBean itemData, int position) {
+        holder.setText(R.id.tv_classify_type_detail,itemData.getName());
     }
 
     @Override

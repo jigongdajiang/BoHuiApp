@@ -142,6 +142,7 @@ public abstract class AppProgressSubScriber<T> extends BaseSubscriber<T> impleme
 
     @Override
     public void onStart() {
+        String name = Thread.currentThread().getName();
         showProgress();
     }
 

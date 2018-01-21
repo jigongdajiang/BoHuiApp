@@ -34,6 +34,7 @@ import java.lang.reflect.Type;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
@@ -73,7 +74,8 @@ public class PostRequest extends BaseBodyRequest<PostRequest> {
                     public ObservableSource apply(@NonNull Observable upstream) {
                         return upstream.map(new CacheResultFunc<T>());
                     }
-                });
+                })
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public <T> Disposable execute(CallBack<T> callBack) {
@@ -92,9 +94,13 @@ public class PostRequest extends BaseBodyRequest<PostRequest> {
                 public ObservableSource<T> apply(@NonNull Observable<CacheResult<T>> upstream) {
                     return upstream.map(new CacheResultFunc<T>());
                 }
-            }).subscribeWith(new CallBackSubsciber<T>(context, proxy.getCallBack()));
+            })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new CallBackSubsciber<T>(context, proxy.getCallBack()));
         } else {
-            return observable.subscribeWith(new CallBackSubsciber<CacheResult<T>>(context, proxy.getCallBack()));
+            return observable
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new CallBackSubsciber<CacheResult<T>>(context, proxy.getCallBack()));
         }
     }
 }

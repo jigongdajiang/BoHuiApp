@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.bean.home.Type2LevelBean;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -18,7 +18,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class Type2LevelAdapter extends BaseAdapter<Type2LevelBean> {
+public class Type2LevelAdapter extends BaseAdapter<ClassifyLevelBean> {
     public Type2LevelAdapter(Context context) {
         super(context);
     }
@@ -34,8 +34,8 @@ public class Type2LevelAdapter extends BaseAdapter<Type2LevelBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, Type2LevelBean itemData, int position) {
-        GlideUtil.displayCircle(mContext,(ImageView) holder.getView(R.id.iv_2level),itemData.getImgUrl());
+    public void bindViewHolder(BaseViewHolder holder, ClassifyLevelBean itemData, int position) {
+        GlideUtil.displayCircle(mContext,(ImageView) holder.getView(R.id.iv_2level),itemData.getLogo());
     }
 
     @Override

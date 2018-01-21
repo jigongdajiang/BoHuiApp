@@ -11,11 +11,12 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.found.DesignerListResult;
+import com.bohui.art.bean.home.DesignerItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.designer.DesignerDetailActivity;
 import com.bohui.art.home.adapter.DesignerAdapter;
-import com.bohui.art.bean.home.DesignerBean;
+import com.bohui.art.bean.home.RecommendDesignerBean;
 import com.bohui.art.search.SearchActivity;
 import com.framework.core.base.BaseHelperUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -110,9 +111,9 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, convertView);
 
         DesignerAdapter designerAdapter = new DesignerAdapter(mContext);
-        List<DesignerBean> designerBeans = new ArrayList<>();
+        List<DesignerItemBean> designerBeans = new ArrayList<>();
         for(int i=0;i<20;i++){
-            DesignerBean designerBean = new DesignerBean();
+            DesignerItemBean designerBean = new DesignerItemBean();
             designerBeans.add(designerBean);
         }
         designerAdapter.setDatas(designerBeans);

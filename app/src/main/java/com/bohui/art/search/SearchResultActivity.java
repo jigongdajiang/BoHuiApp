@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.search.SearchResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.RxViewUtil;
@@ -22,8 +23,8 @@ import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.bean.home.ArtBean;
-import com.bohui.art.bean.home.DesignerBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
+import com.bohui.art.bean.home.RecommendDesignerBean;
 import com.bohui.art.search.mvp.SearchContact;
 import com.bohui.art.search.mvp.SearchDetailModel;
 import com.bohui.art.search.mvp.SearchDetailPresenter;
@@ -116,9 +117,9 @@ public class SearchResultActivity extends AbsNetBaseActivity<SearchDetailPresent
         switch (mType){
             case 0:
                 contentAdapter = new Art2Adapter(mContext);
-                List<ArtBean> artBeans = new ArrayList<>();
+                List<ArtCoverItemBean> artBeans = new ArrayList<>();
                 for(int i=0;i<20;i++){
-                    artBeans.add(new ArtBean());
+                    artBeans.add(new ArtCoverItemBean());
                 }
                 contentAdapter.setDatas(artBeans);
                 break;
@@ -128,10 +129,10 @@ public class SearchResultActivity extends AbsNetBaseActivity<SearchDetailPresent
                 for(int j=0;j<20;j++){
                     ArtManListResult artManListItemBean = new ArtManListResult();
                     artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
-                    List<ArtBean> artBeans2 = new ArrayList<>();
+                    List<ArtItemBean> artBeans2 = new ArrayList<>();
                     for(int m=0; m<10;m++ ){
-                        ArtBean artBean = new ArtBean();
-                        artBean.setImgUrl(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
+                        ArtItemBean artBean = new ArtItemBean();
+                        artBean.setCover(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
                         artBeans2.add(artBean);
                     }
                     artManListItemBean.setArtBeans(artBeans2);
@@ -141,9 +142,9 @@ public class SearchResultActivity extends AbsNetBaseActivity<SearchDetailPresent
                 break;
             case 2:
                 contentAdapter = new DesignerAdapter(mContext);
-                List<DesignerBean> designerBeans = new ArrayList<>();
+                List<RecommendDesignerBean> designerBeans = new ArrayList<>();
                 for(int i=0;i<20;i++){
-                    DesignerBean designerBean = new DesignerBean();
+                    RecommendDesignerBean designerBean = new RecommendDesignerBean();
                     designerBeans.add(designerBean);
                 }
                 contentAdapter.setDatas(designerBeans);

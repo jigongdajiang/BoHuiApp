@@ -3,8 +3,9 @@ package com.bohui.art.home.art1;
 import android.content.Context;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.widget.rv.ItemType;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -15,7 +16,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class Art2Adapter extends BaseAdapter<ArtBean> {
+public class Art2Adapter extends BaseAdapter<ArtItemBean> {
     public Art2Adapter(Context context) {
         super(context);
     }
@@ -31,7 +32,7 @@ public class Art2Adapter extends BaseAdapter<ArtBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtBean itemData, int position) {
-        holder.setText(R.id.tv_art_des,itemData.getTitle());
+    public void bindViewHolder(BaseViewHolder holder, ArtItemBean itemData, int position) {
+        holder.setText(R.id.tv_art_des,itemData.getName());
     }
 }

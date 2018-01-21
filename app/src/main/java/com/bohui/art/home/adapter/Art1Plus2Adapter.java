@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.OnePlusNLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -21,7 +21,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class Art1Plus2Adapter extends BaseAdapter<ArtBean> {
+public class Art1Plus2Adapter extends BaseAdapter<ArtCoverItemBean> {
     public Art1Plus2Adapter(Context context) {
         super(context);
     }
@@ -37,7 +37,7 @@ public class Art1Plus2Adapter extends BaseAdapter<ArtBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtBean itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, ArtCoverItemBean itemData, int position) {
         ImageView imageView = holder.getView(R.id.iv_img);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
         if (position == 0) {

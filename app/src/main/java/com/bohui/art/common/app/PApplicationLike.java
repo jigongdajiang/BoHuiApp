@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.multidex.MultiDex;
 
 import com.framework.core.app.AtyManager;
+import com.framework.core.cache.converter.GsonDiskConverter;
 import com.framework.core.http.EasyHttp;
 import com.framework.core.http.interceptor.HttpLoggingInterceptor;
 import com.framework.core.log.LoggerStrategy;
@@ -87,9 +88,9 @@ public class PApplicationLike extends DefaultApplicationLike {
         EasyHttp.init(getApp());
         EasyHttp.getInstance()
                 .setBaseUrl(AppConfig.getBaseUrl())
+                .setCacheDiskConverter(new GsonDiskConverter())
                 .setParamConvert(new ParamConvert(getApp()))
                 .addInterceptor(new HttpLoggingInterceptor("RequestLog").setLevel(HttpLoggingInterceptor.Level.BODY));
-
     }
 
     private void registerActivityCallBack() {

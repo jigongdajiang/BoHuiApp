@@ -41,6 +41,7 @@ public class MainActivity extends AbsNetBaseActivity {
     FrameLayout mContainer;//Fragment
 
     //fragment相关
+
     private List<Fragment> fragments;
     private List<String> fTags;
     private FragmentChangeManager mFragmentChangeManager;
@@ -166,9 +167,7 @@ public class MainActivity extends AbsNetBaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                if (null != mHelperUtil && mHelperUtil instanceof NetBaseHelperUtil) {
-                    ((NetBaseHelperUtil) mHelperUtil).toastShort("再按一次退出程序");
-                }
+                toastLong("再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
                 AppFuntion.exitApp(mContext);

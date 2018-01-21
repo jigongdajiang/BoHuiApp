@@ -5,7 +5,8 @@ import android.content.Context;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
-import com.bohui.art.bean.home.ArtBean;
+import com.bohui.art.bean.home.ArtCoverItemBean;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -16,7 +17,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class ArtGridAdapter extends BaseAdapter<ArtBean> {
+public class ArtGridAdapter extends BaseAdapter<ArtItemBean> {
     public ArtGridAdapter(Context context) {
         super(context);
     }
@@ -32,8 +33,8 @@ public class ArtGridAdapter extends BaseAdapter<ArtBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtBean itemData, int position) {
-        holder.setText(R.id.tv_des,itemData.getTitle());
+    public void bindViewHolder(BaseViewHolder holder, ArtItemBean itemData, int position) {
+        holder.setText(R.id.tv_des,itemData.getName());
     }
 
     @Override

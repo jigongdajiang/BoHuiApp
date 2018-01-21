@@ -3,6 +3,7 @@ package com.bohui.art.classify;
 import android.content.Context;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -14,7 +15,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class ClassifyTypeAdapter extends BaseAdapter<ClassifyTypeBean> {
+public class ClassifyTypeAdapter extends BaseAdapter<ClassifyLevelBean> {
     public ClassifyTypeAdapter(Context context) {
         super(context);
     }
@@ -30,8 +31,8 @@ public class ClassifyTypeAdapter extends BaseAdapter<ClassifyTypeBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ClassifyTypeBean itemData, int position) {
-        holder.setText(R.id.cb_classify_type,itemData.getType());
+    public void bindViewHolder(BaseViewHolder holder, ClassifyLevelBean itemData, int position) {
+        holder.setText(R.id.cb_classify_type,itemData.getName());
         holder.setChecked(R.id.cb_classify_type,itemData.isChecked());
     }
 }

@@ -19,6 +19,7 @@ import com.framework.core.util.StatusBarCompatUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -47,6 +48,10 @@ public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,Welcome
     // 记录当前选中位置
     private int currentIndex;
 
+    private ImageView iv_welcome_one;
+    private ImageView iv_welcome_two;
+    private ImageView iv_welcome_three;
+
     @Override
     protected void doBeforeSetContentView() {
         super.doBeforeSetContentView();
@@ -63,16 +68,6 @@ public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,Welcome
         createPagerViews();
         initViewPager();
         initDots();
-    }
-
-    @Override
-    protected WelcomePresenter createPresenter() {
-        return new WelcomePresenter();
-    }
-
-    @Override
-    protected WelcomeModel createModel() {
-        return new WelcomeModel();
     }
 
     @Override
@@ -106,17 +101,17 @@ public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,Welcome
         views = new ArrayList<>();
         // 初始化引导图片列表
         View viewOne = inflater.inflate(R.layout.layout_welcome_one, null);
-        ImageView iv_welcome_one = viewOne.findViewById(R.id.iv_welcome_one);
+        iv_welcome_one = viewOne.findViewById(R.id.iv_welcome_one);
         GlideUtil.display(mContext,iv_welcome_one,R.drawable.img_welcome_1);
         views.add(viewOne);
 
         View viewTwo = inflater.inflate(R.layout.layout_welcome_two, null);
-        ImageView iv_welcome_two = viewTwo.findViewById(R.id.iv_welcome_two);
+        iv_welcome_two = viewTwo.findViewById(R.id.iv_welcome_two);
         GlideUtil.display(mContext,iv_welcome_two,R.drawable.img_welcome_2);
         views.add(viewTwo);
 
         View viewThree = inflater.inflate(R.layout.layout_welcome_three, null);
-        ImageView iv_welcome_three = viewThree.findViewById(R.id.iv_welcome_three);
+        iv_welcome_three = viewThree.findViewById(R.id.iv_welcome_three);
         GlideUtil.display(mContext,iv_welcome_three,R.drawable.img_welcome_3);
         TextView startBtn = viewThree.findViewById(R.id.tv_welcome_start);
         mRxManager.add(RxView.clicks(startBtn).throttleFirst(1, TimeUnit.SECONDS).subscribe(new Consumer<Object>() {
@@ -128,6 +123,11 @@ public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,Welcome
             }
         }));
         views.add(viewThree);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.welCome();
     }
 
     @Override
@@ -193,7 +193,11 @@ public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,Welcome
 
     @Override
     public void welComeSuccess(WelcomeResult result) {
-        //获取广告页数据
-        //更新广告Adapter
+        List<String> bootPage = result.getBootPage();
+        if(bootPage != null && bootPage.size() == 3){
+            GlideUtil.display(mContext,iv_welcome_one,bootPage.get(0));
+            GlideUtil.display(mContext,iv_welcome_two,bootPage.get(1));
+            GlideUtil.display(mContext,iv_welcome_three,bootPage.get(2));
+        }
     }
 }

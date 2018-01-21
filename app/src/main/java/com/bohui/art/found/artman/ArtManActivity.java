@@ -6,10 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.bohui.art.R;
+import com.bohui.art.bean.detail.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtManLevelResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
-import com.bohui.art.bean.home.TypeBean;
 import com.bohui.art.found.artman.mvp.ArtManLevelModel;
 import com.bohui.art.found.artman.mvp.ArtManLevelPresenter;
 import com.bohui.art.found.artman.mvp.ArtManListContact;
@@ -57,14 +57,14 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
                     }
                 })
                 .builder();
-        List<TypeBean> types = new ArrayList<>();
-        types.add(new TypeBean(1,"山水"));
-        types.add(new TypeBean(2,"花鸟"));
-        types.add(new TypeBean(3,"人物"));
-        types.add(new TypeBean(4,"机构国画"));
+        List<ArtManLevelBean> types = new ArrayList<>();
+        types.add(new ArtManLevelBean(1,"山水"));
+        types.add(new ArtManLevelBean(2,"花鸟"));
+        types.add(new ArtManLevelBean(3,"人物"));
+        types.add(new ArtManLevelBean(4,"机构国画"));
         refresh(types);
     }
-    private void refresh(List<TypeBean> types) {
+    private void refresh(List<ArtManLevelBean> types) {
         List<Fragment> fragments = new ArrayList<>();
         if(!CollectionUtil.isEmpty(types)){
             for(int i=0; i<types.size(); i++){
@@ -74,7 +74,7 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
             view_pager.setAdapter(mAdapter);
             String[] titles = new String[types.size()];
             for (int j=0; j<titles.length;j++){
-                titles[j] = types.get(j).getType();
+                titles[j] = types.get(j).getName();
             }
             tab.setViewPager(view_pager,titles);
         }
