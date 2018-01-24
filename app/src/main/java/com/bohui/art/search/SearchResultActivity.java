@@ -14,6 +14,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.common.ArtListResult;
+import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.mvp.ArtListContact;
@@ -125,19 +126,7 @@ public class SearchResultActivity extends AbsNetBaseActivity<ArtListPresenter,Ar
                 break;
             case 1:
                 contentAdapter = new ArtManListAdapter(mContext);
-                List<ArtManListResult> artManListItemBeans = new ArrayList<>();
-                for(int j=0;j<20;j++){
-                    ArtManListResult artManListItemBean = new ArtManListResult();
-                    artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
-                    List<ArtItemBean> artBeans2 = new ArrayList<>();
-                    for(int m=0; m<10;m++ ){
-                        ArtItemBean artBean = new ArtItemBean();
-                        artBean.setCover(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
-                        artBeans2.add(artBean);
-                    }
-                    artManListItemBean.setArtBeans(artBeans2);
-                    artManListItemBeans.add(artManListItemBean);
-                }
+                List<ArtManItemBean> artManListItemBeans = new ArrayList<>();
                 contentAdapter.setDatas(artManListItemBeans);
                 break;
             case 2:

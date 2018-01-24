@@ -13,22 +13,13 @@ import java.util.List;
 
 
 public class ArtManListResult {
-    private String artManAvr;
-    private List<ArtItemBean> artBeans;
+    private List<ArtManItemBean> artistList;
 
-    public String getArtManAvr() {
-        return artManAvr;
+    public List<ArtManItemBean> getArtistList() {
+        return artistList;
     }
 
-    public void setArtManAvr(String artManAvr) {
-        this.artManAvr = artManAvr;
-    }
-
-    public List<ArtItemBean> getArtBeans() {
-        return artBeans;
-    }
-
-    public void setArtBeans(List<ArtItemBean> artBeans) {
-        this.artBeans = artBeans;
+    public void setArtistList(List<ArtManItemBean> artistList) {
+        this.artistList = artistList;
     }
 }

@@ -1,5 +1,6 @@
 package com.bohui.art.found.artman.mvp;
 
+import com.bohui.art.bean.common.ArtManListParam;
 import com.bohui.art.bean.found.ArtManLevelResult;
 import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.common.net.mvp.BaseLoadingView;
@@ -18,7 +19,7 @@ import io.reactivex.Observable;
 public interface ArtManListContact {
     String URL_GET_ART_MAN_LEVEL = "";
     String TAG_GET_ART_MAN_LEVEL = "tag_get_art_man_level";
-    String URL_GET_ART_MAN_LIST = "";
+    String URL_GET_ART_MAN_LIST = "artist/getArtistList";
     String TAG_GET_ART_MAN_LIST = "tag_get_art_man_list";
     interface IArtManLevelModel extends BaseModel{
         Observable<ArtManLevelResult> getArtManLevel();
@@ -30,12 +31,12 @@ public interface ArtManListContact {
         public abstract void getArtManLevel();
     }
     interface IArtManListModel extends BaseModel{
-        Observable<ArtManListResult> getArtManList();
+        Observable<ArtManListResult> getArtManList(ArtManListParam param);
     }
     interface IArtManListView extends BaseLoadingView{
         void getArtManListSuccess(ArtManListResult result);
     }
     abstract class IArtManListPresenter extends BasePresenter<IArtManListModel,IArtManListView>{
-        public abstract void getArtManList();
+        public abstract void getArtManList(ArtManListParam param);
     }
 }

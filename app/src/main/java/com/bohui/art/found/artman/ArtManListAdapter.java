@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.ArtManItemArtBean;
+import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.widget.rv.ItemType;
@@ -31,7 +33,7 @@ import java.util.List;
  */
 
 
-public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
+public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
     public ArtManListAdapter(Context context) {
         super(context);
     }
@@ -47,17 +49,17 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, ArtManListResult itemData, int position) {
+    public void bindViewHolder(BaseViewHolder holder, ArtManItemBean itemData, int position) {
         ImageView ivAvr = holder.getView(R.id.iv_art_man_avr);
-        GlideUtil.displayCircle(mContext, ivAvr,itemData.getArtManAvr());
+        GlideUtil.displayCircle(mContext, ivAvr,itemData.getPhoto());
         GridView gridView = holder.getView(R.id.gv_art_man_arts);
-        setGridView(gridView,itemData.getArtBeans());
+        setGridView(gridView,itemData.getPaintingList());
     }
 
     private int imgWh = 0;//要动态指定ImageView的高度
 
     /**设置GirdView参数，绑定数据*/
-    private void setGridView(GridView gridView,List<ArtItemBean> artBeans) {
+    private void setGridView(GridView gridView,List<ArtManItemArtBean> artBeans) {
         int size = artBeans.size();
         int length = 100;//gridView每个item的宽度
         DisplayMetrics dm = new DisplayMetrics();
@@ -83,8 +85,8 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
     /**GirdView 数据适配器*/
     public class GridViewAdapter extends android.widget.BaseAdapter {
         Context context;
-        List<ArtItemBean> list;
-        public GridViewAdapter(Context _context, List<ArtItemBean> _list) {
+        List<ArtManItemArtBean> list;
+        public GridViewAdapter(Context _context, List<ArtManItemArtBean> _list) {
             this.list = _list;
             this.context = _context;
         }
@@ -114,7 +116,7 @@ public class ArtManListAdapter extends BaseAdapter<ArtManListResult> {
             params.width = imgWh;
             params.height = imgWh;
             imageView.setLayoutParams(params);
-            ArtItemBean artBean = list.get(position);
+            ArtManItemArtBean artBean = list.get(position);
             GlideUtil.display(context, imageView,artBean.getCover());
             return convertView;
         }

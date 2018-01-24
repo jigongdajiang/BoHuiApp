@@ -7,6 +7,7 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtManListParam;
 import com.bohui.art.bean.detail.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.bean.home.ArtItemBean;
@@ -38,6 +39,7 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
     RecyclerView rv;
     public static final String TYPE = "type";
     private ArtManLevelBean mType;
+    private ArtManListAdapter artManListAdapter;
     public static ArtManListFragment newInstance(ArtManLevelBean type){
         Bundle bundle = new Bundle();
         bundle.putSerializable(TYPE,type);
@@ -45,6 +47,13 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    protected void doBeforeOnCreateView() {
+        super.doBeforeOnCreateView();
+        mType = (ArtManLevelBean) getArguments().getSerializable(TYPE);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.layout_common_rv;
@@ -55,21 +64,8 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getActivity());
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //猜你喜欢数据适配器
-        ArtManListAdapter artManListAdapter = new ArtManListAdapter(mContext);
-        List<ArtManListResult> artManListItemBeans = new ArrayList<>();
-        for(int j=0;j<20;j++){
-            ArtManListResult artManListItemBean = new ArtManListResult();
-            artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
-            List<ArtItemBean> artBeans = new ArrayList<>();
-            for(int m=0; m<10;m++ ){
-                ArtItemBean artBean = new ArtItemBean();
-                artBean.setCover(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
-                artBeans.add(artBean);
-            }
-            artManListItemBean.setArtBeans(artBeans);
-            artManListItemBeans.add(artManListItemBean);
-        }
-        artManListAdapter.setDatas(artManListItemBeans);
+        artManListAdapter = new ArtManListAdapter(mContext);
+        artManListAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(artManListAdapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
@@ -88,11 +84,15 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
 
     @Override
     protected void extraInit() {
-        mPresenter.getArtManList();
+        ArtManListParam param = new ArtManListParam();
+        param.setLevel(mType.getId());
+        mPresenter.getArtManList(param);
     }
 
     @Override
     public void getArtManListSuccess(ArtManListResult result) {
-
+        if(result != null){
+            artManListAdapter.replaceAllItem(result.getArtistList());
+        }
     }
 }

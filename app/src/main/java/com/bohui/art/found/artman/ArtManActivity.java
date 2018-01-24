@@ -45,7 +45,7 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("国画推荐")
+                .setTitle("艺术家")
                 .setRightImage1(R.mipmap.ic_search)
                 .setRightImage1ClickListner(new View.OnClickListener() {
                     @Override
@@ -58,10 +58,10 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
                 })
                 .builder();
         List<ArtManLevelBean> types = new ArrayList<>();
-        types.add(new ArtManLevelBean(1,"山水"));
-        types.add(new ArtManLevelBean(2,"花鸟"));
-        types.add(new ArtManLevelBean(3,"人物"));
-        types.add(new ArtManLevelBean(4,"机构国画"));
+        types.add(new ArtManLevelBean(1,"国家级"));
+        types.add(new ArtManLevelBean(2,"省级"));
+        types.add(new ArtManLevelBean(3,"市级"));
+        types.add(new ArtManLevelBean(4,"其它"));
         refresh(types);
     }
     private void refresh(List<ArtManLevelBean> types) {

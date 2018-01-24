@@ -54,17 +54,8 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
         List<ArtManListResult> artManListItemBeans = new ArrayList<>();
         for(int j=0;j<20;j++){
             ArtManListResult artManListItemBean = new ArtManListResult();
-            artManListItemBean.setArtManAvr(RecommendFragment.imgs[j%RecommendFragment.imgs.length]);
-            List<ArtItemBean> artBeans = new ArrayList<>();
-            for(int m=0; m<10;m++ ){
-                ArtItemBean artBean = new ArtItemBean();
-                artBean.setCover(RecommendFragment.imgs[m%RecommendFragment.imgs.length]);
-                artBeans.add(artBean);
-            }
-            artManListItemBean.setArtBeans(artBeans);
             artManListItemBeans.add(artManListItemBean);
         }
-        artManListAdapter.setDatas(artManListItemBeans);
         delegateAdapter.addAdapter(artManListAdapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
