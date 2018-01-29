@@ -14,8 +14,11 @@ import io.reactivex.Observable;
 
 public class AccountEditModel implements AccountEditContact.Model {
     @Override
-    public Observable<AccountEditResult> accountEdit() {
+    public Observable<AccountEditResult> accountEdit(UserInfoEditParam param) {
         return EasyHttp.post(AccountEditContact.URL_ACCOUNT_DEIT)
+                .params("uid",String.valueOf(param.getUid()))
+                .params("sex",String.valueOf(param.getSex()))
+                .params("name",param.getName())
                 .execute(AccountEditResult.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.bohui.art.found.mvp;
 
 import com.bohui.art.bean.common.BannerResult;
+import com.bohui.art.bean.found.FoundResult;
 import com.bohui.art.common.net.AppProgressSubScriber;
 
 /**
@@ -13,9 +14,9 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 public class FoundPresenter extends FoundContact.Presenter {
     @Override
     public void getFoundBanner() {
-        mRxManage.add(mModel.getFoundBanner().subscribeWith(new AppProgressSubScriber<BannerResult>() {
+        mRxManage.add(mModel.getFoundBanner().subscribeWith(new AppProgressSubScriber<FoundResult>() {
             @Override
-            protected void onResultSuccess(BannerResult result) {
+            protected void onResultSuccess(FoundResult result) {
                 mView.getFoundBannerSuccess(result);
             }
         }));

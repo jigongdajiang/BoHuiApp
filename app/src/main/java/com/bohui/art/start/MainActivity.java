@@ -14,6 +14,7 @@ import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.found.FoundFragment;
 import com.bohui.art.home.HomeFragment;
 import com.bohui.art.mine.MineFragment;
+import com.bohui.art.start.login.LoginActivity;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -80,11 +81,11 @@ public class MainActivity extends AbsNetBaseActivity {
         fragments.add(foundFragment);
         fTags.add(FoundFragment.class.getSimpleName());
 
-//        if (AppFuntion.isLogin(this)) {//是否登陆
+        if (AppFuntion.isLogin()) {//是否登陆
             mineFragment = new MineFragment();
             fragments.add(mineFragment);
             fTags.add(MineFragment.class.getSimpleName());
-//        }
+        }
 
         mFragmentChangeManager = new FragmentChangeManager(getSupportFragmentManager(), R.id.container, fragments, fTags);
     }
@@ -147,15 +148,15 @@ public class MainActivity extends AbsNetBaseActivity {
                 mTabLayout.setCurrentTab(position);
                 break;
             case 3:
-//                if (AppFuntion.isLogin(mContext)) {
+                if (AppFuntion.isLogin()) {
                     mFragmentChangeManager.showFragment(position);
                     mTabLayout.setCurrentTab(position);
-//                } else {
-//                    mTabLayout.setCurrentTab(mFragmentChangeManager.getCurrentPosition());
-//                    if (mHelperUtil != null && mHelperUtil instanceof NetBaseHelperUtil) {
-//                        ((NetBaseHelperUtil) mHelperUtil).startAty(LoginActivity.class);
-//                    }
-//                }
+                } else {
+                    mTabLayout.setCurrentTab(mFragmentChangeManager.getCurrentPosition());
+                    if (mHelperUtil != null && mHelperUtil instanceof NetBaseHelperUtil) {
+                        ((NetBaseHelperUtil) mHelperUtil).startAty(LoginActivity.class);
+                    }
+                }
                 break;
         }
     }

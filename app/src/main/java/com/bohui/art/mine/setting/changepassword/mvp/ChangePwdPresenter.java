@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class ChangePwdPresenter extends ChangePwdContanct.Presenter {
     @Override
-    public void changePwd() {
-        mRxManage.add(mModel.changePwd().subscribeWith(new AppProgressSubScriber<ChangePasswordResult>(mView,ChangePwdContanct.TAG_CHANGE_PWD,mView) {
+    public void changePwd(long uid,String oldpassword,String password) {
+        mRxManage.add(mModel.changePwd(uid,oldpassword,password).subscribeWith(new AppProgressSubScriber<ChangePasswordResult>(mView,ChangePwdContanct.TAG_CHANGE_PWD,mView) {
             @Override
             protected void onResultSuccess(ChangePasswordResult result) {
                 mView.changePwdSuccess(result);

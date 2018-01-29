@@ -14,10 +14,10 @@ import io.reactivex.Observable;
 
 public class LoginModel implements LoginContact.Model {
     @Override
-    public Observable<LoginResult> login(String phone, String pwd) {
+    public Observable<LoginResult> login(String mobile,String password) {
         return EasyHttp.post(LoginContact.URL_LOGIN)
-                .params("phone",phone)
-                .params("pwd",pwd)
+                .params("mobile",mobile)
+                .params("password",password)
                 .execute(LoginResult.class);
     }
 }

@@ -12,7 +12,7 @@ import com.framework.core.http.subsciber.BaseSubscriber;
 
 public class MinePresenter extends MineContact.Presenter {
     @Override
-    public void getUserInfo(String uid) {
+    public void getUserInfo(long uid) {
         mModel.getUserInfo(uid)
                 .subscribe(new BaseSubscriber<MineInfoResult>(mView,MineContact.TAG_MINE_GET_USERINFO) {
                     @Override

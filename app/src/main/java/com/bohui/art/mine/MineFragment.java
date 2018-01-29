@@ -7,6 +7,7 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.mine.UserBean;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.found.GuideItemAdapter;
 import com.bohui.art.found.GuideItemBean;
@@ -41,6 +42,7 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
     @BindView(R.id.rv_mine)
     RecyclerView rv_mine;
 
+    private MineTopAdapter mineTopAdapter;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_mine;
@@ -51,11 +53,8 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
         VirtualLayoutManager layoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager);
         //Top
-        UserBean userBean = new UserBean();
-        userBean.setAvrUrl(RecommendFragment.imgs[0]);
-        userBean.setName("济公大奖");
-        userBean.setDes("坚持到底就是胜利");
-        final MineTopAdapter mineTopAdapter = new MineTopAdapter(mContext,userBean);
+        mineTopAdapter = new MineTopAdapter(mContext,new MineInfoResult());
+        mineTopAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(mineTopAdapter);
 
         GuideItemAdapter foundItemAdapter = new GuideItemAdapter(mContext);
@@ -116,7 +115,7 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
 
     @Override
     protected void come() {
-        mPresenter.getUserInfo("1");
+        mPresenter.getUserInfo(AppFuntion.getUid());
 
     }
 
@@ -127,6 +126,6 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
 
     @Override
     public void getUserInfoSuccess(MineInfoResult result) {
-        PrintLog.e(result.toString());
+        mineTopAdapter.refresh(result);
     }
 }

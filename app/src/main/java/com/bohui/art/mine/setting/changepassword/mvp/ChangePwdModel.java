@@ -14,8 +14,11 @@ import io.reactivex.Observable;
 
 public class ChangePwdModel implements ChangePwdContanct.Model {
     @Override
-    public Observable<ChangePasswordResult> changePwd() {
+    public Observable<ChangePasswordResult> changePwd(long uid,String oldpassword,String password) {
         return EasyHttp.post(ChangePwdContanct.URL_CHANGE_PWD)
+                .params("uid",String.valueOf(uid))
+                .params("oldpassword",oldpassword)
+                .params("password",password)
                 .execute(ChangePasswordResult.class);
     }
 }

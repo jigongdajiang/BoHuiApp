@@ -14,8 +14,8 @@ import com.framework.core.http.subsciber.BaseSubscriber;
 
 public class LoginPresenter extends LoginContact.Presenter {
     @Override
-    public void login(String phone, String pwd) {
-        mRxManage.add(mModel.login(phone,pwd)
+    public void login(String mobile,String password) {
+        mRxManage.add(mModel.login(mobile,password)
         .subscribeWith(new AppProgressSubScriber<LoginResult>(mView,LoginContact.TAG_LOGIN,mView){
             @Override
             protected void onResultSuccess(LoginResult result) {

@@ -12,9 +12,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/sys_margin"/>
     <EditText
+        android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:hint="手机号"
+        android:inputType="phone"
         android:textSize="@dimen/sys_font_size_large"
         android:textColor="@color/sys_color_font_black"
         android:background="@null"
@@ -34,9 +36,11 @@
         android:layout_marginRight="@dimen/sys_margin"
         android:layout_marginTop="@dimen/sys_margin">
         <EditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="密码"
+            android:inputType="textPassword"
             android:textSize="@dimen/sys_font_size_large"
             android:textColor="@color/sys_color_font_black"
             android:background="@null" />

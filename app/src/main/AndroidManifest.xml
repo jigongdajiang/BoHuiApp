@@ -135,8 +135,12 @@
         <!-- 搜索页 -->
         <activity android:name=".search.SearchActivity"
             android:screenOrientation="portrait"/>
-        <!-- 搜索结果页 -->
-        <activity android:name=".search.SearchResultActivity"
+        <!-- 搜索结果页-艺术品 -->
+        <activity android:name=".search.SearchResultArtActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".search.SearchResultArtManActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".search.SearchResultDesignerActivity"
             android:screenOrientation="portrait"/>
         <!-- 艺术品详情页 -->
         <activity android:name=".detail.art.ArtDetailActivity"

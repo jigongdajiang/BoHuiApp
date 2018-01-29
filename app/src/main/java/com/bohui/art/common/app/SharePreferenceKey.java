@@ -12,4 +12,6 @@ public interface SharePreferenceKey {
     String HAS_INSTALL_AND_START = "has_install_and_start";
     String TICKET = "ticket";
     String ACCOUNT_HEAD_URL = "user_avaurl";
+    String ACCOUNT_UID = "account_uid";
+    String ACCOUNT_USER = "account_inof";
 }

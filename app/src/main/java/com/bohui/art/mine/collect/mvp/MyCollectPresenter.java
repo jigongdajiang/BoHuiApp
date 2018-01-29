@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class MyCollectPresenter extends MyCollectContact.Presenter {
     @Override
-    public void myCollectList() {
-        mRxManage.add(mModel.myCollectList().subscribeWith(new AppProgressSubScriber<MyCollectResult>(mView,MyCollectContact.TAG_MY_COLLECT,mView) {
+    public void myCollectList(MyCollectParam param) {
+        mRxManage.add(mModel.myCollectList(param).subscribeWith(new AppProgressSubScriber<MyCollectResult>(mView,MyCollectContact.TAG_MY_COLLECT,mView) {
             @Override
             protected void onResultSuccess(MyCollectResult result) {
                 mView.myCollectListSuccess(result);

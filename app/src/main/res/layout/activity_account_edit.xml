@@ -99,19 +99,23 @@
             android:textColor="@color/sys_color_font_black"
             android:layout_marginLeft="@dimen/sys_margin"/>
         <RadioGroup
+            android:id="@+id/rg_sex"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/tv_sex_des"
             android:layout_marginLeft="@dimen/sys_margin"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/rb_nan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="男"
+                android:checked="true"
                 android:textSize="@dimen/sys_font_size_middle"
                 android:textColor="@color/sys_color_font_light_gray"/>
             <RadioButton
+                android:id="@+id/rb_nv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

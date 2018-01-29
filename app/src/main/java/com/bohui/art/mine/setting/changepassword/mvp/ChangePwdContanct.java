@@ -15,15 +15,15 @@ import io.reactivex.Observable;
 
 
 public interface ChangePwdContanct {
-    String URL_CHANGE_PWD = "";
+    String URL_CHANGE_PWD = "user/setPassWord";
     String TAG_CHANGE_PWD = "tag_change_pwd";
     interface Model extends BaseModel{
-        Observable<ChangePasswordResult> changePwd();
+        Observable<ChangePasswordResult> changePwd(long uid,String oldpassword,String password);
     }
     interface View extends BaseLoadingView{
         void changePwdSuccess(ChangePasswordResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void changePwd();
+        public abstract void changePwd(long uid,String oldpassword,String password);
     }
 }

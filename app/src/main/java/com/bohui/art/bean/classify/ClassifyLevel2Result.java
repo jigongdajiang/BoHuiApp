@@ -13,16 +13,16 @@ import java.util.List;
 
 
 public class ClassifyLevel2Result {
-//    private List<BannerBean> bannerList;
+    private List<BannerBean> bannerList;
     private List<ClassifyLevelBean> twoClass;
 
-//    public List<BannerBean> getBannerList() {
-//        return bannerList;
-//    }
-//
-//    public void setBannerList(List<BannerBean> bannerList) {
-//        this.bannerList = bannerList;
-//    }
+    public List<BannerBean> getBannerList() {
+        return bannerList;
+    }
+
+    public void setBannerList(List<BannerBean> bannerList) {
+        this.bannerList = bannerList;
+    }
 
     public List<ClassifyLevelBean> getTwoClass() {
         return twoClass;
@@ -35,7 +35,8 @@ public class ClassifyLevel2Result {
     @Override
     public String toString() {
         return "ClassifyLevel2Result{" +
-                "twoClass=" + twoClass.toString() +
+                "bannerList=" + bannerList!=null ? bannerList.toString(): "" +
+                ", twoClass=" + twoClass != null ? twoClass.toString() : "" +
                 '}';
     }
 }

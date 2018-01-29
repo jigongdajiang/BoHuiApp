@@ -14,9 +14,9 @@ import io.reactivex.Observable;
 
 public class MineModel implements MineContact.Model {
     @Override
-    public Observable<MineInfoResult> getUserInfo(String uid) {
+    public Observable<MineInfoResult> getUserInfo(long uid) {
         return EasyHttp.post(MineContact.URL_MINE_GET_USERINFO)
-                .params("uid",uid)
+                .params("uid",String.valueOf(uid))
                 .execute(MineInfoResult.class);
     }
 }

@@ -3,6 +3,8 @@ package com.bohui.art.common.app;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.bohui.art.bean.mine.LogoutResult;
+import com.bohui.art.bean.start.LoginResult;
 import com.framework.core.app.AtyManager;
 import com.framework.core.cache.core.CacheCoreFactory;
 import com.framework.core.util.StrOperationUtil;
@@ -22,12 +24,11 @@ public class AppFuntion {
     /**
      * 是否已登录
      *
-     * @param context
      * @return true 已登录  未登录
      */
-    public static boolean isLogin(Context context) {
-        String ticket = CacheCoreFactory.getPreferenceCache(context).load(String.class, SharePreferenceKey.TICKET);
-        return !StrOperationUtil.isEmpty(ticket);
+    public static boolean isLogin() {
+        String token = getToken();
+        return !StrOperationUtil.isEmpty(token);
     }
 
     public static void exitApp(Context context){
@@ -41,4 +42,26 @@ public class AppFuntion {
             e.printStackTrace();
         }
     }
+
+    public static long getUid(){
+        try {
+            return getUserInfo().getUid();
+        }catch (Exception e){
+            return -1;
+        }
+    }
+    public static String getToken(){
+        try {
+            return getUserInfo().getToken();
+        }catch (Exception e){
+            return "";
+        }
+    }
+    public static void saveUserInfo(LoginResult user){
+         CacheCoreFactory.getPreferenceCache(PApplicationLike.getApp()).save(SharePreferenceKey.ACCOUNT_USER,user);
+    }
+    public static LoginResult getUserInfo(){
+        return CacheCoreFactory.getPreferenceCache(PApplicationLike.getApp()).load(LoginResult.class,SharePreferenceKey.ACCOUNT_USER);
+    }
+
 }

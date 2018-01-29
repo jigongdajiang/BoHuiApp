@@ -15,6 +15,8 @@ import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 import com.widget.smallelement.banner.ConvenientBanner;
 
+import java.util.List;
+
 
 /**
  * @author : gaojigong
@@ -64,6 +66,12 @@ public class BannerAdapter extends BaseAdapter<BannerResult> {
         this.showIndicator = showIndicator;
     }
 
+    public void refreshBanner(List<BannerBean> bannerBeans){
+        getDatas().clear();
+        BannerResult bannerResult = new BannerResult();
+        bannerResult.setBannerBeans(bannerBeans);
+        addItem(bannerResult);
+    }
     @Override
     public void bindViewHolder(BaseViewHolder holder, BannerResult itemData, int position) {
         View bannerHeader = holder.getConvertView();

@@ -15,15 +15,15 @@ import io.reactivex.Observable;
 
 
 public interface LoginContact {
-    String URL_LOGIN = "";
+    String URL_LOGIN = "login/loigin";
     String TAG_LOGIN = "tag_login";
     interface Model extends BaseModel{
-        Observable<LoginResult> login(String phone,String pwd);
+        Observable<LoginResult> login(String mobile,String password);
     }
     interface View extends BaseLoadingView {
         void loginSuccess(LoginResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void login(String phone,String pwd);
+        public abstract void login(String mobile,String password);
     }
 }

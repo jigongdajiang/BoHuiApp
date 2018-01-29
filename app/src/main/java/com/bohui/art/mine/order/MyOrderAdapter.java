@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.OrderBean;
 import com.bohui.art.bean.mine.MyOrderBean;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -17,7 +18,7 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class MyOrderAdapter extends BaseAdapter<MyOrderBean> {
+public class MyOrderAdapter extends BaseAdapter<OrderBean> {
     public MyOrderAdapter(Context context) {
         super(context);
     }
@@ -33,8 +34,10 @@ public class MyOrderAdapter extends BaseAdapter<MyOrderBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, MyOrderBean itemData, int position) {
-
+    public void bindViewHolder(BaseViewHolder holder, OrderBean itemData, int position) {
+        holder.setText(R.id.tv_order_type,itemData.getType());
+        holder.setText(R.id.tv_order_name,itemData.getName());
+        holder.setText(R.id.tv_order_time,itemData.getName());
     }
 
     @Override

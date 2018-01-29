@@ -31,6 +31,9 @@ public class StrOperationUtil {
             return paramString;
         }
     }
+    public static String pwdMd5(String pwd){
+        return md5(pwd).substring(0,16);
+    }
     /**
      * 将指定byte数组转换成16进制字符串
      * 小写

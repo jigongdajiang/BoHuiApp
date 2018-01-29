@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class AccountEditPresenter extends AccountEditContact.Presenter {
     @Override
-    public void accountEdit() {
-        mRxManage.add(mModel.accountEdit().subscribeWith(new AppProgressSubScriber<AccountEditResult>(mView,AccountEditContact.TAG_ACCOUNT_EDIT,mView) {
+    public void accountEdit(UserInfoEditParam param) {
+        mRxManage.add(mModel.accountEdit(param).subscribeWith(new AppProgressSubScriber<AccountEditResult>(mView,AccountEditContact.TAG_ACCOUNT_EDIT,mView) {
             @Override
             protected void onResultSuccess(AccountEditResult result) {
                 mView.accountEditSuccess(result);

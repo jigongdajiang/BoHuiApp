@@ -115,6 +115,7 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
             window.setAttributes(lp);
         }
+
         View view = mParams.layoutViewHolder.getConvertView();
         //一旦显示后，缓存的View会关联到ContentView上，也就是说会有Parent，会导致程序崩溃，这里需要先移除
         if (view != null && view.getParent() != null) {
@@ -147,7 +148,7 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
         showDialogLife("onStart");
         //dialog占屏幕的比例
         int width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        int height = ViewGroup.LayoutParams.WRAP_CONTENT;;
+        int height = ViewGroup.LayoutParams.WRAP_CONTENT;
         if (mParams.dialogWidthForScreen > 0) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -251,10 +252,10 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             mParams.layoutViewHolder.setViewOnClickListener(id, autoDimss ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    miss();
                     if (listener != null) {
                         listener.onClick(v);
                     }
-                    miss();
                 }
             } : listener);
         return this;
@@ -505,7 +506,6 @@ public class BasePowfullDialog extends DialogFragment implements DialogInterface
             mP.canExistWidthSoft = canExistWidthSoft;
             return this;
         }
-
         public BasePowfullDialog builder() {
             BasePowfullDialog baseDialog = new BasePowfullDialog();
             baseDialog.setParams(mP);

@@ -13,9 +13,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/sys_margin"/>
     <EditText
+        android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:hint="手机号"
+        android:inputType="phone"
         android:textSize="@dimen/sys_font_size_large"
         android:textColor="@color/sys_color_font_black"
         android:background="@null"
@@ -28,42 +30,42 @@
         android:background="@color/sys_color_base"
         android:layout_marginLeft="@dimen/sys_margin"
         android:layout_marginRight="@dimen/sys_margin"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginLeft="@dimen/sys_margin"
-        android:layout_marginRight="@dimen/sys_margin"
-        android:layout_marginTop="@dimen/sys_margin">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="验证码"
-            android:textSize="@dimen/sys_font_size_large"
-            android:textColor="@color/sys_color_font_black"
-            android:background="@null"
-            android:layout_toLeftOf="@+id/tv_get_code"/>
-        <TextView
-            android:id="@+id/tv_get_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="获取验证码"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/sys_padding"
-            android:paddingRight="@dimen/sys_padding"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingBottom="@dimen/dp_5"
-            android:textSize="@dimen/sys_font_size_middle"
-            android:textColor="@color/sys_color_font_white"
-            android:background="@drawable/shape_base_radius_half"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/sys_color_base"
-            android:layout_marginRight="@dimen/sys_margin"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/tv_get_code"/>
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_50"-->
+        <!--android:layout_marginLeft="@dimen/sys_margin"-->
+        <!--android:layout_marginRight="@dimen/sys_margin"-->
+        <!--android:layout_marginTop="@dimen/sys_margin">-->
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:hint="验证码"-->
+            <!--android:textSize="@dimen/sys_font_size_large"-->
+            <!--android:textColor="@color/sys_color_font_black"-->
+            <!--android:background="@null"-->
+            <!--android:layout_toLeftOf="@+id/tv_get_code"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_get_code"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="获取验证码"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:paddingLeft="@dimen/sys_padding"-->
+            <!--android:paddingRight="@dimen/sys_padding"-->
+            <!--android:paddingTop="@dimen/dp_5"-->
+            <!--android:paddingBottom="@dimen/dp_5"-->
+            <!--android:textSize="@dimen/sys_font_size_middle"-->
+            <!--android:textColor="@color/sys_color_font_white"-->
+            <!--android:background="@drawable/shape_base_radius_half"/>-->
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/sys_color_base"-->
+            <!--android:layout_marginRight="@dimen/sys_margin"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_toLeftOf="@+id/tv_get_code"/>-->
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -72,9 +74,11 @@
         android:layout_marginRight="@dimen/sys_margin"
         android:layout_marginTop="@dimen/sys_margin">
         <EditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="密码"
+            android:inputType="textPassword"
             android:textSize="@dimen/sys_font_size_large"
             android:textColor="@color/sys_color_font_black"
             android:background="@null" />

@@ -2,6 +2,7 @@ package com.bohui.art.mine.attention.mvp;
 
 import com.bohui.art.bean.mine.MyAttentionResult;
 import com.bohui.art.common.net.mvp.BaseLoadingView;
+import com.bohui.art.mine.collect.mvp.MyCollectParam;
 import com.framework.core.base.BaseModel;
 import com.framework.core.base.BasePresenter;
 
@@ -15,15 +16,15 @@ import io.reactivex.Observable;
 
 
 public interface MyAttentionContact {
-    String URL_MY_ATTENTION = "";
+    String URL_MY_ATTENTION = "user/myFollow";
     String TAG_MY_ATTENTION = "tag_my_attention";
     interface Model extends BaseModel{
-        Observable<MyAttentionResult> myAttention();
+        Observable<MyAttentionResult> myAttention(MyCollectParam param);
     }
     interface View extends BaseLoadingView{
         void myAttentionSuccess(MyAttentionResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void myAttention();
+        public abstract void myAttention(MyCollectParam param);
     }
 }

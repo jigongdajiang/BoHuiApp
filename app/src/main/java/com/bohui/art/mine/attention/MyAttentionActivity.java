@@ -19,6 +19,7 @@ import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.mine.attention.mvp.MyAttentionContact;
 import com.bohui.art.mine.attention.mvp.MyAttentionModel;
 import com.bohui.art.mine.attention.mvp.MyAttentionPresenter;
+import com.bohui.art.mine.collect.mvp.MyCollectParam;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -37,6 +38,7 @@ import butterknife.BindView;
 public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter,MyAttentionModel> implements MyAttentionContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
+    private ArtManListAdapter artManListAdapter;
     @Override
     public int getLayoutId() {
         return R.layout.layout_common_rv;
@@ -50,12 +52,8 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //猜你喜欢数据适配器
-        ArtManListAdapter artManListAdapter = new ArtManListAdapter(mContext);
-        List<ArtManListResult> artManListItemBeans = new ArrayList<>();
-        for(int j=0;j<20;j++){
-            ArtManListResult artManListItemBean = new ArtManListResult();
-            artManListItemBeans.add(artManListItemBean);
-        }
+        artManListAdapter = new ArtManListAdapter(mContext);
+        artManListAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(artManListAdapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
@@ -74,11 +72,14 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
 
     @Override
     protected void extraInit() {
-        mPresenter.myAttention();
+        MyCollectParam param = new MyCollectParam();
+//        myCollectParam.setUid(AppFuntion.getUid());
+        param.setUid(1);
+        mPresenter.myAttention(param);
     }
 
     @Override
     public void myAttentionSuccess(MyAttentionResult result) {
-
+        artManListAdapter.replaceAllItem(result.getList());
     }
 }

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
+import com.bohui.art.bean.mine.MineInfoResult;
 import com.bohui.art.bean.mine.UserBean;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.framework.core.glideext.GlideUtil;
@@ -19,9 +20,13 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
  */
 
 
-public class MineTopAdapter extends BaseAdapter<UserBean> {
-    public MineTopAdapter(Context context, UserBean userBean) {
+public class MineTopAdapter extends BaseAdapter<MineInfoResult> {
+    public MineTopAdapter(Context context, MineInfoResult userBean) {
         super(context);
+        addItem(userBean);
+    }
+    public void refresh(MineInfoResult userBean){
+        getDatas().clear();
         addItem(userBean);
     }
 
@@ -36,10 +41,10 @@ public class MineTopAdapter extends BaseAdapter<UserBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, UserBean itemData, int position) {
-        GlideUtil.displayCircle(mContext,(ImageView) holder.getView(R.id.iv_mine_avr),itemData.getAvrUrl());
+    public void bindViewHolder(BaseViewHolder holder, MineInfoResult itemData, int position) {
+        GlideUtil.displayCircle(mContext,(ImageView) holder.getView(R.id.iv_mine_avr),itemData.getPhoto());
         holder.setText(R.id.tv_mine_name,itemData.getName());
-        holder.setText(R.id.tv_mine_sample_des,itemData.getDes());
+        holder.setText(R.id.tv_mine_sample_des,itemData.getIndustry());
     }
 
     @Override

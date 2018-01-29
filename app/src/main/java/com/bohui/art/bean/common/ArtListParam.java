@@ -1,5 +1,6 @@
 package com.bohui.art.bean.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,14 +11,15 @@ import java.util.List;
 
 
 public class ArtListParam extends PageParam {
-    private List<Long> oneclass;
-    private List<Long> towclass;
+    private List<Long> oneclass=new ArrayList<>();
+    private List<Long> towclass=new ArrayList<>();
     private String name;
     private double startprice;
     private double endprice;
     private int level;
     private int pricesort;
     private int looksort;
+    private int youxian;
 
     public List<Long> getOneclass() {
         return oneclass;
@@ -81,5 +83,28 @@ public class ArtListParam extends PageParam {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getYouxian() {
+        return youxian;
+    }
+
+    public void setYouxian(int youxian) {
+        this.youxian = youxian;
+    }
+
+    @Override
+    public String toString() {
+        return "ArtListParam{" +
+                "oneclass=" + oneclass.toString() +
+                ", towclass=" + towclass.toString() +
+                ", name='" + name + '\'' +
+                ", startprice=" + startprice +
+                ", endprice=" + endprice +
+                ", level=" + level +
+                ", pricesort=" + pricesort +
+                ", looksort=" + looksort +
+                ", youxian=" + youxian +
+                '}';
     }
 }

@@ -11,6 +11,7 @@ import com.bohui.art.bean.mine.MyOrderListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.found.order.OrderActivity;
+import com.bohui.art.mine.collect.mvp.MyCollectParam;
 import com.bohui.art.mine.order.mvp.MyOrderContact;
 import com.bohui.art.mine.order.mvp.MyOrderModel;
 import com.bohui.art.mine.order.mvp.MyOrderPresenter;
@@ -33,6 +34,7 @@ import butterknife.BindView;
 public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrderModel> implements MyOrderContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
+    private MyOrderAdapter myOrderAdapter;
     @Override
     public int getLayoutId() {
         return R.layout.layout_common_rv;
@@ -46,13 +48,8 @@ public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrder
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
-        MyOrderAdapter myOrderAdapter = new MyOrderAdapter(mContext);
-        List<MyOrderBean> myOrderBeans = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            MyOrderBean myOrderBean = new MyOrderBean();
-            myOrderBeans.add(myOrderBean);
-        }
-        myOrderAdapter.setDatas(myOrderBeans);
+        myOrderAdapter = new MyOrderAdapter(mContext);
+        myOrderAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(myOrderAdapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
@@ -72,11 +69,14 @@ public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrder
 
     @Override
     protected void extraInit() {
-        mPresenter.myOrder();
+        MyCollectParam param = new MyCollectParam();
+//        myCollectParam.setUid(AppFuntion.getUid());
+        param.setUid(1);
+        mPresenter.myOrder(param);
     }
 
     @Override
     public void myOrderSuccess(MyOrderListResult result) {
-
+        myOrderAdapter.replaceAllItem(result.getList());
     }
 }

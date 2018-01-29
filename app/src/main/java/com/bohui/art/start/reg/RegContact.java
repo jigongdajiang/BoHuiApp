@@ -1,5 +1,6 @@
 package com.bohui.art.start.reg;
 
+import com.bohui.art.bean.start.LoginResult;
 import com.bohui.art.bean.start.RegResult;
 import com.bohui.art.bean.start.VerCodeResult;
 import com.bohui.art.common.net.mvp.BaseLoadingView;
@@ -16,20 +17,15 @@ import io.reactivex.Observable;
 
 
 public interface RegContact {
-    String URL_REG_GET_CODE = "";
-    String TAG_REG_GET_CODE = "tag_reg_get_cde";
-    String URL_REG = "";
+    String URL_REG = "login/register";
     String TAG_REG = "tag_reg";
     interface Model extends BaseModel{
-        Observable<VerCodeResult> getCode(String phone);
-        Observable<RegResult> reg(String phone,String code);
+        Observable<LoginResult> reg(String mobile,String password);
     }
     interface View extends BaseLoadingView{
-        void getCodeSuccess(VerCodeResult result);
-        void regSuccess(RegResult result);
+        void regSuccess(LoginResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void getCode(String phone);
-        public abstract void reg(String phone,String code);
+        public abstract void reg(String mobile,String password);
     }
 }

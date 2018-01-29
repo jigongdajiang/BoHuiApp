@@ -1,5 +1,7 @@
 package com.bohui.art.search;
 
+import com.bohui.art.bean.home.ClassifyLevelBean;
+
 import java.util.List;
 
 /**
@@ -10,22 +12,32 @@ import java.util.List;
 
 
 public class FiltrateTagBean {
-    private String tabDes;
-    private List<String> tags;
+    private String oneClassifyName;
+    private long oneClassifyId;
 
-    public String getTabDes() {
-        return tabDes;
+    private List<ClassifyLevelBean> twoClassify;
+
+    public String getOneClassifyName() {
+        return oneClassifyName;
     }
 
-    public void setTabDes(String tabDes) {
-        this.tabDes = tabDes;
+    public void setOneClassifyName(String oneClassifyName) {
+        this.oneClassifyName = oneClassifyName;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public long getOneClassifyId() {
+        return oneClassifyId;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setOneClassifyId(long oneClassifyId) {
+        this.oneClassifyId = oneClassifyId;
+    }
+
+    public List<ClassifyLevelBean> getTwoClassify() {
+        return twoClassify;
+    }
+
+    public void setTwoClassify(List<ClassifyLevelBean> twoClassify) {
+        this.twoClassify = twoClassify;
     }
 }

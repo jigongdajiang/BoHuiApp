@@ -47,7 +47,8 @@ public class SearchActivity extends AbsNetBaseActivity<SearchPresenter,SearchMod
     TagFlowLayout tag_search;
 
     public static final String SEARCH_TYPE = "search_type";
-    private int mType;//0 艺术品  1 艺术家  2设计师
+    public static final String SEARCH_KEY = "search_key";
+    private int mType;//0 艺术品  1 艺术家  2设计师，不同的类型返回的搜索标签列表内容不一样，但是格式一样
 
     @Override
     protected void doBeforeSetContentView() {
@@ -85,9 +86,18 @@ public class SearchActivity extends AbsNetBaseActivity<SearchPresenter,SearchMod
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 //进入搜索结果页
                 Bundle bundle = new Bundle();
-                bundle.putString(SearchResultActivity.SEARCH_KEY,mTags.get(position));
-                bundle.putInt(SearchResultActivity.SEARCH_TYPE,mType);
-                ((BaseHelperUtil)mHelperUtil).startAty(SearchResultActivity.class,bundle);
+                bundle.putString(SEARCH_KEY,mTags.get(position));
+                switch (mType){
+                    case 0:
+                        startAty(SearchResultArtActivity.class,bundle);
+                        break;
+                    case 1:
+                        startAty(SearchResultArtManActivity.class,bundle);
+                        break;
+                    case 2:
+                        startAty(SearchResultDesignerActivity.class,bundle);
+                        break;
+                }
                 return false;
             }
         });

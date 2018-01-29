@@ -1,12 +1,14 @@
 package com.bohui.art.found;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.FoundResult;
 import com.bohui.art.common.activity.CommonStaticActivity;
 import com.bohui.art.bean.common.BannerBean;
 import com.bohui.art.bean.common.BannerResult;
@@ -21,7 +23,9 @@ import com.bohui.art.found.order.OrderActivity;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.util.CollectionUtil;
 import com.framework.core.util.ResUtil;
+import com.framework.core.util.StrOperationUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -41,6 +45,9 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
     @BindView(R.id.rv_found)
     RecyclerView rv_found;
 
+    private BannerAdapter bannerAdapter;
+    private String coopDescUrl;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_found;
@@ -51,24 +58,17 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
         VirtualLayoutManager layoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager);
         //Banner
-        BannerAdapter bannerAdapter = new BannerAdapter(mContext);
+        bannerAdapter = new BannerAdapter(mContext);
+        bannerAdapter.refreshBanner(new ArrayList<BannerBean>());
+        bannerAdapter.setDelegateAdapter(delegateAdapter);
         bannerAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_250));
-        List<BannerBean> bannerDatas = new ArrayList<>();
-        bannerDatas.add(new BannerBean("banner1","http://www.baidu.com", RecommendFragment.imgs[0]
-        ));
-        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[1]
-        ));
-        bannerDatas.add(new BannerBean("banner2","http://www.baidu.com",RecommendFragment.imgs[2]
-        ));
-        BannerResult bannerBeans = new BannerResult();
-        bannerBeans.setBannerBeans(bannerDatas);
-        bannerAdapter.addItem(bannerBeans);
         delegateAdapter.addAdapter(bannerAdapter);
 
         GuideItemAdapter foundItemAdapter = new GuideItemAdapter(mContext);
+        foundItemAdapter.setDelegateAdapter(delegateAdapter);
         List<GuideItemBean> foundItemBeans = new ArrayList<>();
 
-        final GuideItemBean artManItem = new GuideItemBean("艺术家",R.mipmap.ic_art_man,0,R.dimen.dp_0);
+        GuideItemBean artManItem = new GuideItemBean("艺术家",R.mipmap.ic_art_man,0,R.dimen.dp_1);
         foundItemBeans.add(artManItem);
 
         GuideItemBean designerItem = new GuideItemBean("设计师",R.mipmap.ic_stylist,1,R.dimen.dp_1);
@@ -107,10 +107,11 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
                         ((BaseHelperUtil)mHelperUtil).toastShort("敬请期待");
                         break;
                     case 3:
-                        Intent intent = new Intent();
-                        intent.setClass(mContext, CommonStaticActivity.class);
-                        intent.putExtra(CommonStaticActivity.WEB_URL_CONTENT, "http://www.baidu.com");
-                        mContext.startActivity(intent);
+                        if(!StrOperationUtil.isEmpty(coopDescUrl)){
+                            Bundle bundle = new Bundle();
+                            bundle.putString(CommonStaticActivity.WEB_URL_CONTENT,coopDescUrl);
+                            startAty(CommonStaticActivity.class,bundle);
+                        }
                         break;
                     case 4:
                         ((BaseHelperUtil)mHelperUtil).startAty(OrderActivity.class);
@@ -139,8 +140,12 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
     }
 
     @Override
-    public void getFoundBannerSuccess(BannerResult result) {
-
+    public void getFoundBannerSuccess(FoundResult result) {
+        List<BannerBean> bannerBeans = result.getBannerList();
+        if(!CollectionUtil.isEmpty(bannerBeans)){
+            bannerAdapter.refreshBanner(bannerBeans);
+        }
+        coopDescUrl = result.getCoopDescUrl();
     }
 
 }

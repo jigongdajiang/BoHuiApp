@@ -98,16 +98,16 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, 
     private void refreshData() {
         List<DelegateAdapter.Adapter> adapters = new ArrayList<>();
         //Banner
-//        List<BannerBean> bannerBeans = mResult.getBannerList();
-//        if(!CollectionUtil.isEmpty(bannerBeans)){
-//            BannerAdapter bannerAdapter = new BannerAdapter(mContext);
-//            bannerAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_100));
-//            bannerAdapter.setShowIndicator(false);
-//            BannerResult bannerResult = new BannerResult();
-//            bannerResult.setBannerBeans(bannerBeans);
-//            bannerAdapter.addItem(bannerResult);
-//            adapters.add(bannerAdapter);
-//        }
+        List<BannerBean> bannerBeans = mResult.getBannerList();
+        if(!CollectionUtil.isEmpty(bannerBeans)){
+            BannerAdapter bannerAdapter = new BannerAdapter(mContext);
+            bannerAdapter.setBannerHeight(ResUtil.getResDimensionPixelOffset(mContext,R.dimen.dp_100));
+            bannerAdapter.setShowIndicator(false);
+            BannerResult bannerResult = new BannerResult();
+            bannerResult.setBannerBeans(bannerBeans);
+            bannerAdapter.addItem(bannerResult);
+            adapters.add(bannerAdapter);
+        }
         List<ClassifyLevelBean> classifyLevelBeans = mResult.getTwoClass();
         if (!CollectionUtil.isEmpty(classifyLevelBeans)) {
             //二级分类

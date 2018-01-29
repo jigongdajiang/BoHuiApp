@@ -15,15 +15,15 @@ import io.reactivex.Observable;
 
 
 public interface MyCollectContact {
-    String URL_MY_COLLECT = "";
+    String URL_MY_COLLECT = "user/myCollection";
     String TAG_MY_COLLECT = "tag_my_collect";
     interface Model extends BaseModel{
-        Observable<MyCollectResult> myCollectList();
+        Observable<MyCollectResult> myCollectList(MyCollectParam param);
     }
     interface View extends BaseLoadingView{
         void myCollectListSuccess(MyCollectResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void myCollectList();
+        public abstract void myCollectList(MyCollectParam param);
     }
 }

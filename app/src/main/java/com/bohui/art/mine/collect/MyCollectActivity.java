@@ -10,12 +10,14 @@ import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.mine.MyCollectResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.mine.collect.mvp.MyCollectContact;
 import com.bohui.art.mine.collect.mvp.MyCollectModel;
+import com.bohui.art.mine.collect.mvp.MyCollectParam;
 import com.bohui.art.mine.collect.mvp.MyCollectPresenter;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
@@ -35,6 +37,8 @@ import butterknife.BindView;
 public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyCollectModel> implements MyCollectContact.View {
     @BindView(R.id.rv)
     RecyclerView rv;
+
+    private Art2Adapter art2Adapter;
     @Override
     public int getLayoutId() {
         return R.layout.layout_common_rv;
@@ -47,12 +51,8 @@ public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyC
                 .builder();
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        Art2Adapter art2Adapter = new Art2Adapter(mContext);
-        List<ArtItemBean> artBeans = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            artBeans.add(new ArtItemBean());
-        }
-        art2Adapter.setDatas(artBeans);
+        art2Adapter = new Art2Adapter(mContext);
+        art2Adapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(art2Adapter);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
@@ -71,11 +71,14 @@ public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyC
 
     @Override
     protected void extraInit() {
-        mPresenter.myCollectList();
+        MyCollectParam myCollectParam = new MyCollectParam();
+//        myCollectParam.setUid(AppFuntion.getUid());
+        myCollectParam.setUid(1);
+        mPresenter.myCollectList(myCollectParam);
     }
 
     @Override
     public void myCollectListSuccess(MyCollectResult result) {
-
+        art2Adapter.replaceAllItem(result.getList());
     }
 }

@@ -14,8 +14,11 @@ import io.reactivex.Observable;
 
 public class MyCollectModel implements MyCollectContact.Model {
     @Override
-    public Observable<MyCollectResult> myCollectList() {
+    public Observable<MyCollectResult> myCollectList(MyCollectParam param) {
         return EasyHttp.post(MyCollectContact.URL_MY_COLLECT)
+                .params("uid", String.valueOf(param.getUid()))
+                .params("start", String.valueOf(param.getStart()))
+                .params("length", String.valueOf(param.getLength()))
                 .execute(MyCollectResult.class);
     }
 }

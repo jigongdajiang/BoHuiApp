@@ -15,15 +15,15 @@ import io.reactivex.Observable;
 
 
 public interface AccountEditContact {
-    String URL_ACCOUNT_DEIT = "";
+    String URL_ACCOUNT_DEIT = "user/setPersonMess";
     String TAG_ACCOUNT_EDIT = "tag_account_edit";
     interface Model extends BaseModel{
-        Observable<AccountEditResult> accountEdit();
+        Observable<AccountEditResult> accountEdit(UserInfoEditParam param);
     }
     interface View extends BaseLoadingView{
         void accountEditSuccess(AccountEditResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void accountEdit();
+        public abstract void accountEdit(UserInfoEditParam param);
     }
 }
