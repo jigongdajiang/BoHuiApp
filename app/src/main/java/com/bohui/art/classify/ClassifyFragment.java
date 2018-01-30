@@ -1,9 +1,11 @@
 package com.bohui.art.classify;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -16,9 +18,11 @@ import com.bohui.art.classify.mvp.ClassifyModel;
 import com.bohui.art.classify.mvp.ClassifyPresenter;
 import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
+import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.home.mvp.HomeContact;
 import com.bohui.art.home.mvp.HomeModel;
 import com.bohui.art.home.mvp.HomePresenter;
+import com.bohui.art.search.SearchActivity;
 import com.framework.core.fragment.BaseFragmentAdapter;
 import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author : gaojigong
@@ -42,6 +47,8 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
     RecyclerView rv;
     @BindView(R.id.vp_classify)
     RollCtrlViewPager rollCtrlViewPager;
+    @BindView(R.id.rl_search)
+    RelativeLayout rl_search;
 
     private DelegateAdapter mDelegateAdapter;
     private ClassifyTypeAdapter classifyTypeAdapter;
@@ -57,6 +64,14 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
 
     @Override
     public void initView() {
+        RxViewUtil.addOnClick(mRxManager, rl_search, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                Bundle bundle = new Bundle();
+                bundle.putInt(SearchActivity.SEARCH_TYPE,0);
+                startAty(SearchActivity.class,bundle);
+            }
+        });
         VirtualLayoutManager layoutManager = new VirtualLayoutManager(mContext);
         mDelegateAdapter = new DelegateAdapter(layoutManager);
         classifyTypeAdapter = new ClassifyTypeAdapter(mContext);
