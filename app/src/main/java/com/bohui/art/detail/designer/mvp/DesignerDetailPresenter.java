@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class DesignerDetailPresenter extends DesignerDetailContact.Presenter {
     @Override
-    public void getDesignerDetail(String id) {
-        mRxManage.add(mModel.getDesingerDetail(id).subscribeWith(new AppProgressSubScriber<DesignerDetailResult>(mView,DesignerDetailContact.TAG_GET_DESIGNER_DETAIL,mView) {
+    public void getDesignerDetail(long uid,long did) {
+        mRxManage.add(mModel.getDesingerDetail(uid,did).subscribeWith(new AppProgressSubScriber<DesignerDetailResult>(mView,DesignerDetailContact.TAG_GET_DESIGNER_DETAIL,mView) {
             @Override
             protected void onResultSuccess(DesignerDetailResult result) {
                 mView.getDesignerDetailSuccess(result);

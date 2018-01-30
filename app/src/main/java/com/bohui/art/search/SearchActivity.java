@@ -14,7 +14,7 @@ import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.search.mvp.SearchContact;
 import com.bohui.art.search.mvp.SearchModel;
 import com.bohui.art.search.mvp.SearchPresenter;
-import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.util.StrOperationUtil;
 import com.widget.smallelement.flowtag.FlowLayout;
 import com.widget.smallelement.flowtag.TagAdapter;
 import com.widget.smallelement.flowtag.TagFlowLayout;
@@ -69,8 +69,51 @@ public class SearchActivity extends AbsNetBaseActivity<SearchPresenter,SearchMod
                 onBackPressed();
             }
         });
-        final List<String> mTags = getTags();
-        tag_search.setAdapter(new TagAdapter<String>(mTags)
+        RxViewUtil.addOnClick(mRxManager, tv_search, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                String content = et_search.getText().toString();
+                if(StrOperationUtil.isEmpty(content)){
+                    showMsgDialg("输入内容不能为空");
+                    return;
+                }
+                goSearchResult(content);
+            }
+        });
+
+    }
+
+    private void goSearchResult(String content) {
+        //进入搜索结果页
+        Bundle bundle = new Bundle();
+        bundle.putString(SEARCH_KEY,content);
+        switch (mType){
+            case 0:
+                startAty(SearchResultArtActivity.class,bundle);
+                break;
+            case 1:
+                startAty(SearchResultArtManActivity.class,bundle);
+                break;
+            case 2:
+                startAty(SearchResultDesignerActivity.class,bundle);
+                break;
+        }
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getSearchTag();
+    }
+
+    @Override
+    public void getSearchTagSuccess(final SearchTagResult result) {
+        //更新Tag
+        tag_search.setAdapter(new TagAdapter<String>(result.getTags())
         {
             @Override
             public View getView(FlowLayout parent, int position, String s)
@@ -84,54 +127,10 @@ public class SearchActivity extends AbsNetBaseActivity<SearchPresenter,SearchMod
         tag_search.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                //进入搜索结果页
-                Bundle bundle = new Bundle();
-                bundle.putString(SEARCH_KEY,mTags.get(position));
-                switch (mType){
-                    case 0:
-                        startAty(SearchResultArtActivity.class,bundle);
-                        break;
-                    case 1:
-                        startAty(SearchResultArtManActivity.class,bundle);
-                        break;
-                    case 2:
-                        startAty(SearchResultDesignerActivity.class,bundle);
-                        break;
-                }
+                String tag = result.getTags().get(position);
+                goSearchResult(tag);
                 return false;
             }
         });
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setMV(mModel,this);
-    }
-
-    private List<String> getTags() {
-        List<String> tags = new ArrayList<>();
-        switch (mType){
-            case 0:
-                for(int i=0;i<15;i++){
-                    tags.add("艺术品标签"+i);
-                }
-                break;
-            case 1:
-                for(int i=0;i<10;i++){
-                    tags.add("艺术家标签"+i);
-                }
-                break;
-            case 2:
-                for(int i=0;i<5;i++){
-                    tags.add("设计师标签"+i);
-                }
-                break;
-        }
-        return tags;
-    }
-
-    @Override
-    public void getSearchTagSuccess(SearchTagResult result) {
-        //更新Tag
     }
 }

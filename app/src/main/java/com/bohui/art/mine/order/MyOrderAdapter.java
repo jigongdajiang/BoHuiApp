@@ -37,7 +37,7 @@ public class MyOrderAdapter extends BaseAdapter<OrderBean> {
     public void bindViewHolder(BaseViewHolder holder, OrderBean itemData, int position) {
         holder.setText(R.id.tv_order_type,itemData.getType());
         holder.setText(R.id.tv_order_name,itemData.getName());
-        holder.setText(R.id.tv_order_time,itemData.getName());
+        holder.setText(R.id.tv_order_time,itemData.getTime());
     }
 
     @Override

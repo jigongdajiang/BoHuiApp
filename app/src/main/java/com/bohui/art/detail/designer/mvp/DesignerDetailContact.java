@@ -15,15 +15,15 @@ import io.reactivex.Observable;
 
 
 public interface DesignerDetailContact {
-    String URL_GET_DESIGNER_DETAIL = "";
+    String URL_GET_DESIGNER_DETAIL = "designer/getDesignerDetail";
     String TAG_GET_DESIGNER_DETAIL = "tag_get_designer_detail";
     interface Model extends BaseModel{
-        Observable<DesignerDetailResult> getDesingerDetail(String id);
+        Observable<DesignerDetailResult> getDesingerDetail(long uid,long did);
     }
     interface View extends BaseLoadingView{
         void getDesignerDetailSuccess(DesignerDetailResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void getDesignerDetail(String id);
+        public abstract void getDesignerDetail(long uid,long did);
     }
 }

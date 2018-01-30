@@ -18,6 +18,7 @@ public class LoginResult implements Serializable{
     private int is;
     private int age;
     private String token;
+    private int status;
 
     public long getUid() {
         return uid;
@@ -81,6 +82,14 @@ public class LoginResult implements Serializable{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

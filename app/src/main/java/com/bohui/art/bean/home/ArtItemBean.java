@@ -10,6 +10,7 @@ package com.bohui.art.bean.home;
 
 public class ArtItemBean {
     private long id;
+    private long aid;//有时候是aid
     private String name;
     private String cover;
     private String size;
@@ -71,10 +72,19 @@ public class ArtItemBean {
         this.salePrice = salePrice;
     }
 
+    public long getAid() {
+        return aid;
+    }
+
+    public void setAid(long aid) {
+        this.aid = aid;
+    }
+
     @Override
     public String toString() {
         return "ArtItemBean{" +
                 "id=" + id +
+                ", aid=" + aid +
                 ", name='" + name + '\'' +
                 ", cover='" + cover + '\'' +
                 ", size='" + size + '\'' +

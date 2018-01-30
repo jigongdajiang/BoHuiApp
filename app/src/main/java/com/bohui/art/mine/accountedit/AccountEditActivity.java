@@ -9,14 +9,18 @@ import com.bohui.art.R;
 import com.bohui.art.bean.mine.AccountEditResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
+import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.mine.MineFragment;
 import com.bohui.art.mine.accountedit.mvp.AccountEditContact;
 import com.bohui.art.mine.accountedit.mvp.AccountEditModel;
 import com.bohui.art.mine.accountedit.mvp.AccountEditPresenter;
 import com.bohui.art.mine.accountedit.mvp.UserInfoEditParam;
+import com.bohui.art.mine.upload.UpLoadUtil;
 import com.framework.core.util.StrOperationUtil;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author : gaojigong
@@ -36,6 +40,7 @@ public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter
     EditText et_intro;
 
     private int sex = 1;
+    private UpLoadUtil upLoadUtil;//头像上传工具类
     @Override
     public int getLayoutId() {
         return R.layout.activity_account_edit;
@@ -56,10 +61,10 @@ public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter
                         }
                         String intro = et_intro.getText().toString();
                         UserInfoEditParam param = new UserInfoEditParam();
-                        param.setUid(1);
-//                        param.setUid(AppFuntion.getUid());
+                        param.setUid(AppFuntion.getUid());
                         param.setSex(sex);
                         param.setName(name);
+                        param.setIndustry(intro);
                         mPresenter.accountEdit(param);
                     }
                 })
@@ -74,6 +79,15 @@ public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter
                 }
             }
         });
+
+        upLoadUtil = new UpLoadUtil(AccountEditActivity.this, iv_avr);
+        RxViewUtil.addOnClick(mRxManager, iv_avr, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                //上传头像
+                upLoadUtil.changeAvr();
+            }
+        });
     }
 
     @Override
@@ -85,4 +99,5 @@ public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter
     public void accountEditSuccess(AccountEditResult result) {
         showMsgDialg(result.getMsg());
     }
+
 }

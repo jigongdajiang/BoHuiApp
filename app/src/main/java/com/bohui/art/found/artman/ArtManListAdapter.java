@@ -50,7 +50,30 @@ public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtManItemBean itemData, int position) {
+        //头像
         ImageView ivAvr = holder.getView(R.id.iv_art_man_avr);
+        //名称
+        holder.setText(R.id.tv_art_man_name,itemData.getName());
+        //艺术家级别
+        int level = itemData.getLevel();
+        switch (level){
+            case 1:
+                holder.setText(R.id.tv_art_man_level,"国家级艺术家");
+                break;
+            case 2:
+                holder.setText(R.id.tv_art_man_level,"省级艺术家");
+                break;
+            case 3:
+                holder.setText(R.id.tv_art_man_level,"市级艺术家");
+                break;
+        }
+        //擅长
+        holder.setText(R.id.tv_good,"擅长:山水画");
+        //作品数
+        holder.setText(R.id.tv_art_number,"作品: "+itemData.getPaintingNum());
+        //粉丝
+        holder.setText(R.id.tv_art_fans,"粉丝: "+itemData.getFollowNum());
+        //作品集列表
         GlideUtil.displayCircle(mContext, ivAvr,itemData.getPhoto());
         GridView gridView = holder.getView(R.id.gv_art_man_arts);
         setGridView(gridView,itemData.getPaintingList());

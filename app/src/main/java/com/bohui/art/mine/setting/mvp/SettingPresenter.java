@@ -23,8 +23,8 @@ public class SettingPresenter extends SettingContact.Presenter {
     }
 
     @Override
-    public void logout() {
-        mRxManage.add(mModel.logout().subscribeWith(new AppProgressSubScriber<LogoutResult>(mView,SettingContact.TAG_LOGOUT,mView) {
+    public void logout(long uid) {
+        mRxManage.add(mModel.logout(uid).subscribeWith(new AppProgressSubScriber<LogoutResult>(mView,SettingContact.TAG_LOGOUT,mView) {
             @Override
             protected void onResultSuccess(LogoutResult result) {
                 mView.logoutSuccess(result);

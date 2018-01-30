@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.detail.CAResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.detail.art.ArtDetailActivity;
@@ -21,10 +23,14 @@ import com.bohui.art.detail.artman.adapter.IntroAdapter;
 import com.bohui.art.detail.artman.adapter.ShowreelAdapter;
 import com.bohui.art.bean.detail.ArtMainDetailResult;
 import com.bohui.art.bean.detail.ShowreelBean;
+import com.bohui.art.detail.artman.mvp.ArtManDetailContact;
+import com.bohui.art.detail.artman.mvp.ArtManDetailModel;
+import com.bohui.art.detail.artman.mvp.ArtManDetailPresenter;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.home.art2.Art2Activity;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.start.MainActivity;
+import com.bohui.art.start.login.LoginActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.framework.core.log.PrintLog;
@@ -44,7 +50,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class ArtManDetailActivity extends AbsNetBaseActivity {
+public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresenter,ArtManDetailModel> implements ArtManDetailContact.View {
     @BindView(R.id.segment_tab)
     SegmentTabLayout segment_tab;
     @BindView(R.id.iv_back)
@@ -60,6 +66,24 @@ public class ArtManDetailActivity extends AbsNetBaseActivity {
     private int dbzPosition = 1;
     private int zpjPosition = 1;
     private int jnPosition = 1;
+    private long aid;
+    private int isfollow;//0未关注，1已关注
+    private  DetailAdapter detailAdapter;
+    public static final String ART_MAN_ID = "art_man_id";
+    public static void comeIn(Activity activity, long aid){
+        Intent intent = new Intent(activity,ArtManDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putLong(ART_MAN_ID,aid);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        aid = getIntent().getLongExtra(ART_MAN_ID,0);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_art_man_detail;
@@ -68,12 +92,37 @@ public class ArtManDetailActivity extends AbsNetBaseActivity {
     @Override
     public void initView() {
         segment_tab.setTabData(mTabTitles);
-        ArtMainDetailResult artMainDetailResult = new ArtMainDetailResult();
+        RxViewUtil.addOnClick(mRxManager, iv_back, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                onBackPressed();
+            }
+        });
+        RxViewUtil.addOnClick(mRxManager, iv_home, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                startActivity(new Intent(ArtManDetailActivity.this, MainActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getArtManDetail(aid);
+    }
+
+    @Override
+    public void getArtManDetailSuccess(ArtMainDetailResult artMainDetailResult) {
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
         //简介 0
-        DetailAdapter detailAdapter = new DetailAdapter(mContext,artMainDetailResult);
+        detailAdapter = new DetailAdapter(mContext,artMainDetailResult);
         delegateAdapter.addAdapter(detailAdapter);
 
         //代表艺术品导航 1
@@ -81,10 +130,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity {
         delegateAdapter.addAdapter(detailGuideAdapter);
         dbzPosition = 1;
         //代表艺术品 2+
-        List<ArtItemBean> artBeans = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            artBeans.add(new ArtItemBean());
-        }
+        List<ArtItemBean> artBeans = artMainDetailResult.getDlist();
         Art2Adapter art2Adapter = new Art2Adapter(mContext);
         art2Adapter.setDatas(artBeans);
         delegateAdapter.addAdapter(art2Adapter);
@@ -95,10 +141,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity {
         delegateAdapter.addAdapter(detailGuideAdapterZpj);
 
         ShowreelAdapter showreelAdapter = new ShowreelAdapter(mContext);
-        List<ShowreelBean> showreelBeans = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            showreelBeans.add(new ShowreelBean());
-        }
+        List<ShowreelBean> showreelBeans = artMainDetailResult.getSetlist();
         showreelAdapter.setDatas(showreelBeans);
         delegateAdapter.addAdapter(showreelAdapter);
 
@@ -175,31 +218,52 @@ public class ArtManDetailActivity extends AbsNetBaseActivity {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 if(adapter instanceof Art2Adapter){
-                    ArtDetailActivity.comeIn(ArtManDetailActivity.this,new Bundle());
+                    ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
+                    ArtDetailActivity.comeIn(ArtManDetailActivity.this,itemBean.getAid());
                 }else if(adapter instanceof ShowreelAdapter){
-                    ((AbsBaseHelperUtil)mHelperUtil).startAty(Art2Activity.class);
+                    ShowreelBean showreelBean = ((ShowreelAdapter) adapter).getData(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(ArtJiActivity.ART_JI_ITEM,showreelBean);
+                    startAty(ArtJiActivity.class,bundle);
                 }
             }
-        });
 
-        RxViewUtil.addOnClick(mRxManager, iv_back, new Consumer() {
             @Override
-            public void accept(Object o) throws Exception {
-                onBackPressed();
-            }
-        });
-        RxViewUtil.addOnClick(mRxManager, iv_home, new Consumer() {
-            @Override
-            public void accept(Object o) throws Exception {
-                startActivity(new Intent(ArtManDetailActivity.this, MainActivity.class));
+            public void onItemChildClick(BaseAdapter adapter, View view, int position) {
+                if(view.getId() == R.id.tv_attention){
+                    //没登录去登录
+                    if(!AppFuntion.isLogin()){
+                        startAty(LoginActivity.class);
+                        return;
+                    }
+                    if(isfollow == 0){
+                        //未关注，则为关注
+                        mPresenter.attentionArtMan(AppFuntion.getUid(),aid,1);
+                    }else {
+                        //已关注，则为取消关注
+                        mPresenter.attentionArtMan(AppFuntion.getUid(),aid,2);
+                    }
+                }
             }
         });
     }
 
-
-    public static void comeIn(Activity activity, Bundle bundle){
-        Intent intent = new Intent(activity,ArtManDetailActivity.class);
-        intent.putExtras(bundle);
-        activity.startActivity(intent);
+    @Override
+    public void attentionArtManSuccess(CAResult result) {
+        if(isfollow == 0){
+            //关注的结果
+            if(result.getIsRes() == 1){
+                showMsgDialg("关注成功");
+                isfollow = 1;
+                detailAdapter.changeAttentionText(isfollow);
+            }
+        }else{
+            //取消关注的结果
+            if(result.getIsRes() == 1){
+                showMsgDialg("取消关注成功");
+                isfollow = 0;
+                detailAdapter.changeAttentionText(isfollow);
+            }
+        }
     }
 }

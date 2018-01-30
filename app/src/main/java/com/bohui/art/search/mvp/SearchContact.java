@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 
 
 public interface SearchContact {
-    String URL_GET_SEARCH_TAG = "";
+    String URL_GET_SEARCH_TAG = "login/getAllTags";
     String TAG_GET_SEARCH_TAG = "TAG_GET_SEARCH_TAG";
     interface ISearchModel extends BaseModel{
         Observable<SearchTagResult> getSearchTag();

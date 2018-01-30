@@ -97,14 +97,24 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
                 } else if (adapter instanceof TypeTopAdapter) {
                     ClassifyLevelBean bean = ((TypeTopAdapter) adapter).getData(position);
                     if (bean.getPid() == 0) {
-                        ((NetBaseHelperUtil) mHelperUtil).startAty(Art1Activity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Art1Activity.CLASSIFY_LEVEL1,bean);
+                        startAty(Art1Activity.class,bundle);
                     } else {
-                        ((NetBaseHelperUtil) mHelperUtil).startAty(Art2Activity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Art2Activity.TYPE,bean);
+                        startAty(Art2Activity.class,bundle);
                     }
                 } else if (adapter instanceof Art1Plus2Adapter
                         || adapter instanceof OrgGridAdapter
                         || adapter instanceof ArtGridAdapter) {
-                    ArtDetailActivity.comeIn(getActivity(), new Bundle());
+                    long id =0;
+                    if(adapter.getData(position) instanceof  ArtCoverItemBean){
+                        id = ((ArtCoverItemBean)adapter.getData(position)).getId();
+                    }else if(adapter.getData(position) instanceof ArtItemBean){
+                        id = ((ArtItemBean)adapter.getData(position)).getId();
+                    }
+                    ArtDetailActivity.comeIn(getActivity(),id);
                 }
             }
         });

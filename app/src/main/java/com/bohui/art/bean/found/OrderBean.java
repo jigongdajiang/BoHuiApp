@@ -15,6 +15,7 @@ public class OrderBean {
     private String remarks;
     private String mobile;
     private String name;
+    private String time;
     private long uid;
 
     public String getType() {
@@ -79,6 +80,14 @@ public class OrderBean {
 
     public void setUid(long uid) {
         this.uid = uid;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override

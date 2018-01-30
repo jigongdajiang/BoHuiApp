@@ -12,12 +12,14 @@
         android:layout_centerInParent="true"
         android:background="@color/sys_color_content_bg">
         <ImageView
+            android:id="@+id/iv_fengmian"
             android:layout_width="@dimen/dp_110"
             android:layout_height="@dimen/dp_110"
             android:layout_gravity="center"
             android:src="@drawable/img_temp_1"
             android:scaleType="fitXY"/>
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_88888888"

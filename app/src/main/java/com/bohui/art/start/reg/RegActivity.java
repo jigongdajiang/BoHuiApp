@@ -1,5 +1,6 @@
 package com.bohui.art.start.reg;
 
+import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -91,9 +92,25 @@ public class RegActivity extends AbsNetBaseActivity<RegPresenter,RegModel> imple
 
     @Override
     public void regSuccess(LoginResult result) {
-        //保存用户登录信息
-        AppFuntion.saveUserInfo(result);
-        //进入首页
-        startAty(MainActivity.class);
+        int status = result.getStatus();
+        switch (status){
+            case 1:
+                //保存用户登录信息
+                AppFuntion.saveUserInfo(result);
+                //进入首页
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("login_success",true);
+                startAty(MainActivity.class,bundle);
+                break;
+            case 2:
+                showMsgDialg("验证码失效");
+                break;
+            case 3:
+                showMsgDialg("验证码错误");
+                break;
+            case 4:
+                showMsgDialg("手机号已存在");
+                break;
+        }
     }
 }

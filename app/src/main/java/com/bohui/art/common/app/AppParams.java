@@ -23,6 +23,8 @@ public class AppParams {
      */
     public boolean hasStartCarma;
 
+    public String apkFilePath;
+
 
     private static AppParams mInstance;
 

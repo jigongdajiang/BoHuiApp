@@ -9,6 +9,7 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.common.ArtManListParam;
 import com.bohui.art.bean.detail.ArtManLevelBean;
+import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
@@ -72,7 +73,8 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ArtManDetailActivity.comeIn(getActivity(),new Bundle());
+                ArtManItemBean itemBean = (ArtManItemBean) adapter.getData(position);
+                ArtManDetailActivity.comeIn(getActivity(),itemBean.getAid());
             }
         });
     }

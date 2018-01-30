@@ -1,5 +1,8 @@
 package com.bohui.art.bean.home;
 
+
+import com.bohui.art.bean.found.DesignerItemBean;
+
 import java.util.List;
 
 /**

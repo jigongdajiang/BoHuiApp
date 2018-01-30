@@ -60,8 +60,7 @@ public class ChangePasswordActivity extends AbsNetBaseActivity<ChangePwdPresente
                         }
                         String op = StrOperationUtil.pwdMd5(oldPwd);
                         String np = StrOperationUtil.pwdMd5(newPwd);
-                        mPresenter.changePwd(1,op,np);
-//                        mPresenter.changePwd(AppFuntion.getUid(),op,np);
+                        mPresenter.changePwd(AppFuntion.getUid(),op,np);
                     }
                 })
                 .builder();

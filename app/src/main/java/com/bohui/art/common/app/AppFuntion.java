@@ -7,6 +7,7 @@ import com.bohui.art.bean.mine.LogoutResult;
 import com.bohui.art.bean.start.LoginResult;
 import com.framework.core.app.AtyManager;
 import com.framework.core.cache.core.CacheCoreFactory;
+import com.framework.core.http.EasyHttp;
 import com.framework.core.util.StrOperationUtil;
 
 /**
@@ -62,6 +63,14 @@ public class AppFuntion {
     }
     public static LoginResult getUserInfo(){
         return CacheCoreFactory.getPreferenceCache(PApplicationLike.getApp()).load(LoginResult.class,SharePreferenceKey.ACCOUNT_USER);
+    }
+
+    /**
+     * 静态退出登录
+     */
+    public static void staticLogout(Context context) {
+        CacheCoreFactory.getPreferenceCache(context).remove(SharePreferenceKey.ACCOUNT_USER);
+        EasyHttp.clearCache();
     }
 
 }

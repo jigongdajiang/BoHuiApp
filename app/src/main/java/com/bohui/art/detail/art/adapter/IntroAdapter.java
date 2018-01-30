@@ -34,7 +34,7 @@ public class IntroAdapter extends BaseAdapter<ArtDetailResult> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
-        holder.setText(R.id.tv_intro,itemData.getIntro());
+        holder.setText(R.id.tv_intro,itemData.getDesc());
     }
     @Override
     public LayoutHelper onCreateLayoutHelper() {

@@ -10,6 +10,7 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.OnePlusNLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtCoverItemBean;
+import com.framework.core.glideext.GlideUtil;
 import com.framework.core.util.ResUtil;
 import com.framework.core.util.StrOperationUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -47,6 +48,7 @@ public class Art1Plus2Adapter extends BaseAdapter<ArtCoverItemBean> {
             params.height = ResUtil.getResDimensionPixelOffset(mContext, R.dimen.dp_50);
         }
         imageView.setLayoutParams(params);
+        GlideUtil.display(mContext,imageView,itemData.getCover());
         LinearLayout itemView = (LinearLayout) holder.getConvertView();
         RecyclerView.LayoutParams itemViewLayoutParams = (RecyclerView.LayoutParams) itemView.getLayoutParams();
         if (position == 1) {

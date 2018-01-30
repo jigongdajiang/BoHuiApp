@@ -11,6 +11,7 @@ public class UserInfoEditParam {
     private long uid;
     private int sex;
     private String name;
+    private String industry;
 
     public long getUid() {
         return uid;
@@ -34,5 +35,13 @@ public class UserInfoEditParam {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 }

@@ -74,7 +74,12 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, 
         rv_classify_type.addOnItemTouchListener(new RvClickListenerIml() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ((NetBaseHelperUtil) mHelperUtil).startAty(Art2Activity.class);
+                if(adapter instanceof  ClassifyTypeDetailAdapter){
+                    ClassifyLevelBean levelBean = ((ClassifyTypeDetailAdapter) adapter).getData(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Art2Activity.TYPE,levelBean);
+                    startAty(Art2Activity.class,bundle);
+                }
             }
         });
     }

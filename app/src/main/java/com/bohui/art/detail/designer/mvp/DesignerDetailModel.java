@@ -14,9 +14,10 @@ import io.reactivex.Observable;
 
 public class DesignerDetailModel implements DesignerDetailContact.Model {
     @Override
-    public Observable<DesignerDetailResult> getDesingerDetail(String id) {
+    public Observable<DesignerDetailResult> getDesingerDetail(long uid,long did) {
         return EasyHttp.post(DesignerDetailContact.URL_GET_DESIGNER_DETAIL)
-                .params("id",id)
+                .params("uid",String.valueOf(uid))
+                .params("did",String.valueOf(did))
                 .execute(DesignerDetailResult.class);
     }
 }

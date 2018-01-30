@@ -59,7 +59,8 @@ public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyC
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ArtDetailActivity.comeIn(MyCollectActivity.this,new Bundle());
+                ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
+                ArtDetailActivity.comeIn(MyCollectActivity.this,itemBean.getId());
             }
         });
     }
@@ -72,7 +73,7 @@ public class MyCollectActivity extends AbsNetBaseActivity<MyCollectPresenter,MyC
     @Override
     protected void extraInit() {
         MyCollectParam myCollectParam = new MyCollectParam();
-//        myCollectParam.setUid(AppFuntion.getUid());
+        myCollectParam.setUid(AppFuntion.getUid());
         myCollectParam.setUid(1);
         mPresenter.myCollectList(myCollectParam);
     }

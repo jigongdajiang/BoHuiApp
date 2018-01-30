@@ -7,9 +7,11 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.mine.MyAttentionResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.ArtManListAdapter;
@@ -60,7 +62,8 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ArtManDetailActivity.comeIn(MyAttentionActivity.this,new Bundle());
+                ArtManItemBean itemBean = (ArtManItemBean) adapter.getData(position);
+                ArtManDetailActivity.comeIn(MyAttentionActivity.this,itemBean.getAid());
             }
         });
     }
@@ -73,8 +76,7 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
     @Override
     protected void extraInit() {
         MyCollectParam param = new MyCollectParam();
-//        myCollectParam.setUid(AppFuntion.getUid());
-        param.setUid(1);
+        param.setUid(AppFuntion.getUid());
         mPresenter.myAttention(param);
     }
 

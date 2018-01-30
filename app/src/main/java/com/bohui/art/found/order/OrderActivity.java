@@ -7,6 +7,7 @@ import com.bohui.art.R;
 import com.bohui.art.bean.found.OrderBean;
 import com.bohui.art.bean.found.OrderResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.util.CallUitl;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
@@ -101,8 +102,7 @@ public class OrderActivity extends AbsNetBaseActivity<OrderPresenter,OrderModel>
                 param.setNum(num);
                 param.setMobile(phone);
                 param.setRemarks(remarks);
-                param.setUid(1);
-//                param.setUid(AppFuntion.getUid());
+                param.setUid(AppFuntion.getUid());
                 mPresenter.order(param);
             }
         });

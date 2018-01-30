@@ -9,16 +9,18 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.common.BannerBean;
 import com.bohui.art.bean.common.BannerResult;
+import com.bohui.art.bean.found.DesignerItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.home.ClassifyLevelBean;
-import com.bohui.art.bean.home.DesignerItemBean;
 import com.bohui.art.bean.home.RecommendDesignerBean;
 import com.bohui.art.bean.home.RecommendListItemBean;
 import com.bohui.art.bean.home.RecommendMechanismBean;
 import com.bohui.art.bean.home.RecommendResult;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
-import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.detail.art.ArtDetailActivity;
+import com.bohui.art.detail.designer.DesignerDetailActivity;
+import com.bohui.art.found.designer.DesignerActivity;
 import com.bohui.art.home.adapter.ArtGridAdapter;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.bohui.art.home.adapter.DesignerAdapter;
@@ -59,13 +61,6 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
 
     private RecommendResult mResult;
     private DelegateAdapter mDelegateAdapter;
-    public static String imgs[] = new String[]{
-            "http://pic48.nipic.com/file/20140912/7487939_223919315000_2.jpg",
-            "http://fd.topitme.com/d/a8/1d/11315383988791da8do.jpg",
-            "http://img0.imgtn.bdimg.com/it/u=3424226810,3788025634&fm=214&gp=0.jpg",
-            "http://image.tianjimedia.com/uploadImages/2014/289/01/IGS09651F94M.jpg",
-            "http://img.sc115.com/mm/mm3/mm112013852nhei3knpfbu.jpg",
-    };
 
     @Override
     public int getLayoutId() {
@@ -89,7 +84,17 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
                 } else if (adapter instanceof Art1Plus2Adapter
                         || adapter instanceof OrgGridAdapter
                         || adapter instanceof ArtGridAdapter) {
-                    ArtDetailActivity.comeIn(getActivity(), new Bundle());
+                    long id =0;
+                    if(adapter.getData(position) instanceof  ArtCoverItemBean){
+                        id = ((ArtCoverItemBean)adapter.getData(position)).getId();
+                    }else if(adapter.getData(position) instanceof ArtItemBean){
+                        id = ((ArtItemBean)adapter.getData(position)).getId();
+                    }
+
+                    ArtDetailActivity.comeIn(getActivity(),id);
+                }else if(adapter instanceof DesignerAdapter){
+                    DesignerItemBean itemBean = ((DesignerAdapter) adapter).getData(position);
+                    DesignerDetailActivity.comeIn(getActivity(), AppFuntion.getUid(),itemBean.getDid());
                 }
             }
         });

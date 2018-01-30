@@ -1,14 +1,19 @@
 package com.bohui.art.mine.setting.suggest;
 
 import android.view.View;
+import android.widget.EditText;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.mine.SuggestSubmitResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.mine.setting.suggest.mvp.SuggestContanct;
 import com.bohui.art.mine.setting.suggest.mvp.SuggestModel;
 import com.bohui.art.mine.setting.suggest.mvp.SuggestPresenter;
+import com.framework.core.util.StrOperationUtil;
+
+import butterknife.BindView;
 
 /**
  * @author : gaojigong
@@ -18,6 +23,8 @@ import com.bohui.art.mine.setting.suggest.mvp.SuggestPresenter;
 
 
 public class SuggestActivity extends AbsNetBaseActivity<SuggestPresenter,SuggestModel> implements SuggestContanct.View {
+    @BindView(R.id.et_suggest)
+    EditText et_suggest;
     @Override
     public int getLayoutId() {
         return R.layout.activity_suggest;
@@ -31,7 +38,12 @@ public class SuggestActivity extends AbsNetBaseActivity<SuggestPresenter,Suggest
                 .setRightTextClickListner(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.suggestSubmit();
+                        String content = et_suggest.getText().toString();
+                        if(StrOperationUtil.isEmpty(content)){
+                            showMsgDialg("内容不能为空");
+                            return;
+                        }
+                        mPresenter.suggestSubmit(AppFuntion.getUid(),content);
                     }
                 })
                 .builder();

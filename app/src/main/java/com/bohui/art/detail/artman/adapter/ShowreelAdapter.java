@@ -1,12 +1,14 @@
 package com.bohui.art.detail.artman.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.bohui.art.bean.detail.ShowreelBean;
+import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -35,7 +37,9 @@ public class ShowreelAdapter extends BaseAdapter<ShowreelBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ShowreelBean itemData, int position) {
-
+        ImageView iv_fengmian = holder.getView(R.id.iv_fengmian);
+        GlideUtil.display(mContext,iv_fengmian,itemData.getImg());
+        holder.setText(R.id.tv_name,itemData.getName());
     }
 
     @Override

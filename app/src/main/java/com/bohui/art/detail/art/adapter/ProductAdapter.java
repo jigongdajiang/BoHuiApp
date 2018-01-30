@@ -3,6 +3,7 @@ package com.bohui.art.detail.art.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
@@ -12,6 +13,7 @@ import com.bohui.art.bean.common.BannerBean;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.bohui.art.common.util.BannerHelper;
 import com.bohui.art.bean.detail.ArtDetailResult;
+import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 import com.widget.smallelement.banner.ConvenientBanner;
@@ -44,6 +46,7 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
     private int currentNumber = 1;
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
+        //详情图片
         ConvenientBanner<String> cb_banner = holder.getView(R.id.banner);
         List<BannerBean>  bannerBeans = new ArrayList<>();
         for(String imgUrl : itemData.getImgs()){
@@ -73,6 +76,32 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
 
             }
         });
+        //艺术品名称
+        holder.setText(R.id.tv_name,itemData.getName() + itemData.getArtname()+"作品");
+        //艺术品价格
+        holder.setText(R.id.tv_price,String.valueOf(itemData.getPrice()));
+        //艺术品尺寸规格
+        holder.setText(R.id.tv_size,itemData.getSize());
+        //剩余量
+        holder.setText(R.id.tv_loss_num,itemData.getLooknum()+"人浏览");
+        //艺术家头像
+        ImageView iv_avr = holder.getView(R.id.iv_avr);
+        GlideUtil.display(mContext,iv_avr,itemData.getPhoto());
+        //艺术家名称
+        holder.setText(R.id.tv_art_man_name,itemData.getArtname());
+        //艺术家级别
+        int level = itemData.getLevel();
+        switch (level){
+            case 1:
+                holder.setText(R.id.tv_art_man_level,"国家级艺术家");
+                break;
+            case 2:
+                holder.setText(R.id.tv_art_man_level,"省级艺术家");
+                break;
+            case 3:
+                holder.setText(R.id.tv_art_man_level,"市级艺术家");
+                break;
+        }
         holder.addOnClickListener(R.id.rl_art_man);
     }
     private void showTvNumber(TextView tv,int cn,int numbers){

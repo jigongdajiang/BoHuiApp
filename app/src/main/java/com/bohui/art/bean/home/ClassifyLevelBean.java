@@ -84,7 +84,6 @@ public class ClassifyLevelBean implements Serializable{
                 ", id=" + id +
                 ", logo='" + logo + '\'' +
                 ", pid=" + pid +
-                ", isChecked=" + isChecked +
                 '}';
     }
 }

@@ -16,15 +16,15 @@ import io.reactivex.Observable;
 
 
 public interface SettingContact {
-    String URL_CHECK_VERSION = "";
+    String URL_CHECK_VERSION = "login/isVersion";
     String TAG_CHECK_VERSION = "tag_check_version";
 
-    String URL_LOGOUT = "";
+    String URL_LOGOUT = "login/logout";
     String TAG_LOGOUT = "TAG_LOGOUT";
 
     interface Model extends BaseModel{
         Observable<CheckVersionResult> checkVersion();
-        Observable<LogoutResult> logout();
+        Observable<LogoutResult> logout(long uid);
     }
     interface View extends BaseLoadingView{
         void checkVersionSuccess(CheckVersionResult result);
@@ -32,7 +32,7 @@ public interface SettingContact {
     }
     abstract class Presenter extends BasePresenter<Model,View>{
         public abstract void checkVersion();
-        public abstract void logout();
+        public abstract void logout(long uid);
     }
 
 }

@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.detail.DesignerDetailBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.util.CallUitl;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.detail.art.adapter.DetailGuideAdapter;
 import com.bohui.art.detail.designer.adapter.CaseAdapter;
@@ -48,11 +51,33 @@ public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPre
 
     @BindView(R.id.rv)
     RecyclerView rv;
+    @BindView(R.id.rl_call)
+    RelativeLayout rl_call;
     private String[] mTabTitles = {"设计师", "案例", "TA的简介"};
     private int rvStatus = 0;
 
     private int alPosition = 1;//案例导航条
     private int jnPosition = 1;//简介导航条
+
+    private long uid;
+    private long did;
+    private String mobile;
+    public static final String DESIGNER_UID = "designer_uid";
+    public static final String DESIGNER_DID = "designer_did";
+    public static void comeIn(Activity activity, long uid,long did){
+        Intent intent = new Intent(activity,DesignerDetailActivity.class);
+        intent.putExtra(DESIGNER_UID,uid);
+        intent.putExtra(DESIGNER_DID,did);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        uid = getIntent().getLongExtra(DESIGNER_UID,0);
+        did = getIntent().getLongExtra(DESIGNER_DID,0);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_designer_detail;
@@ -61,7 +86,39 @@ public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPre
     @Override
     public void initView() {
         segment_tab.setTabData(mTabTitles);
-        DesignerDetailResult designerDetailResult = new DesignerDetailResult();
+        RxViewUtil.addOnClick(mRxManager, iv_back, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                onBackPressed();
+            }
+        });
+        RxViewUtil.addOnClick(mRxManager, iv_home, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                startActivity(new Intent(DesignerDetailActivity.this, MainActivity.class));
+            }
+        });
+        RxViewUtil.addOnClick(mRxManager, rl_call, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                CallUitl.call(DesignerDetailActivity.this,mobile);
+            }
+        });
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getDesignerDetail(uid,did);
+    }
+
+    @Override
+    public void getDesignerDetailSuccess(DesignerDetailResult result) {
+        DesignerDetailBean designerDetailResult = result.getDesignerDetail();
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
@@ -75,10 +132,7 @@ public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPre
         delegateAdapter.addAdapter(detailGuideAdapter);
 
         //案例内容
-        List<CaseBean> caseBeans = new ArrayList<>();
-        for(int i=0;i<5;i++){
-            caseBeans.add(new CaseBean());
-        }
+        List<CaseBean> caseBeans = designerDetailResult.getOpusList();
         CaseAdapter caseAdapter = new CaseAdapter(mContext);
         caseAdapter.setDatas(caseBeans);
         delegateAdapter.addAdapter(caseAdapter);
@@ -148,39 +202,6 @@ public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPre
 
             }
         });
-
-
-        RxViewUtil.addOnClick(mRxManager, iv_back, new Consumer() {
-            @Override
-            public void accept(Object o) throws Exception {
-                onBackPressed();
-            }
-        });
-        RxViewUtil.addOnClick(mRxManager, iv_home, new Consumer() {
-            @Override
-            public void accept(Object o) throws Exception {
-                startActivity(new Intent(DesignerDetailActivity.this, MainActivity.class));
-            }
-        });
-    }
-    public static void comeIn(Activity activity, Bundle bundle){
-        Intent intent = new Intent(activity,DesignerDetailActivity.class);
-        intent.putExtras(bundle);
-        activity.startActivity(intent);
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setMV(mModel,this);
-    }
-
-    @Override
-    protected void extraInit() {
-        mPresenter.getDesignerDetail("");
-    }
-
-    @Override
-    public void getDesignerDetailSuccess(DesignerDetailResult result) {
-
+        mobile = designerDetailResult.getMobile();
     }
 }

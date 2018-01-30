@@ -87,7 +87,7 @@
         <!-- 主页 -->
         <activity android:name=".start.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
         <!-- 基础Web页 -->
         <activity android:name=".common.activity.BaseWebActivity"
             android:screenOrientation="portrait"/>
@@ -147,6 +147,9 @@
             android:screenOrientation="portrait"/>
         <!-- 艺术家详情 -->
         <activity android:name=".detail.artman.ArtManDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 作品集列表 -->
+        <activity android:name=".detail.artman.ArtJiActivity"
             android:screenOrientation="portrait"/>
         <!-- 设计师详情 -->
         <activity android:name=".detail.designer.DesignerDetailActivity"

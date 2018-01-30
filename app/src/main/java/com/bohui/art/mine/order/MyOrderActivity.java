@@ -9,6 +9,7 @@ import com.bohui.art.R;
 import com.bohui.art.bean.mine.MyOrderBean;
 import com.bohui.art.bean.mine.MyOrderListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.found.order.OrderActivity;
 import com.bohui.art.mine.collect.mvp.MyCollectParam;
@@ -56,7 +57,7 @@ public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrder
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ((BaseHelperUtil)mHelperUtil).startAty(OrderActivity.class);
+
             }
         });
 
@@ -70,8 +71,7 @@ public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrder
     @Override
     protected void extraInit() {
         MyCollectParam param = new MyCollectParam();
-//        myCollectParam.setUid(AppFuntion.getUid());
-        param.setUid(1);
+        param.setUid(AppFuntion.getUid());
         mPresenter.myOrder(param);
     }
 

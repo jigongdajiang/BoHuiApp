@@ -92,7 +92,8 @@
             android:background="@drawable/shape_attention_un"
             android:text="+ 关注"
             android:textSize="@dimen/sp_10"
-            android:textColor="@color/sys_color_font_white"/>
+            android:textColor="@color/sys_color_font_white"
+            android:visibility="gone"/>
     </RelativeLayout>
     <HorizontalScrollView
         android:id="@+id/hsv_arts"

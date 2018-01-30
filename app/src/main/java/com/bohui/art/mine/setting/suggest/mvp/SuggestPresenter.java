@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class SuggestPresenter extends SuggestContanct.Presenter {
     @Override
-    public void suggestSubmit() {
-        mRxManage.add(mModel.suggestSubmit().subscribeWith(new AppProgressSubScriber<SuggestSubmitResult>(mView,SuggestContanct.TAG_SUGGEST,mView) {
+    public void suggestSubmit(long uid,String advice) {
+        mRxManage.add(mModel.suggestSubmit(uid,advice).subscribeWith(new AppProgressSubScriber<SuggestSubmitResult>(mView,SuggestContanct.TAG_SUGGEST,mView) {
             @Override
             protected void onResultSuccess(SuggestSubmitResult result) {
                 mView.suggestSubmitSuccess(result);

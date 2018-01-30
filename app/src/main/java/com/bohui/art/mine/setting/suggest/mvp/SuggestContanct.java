@@ -15,15 +15,15 @@ import io.reactivex.Observable;
 
 
 public interface SuggestContanct {
-    String URL_SUGGEST = "";
+    String URL_SUGGEST = "user/addAdvice";
     String TAG_SUGGEST = "tag_suggest";
     interface Model extends BaseModel{
-        Observable<SuggestSubmitResult> suggestSubmit();
+        Observable<SuggestSubmitResult> suggestSubmit(long uid,String advice);
     }
     interface View extends BaseLoadingView{
         void suggestSubmitSuccess(SuggestSubmitResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void suggestSubmit();
+        public abstract void suggestSubmit(long uid,String advice);
     }
 }

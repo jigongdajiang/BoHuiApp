@@ -21,6 +21,7 @@ public class RegModel implements RegContact.Model {
         return EasyHttp.post(RegContact.URL_REG)
                 .params("mobile",mobile)
                 .params("password",password)
+                .params("code","123456")
                 .execute(LoginResult.class);
     }
 }

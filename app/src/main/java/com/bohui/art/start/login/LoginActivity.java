@@ -1,5 +1,6 @@
 package com.bohui.art.start.login;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -86,6 +87,8 @@ public class LoginActivity extends AbsNetBaseActivity<LoginPresenter,LoginModel>
         //保存用户登录标示信息
         AppFuntion.saveUserInfo(result);
         //进入首页
-        startAty(MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("login_success",true);
+        startAty(MainActivity.class,bundle);
     }
 }

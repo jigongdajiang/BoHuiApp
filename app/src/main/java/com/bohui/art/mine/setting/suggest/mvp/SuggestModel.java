@@ -14,8 +14,10 @@ import io.reactivex.Observable;
 
 public class SuggestModel implements SuggestContanct.Model {
     @Override
-    public Observable<SuggestSubmitResult> suggestSubmit() {
+    public Observable<SuggestSubmitResult> suggestSubmit(long uid,String advice) {
         return EasyHttp.post(SuggestContanct.URL_SUGGEST)
+                .params("uid",String.valueOf(uid))
+                .params("advice",advice)
                 .execute(SuggestSubmitResult.class);
     }
 }

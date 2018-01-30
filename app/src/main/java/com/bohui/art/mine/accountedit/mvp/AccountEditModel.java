@@ -19,6 +19,7 @@ public class AccountEditModel implements AccountEditContact.Model {
                 .params("uid",String.valueOf(param.getUid()))
                 .params("sex",String.valueOf(param.getSex()))
                 .params("name",param.getName())
+                .params("industry",param.getIndustry())
                 .execute(AccountEditResult.class);
     }
 }

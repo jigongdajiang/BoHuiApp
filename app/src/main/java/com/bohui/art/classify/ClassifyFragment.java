@@ -107,6 +107,11 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
 
     @Override
     public void getClassifyLevel1Success(ClassifyLevelResult result) {
+        ClassifyLevelBean beanRm = new ClassifyLevelBean();
+        beanRm.setName("热门分类");
+        beanRm.setId(0);
+        beanRm.setChecked(true);
+        result.getOneClass().add(0,beanRm);
         if(mResult == null || (result != null && !mResult.toString().equals(result.toString()))){
             mResult = result;
             refreshData();
@@ -116,11 +121,6 @@ public class ClassifyFragment extends AbsMianFragment<HomePresenter,HomeModel> i
     private void refreshData() {
         List<ClassifyLevelBean> oneClass = mResult.getOneClass();
         if(!CollectionUtil.isEmpty(oneClass)){
-            ClassifyLevelBean beanRm = new ClassifyLevelBean();
-            beanRm.setName("热门分类");
-            beanRm.setId(0);
-            beanRm.setChecked(true);
-            oneClass.add(0,beanRm);
             classifyTypeAdapter.replaceAllItem(oneClass);
             rollCtrlViewPager.setOffscreenPageLimit(oneClass.size());
             mFragments.clear();

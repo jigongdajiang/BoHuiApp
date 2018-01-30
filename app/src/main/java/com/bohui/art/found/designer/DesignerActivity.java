@@ -10,13 +10,16 @@ import android.widget.ListView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.DesignerAttrBean;
+import com.bohui.art.bean.found.DesignerAttrResult;
+import com.bohui.art.bean.found.DesignerItemBean;
+import com.bohui.art.bean.found.DesignerListParam;
 import com.bohui.art.bean.found.DesignerListResult;
-import com.bohui.art.bean.home.DesignerItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.designer.DesignerDetailActivity;
 import com.bohui.art.home.adapter.DesignerAdapter;
-import com.bohui.art.bean.home.RecommendDesignerBean;
 import com.bohui.art.search.SearchActivity;
 import com.framework.core.base.BaseHelperUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -46,6 +49,18 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
     private List<View> popupViews = new ArrayList<>();
     private ListDropDownAdapter areaAdapter;
     private ListDropDownAdapter styleAdapter;
+    private List<DesignerAttrBean> areaBeans;
+    private List<DesignerAttrBean> styleBeans;
+    private DesignerAdapter designerAdapter;
+    private final String headers[] = {"擅长领域", "擅长风格"};
+    private DesignerListParam param;
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        param = new DesignerListParam();
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_designer;
@@ -65,34 +80,38 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
                     }
                 })
                 .builder();
-
         View convertView =  LayoutInflater.from(mContext).inflate(R.layout.layout_common_rv,null);
-        rv = convertView.findViewById(R.id.rv);
-        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
-        DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        rv.setLayoutManager(virtualLayoutManager);
-        rv.setAdapter(delegateAdapter);
-
-        final String headers[] = {"擅长领域", "擅长风格"};
-        final String areas[] = {"不限", "KTV", "写字楼", "饭店"};
-        final String styles[] = {"不限", "中国风", "欧美风"};
 
         final ListView areaView = new ListView(this);
         areaView.setDividerHeight(0);
-        areaAdapter = new ListDropDownAdapter(this, Arrays.asList(areas));
+        areaBeans = new ArrayList<>();
+        DesignerAttrBean areaHeader = new DesignerAttrBean();
+        areaHeader.setName("擅长领域");
+        areaHeader.setTid(0);
+        areaHeader.setType(1);
+        areaBeans.add(areaHeader);
+        areaAdapter = new ListDropDownAdapter(this,areaBeans);
         areaView.setAdapter(areaAdapter);
 
         final ListView styleView = new ListView(this);
         styleView.setDividerHeight(0);
-        styleAdapter = new ListDropDownAdapter(this, Arrays.asList(styles));
+        styleBeans = new ArrayList<>();
+        DesignerAttrBean styleHeader = new DesignerAttrBean();
+        styleHeader.setName("擅长风格");
+        styleHeader.setTid(0);
+        styleHeader.setType(2);
+        areaBeans.add(styleHeader);
+        styleAdapter = new ListDropDownAdapter(this, styleBeans);
         styleView.setAdapter(styleAdapter);
 
         areaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 areaAdapter.setCheckItem(position);
-                mDropDownMenu.setTabText(position == 0 ? headers[0] : areas[position]);
+                mDropDownMenu.setTabText(areaBeans.get(position).getName());
                 mDropDownMenu.closeMenu();
+                param.setGoodfiled(areaBeans.get(position).getTid());
+                mPresenter.getDesignerList(param);
             }
         });
 
@@ -100,8 +119,10 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 styleAdapter.setCheckItem(position);
-                mDropDownMenu.setTabText(position == 0 ? headers[1] : styles[position]);
+                mDropDownMenu.setTabText(styleBeans.get(position).getName());
                 mDropDownMenu.closeMenu();
+                param.setGoodstyle(styleBeans.get(position).getTid());
+                mPresenter.getDesignerList(param);
             }
         });
 
@@ -109,20 +130,19 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
         popupViews.add(styleView);
 
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, convertView);
-
-        DesignerAdapter designerAdapter = new DesignerAdapter(mContext);
-        List<DesignerItemBean> designerBeans = new ArrayList<>();
-        for(int i=0;i<20;i++){
-            DesignerItemBean designerBean = new DesignerItemBean();
-            designerBeans.add(designerBean);
-        }
-        designerAdapter.setDatas(designerBeans);
+        rv = convertView.findViewById(R.id.rv);
+        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
+        DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
+        designerAdapter = new DesignerAdapter(mContext);
+        designerAdapter.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(designerAdapter);
-
+        rv.setLayoutManager(virtualLayoutManager);
+        rv.setAdapter(delegateAdapter);
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                DesignerDetailActivity.comeIn(DesignerActivity.this,new Bundle());
+                DesignerItemBean itemBean = (DesignerItemBean) adapter.getData(position);
+                DesignerDetailActivity.comeIn(DesignerActivity.this, AppFuntion.getUid(),itemBean.getDid());
             }
         });
     }
@@ -134,11 +154,33 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
 
     @Override
     protected void extraInit() {
-        mPresenter.getDesignerList();
+        mPresenter.getDesignerAttr();
+    }
+
+    @Override
+    public void getDesignerAttrSuccess(DesignerAttrResult result) {
+        areaBeans.clear();
+        DesignerAttrBean areaHeader = new DesignerAttrBean();
+        areaHeader.setName("擅长领域");
+        areaHeader.setTid(0);
+        areaHeader.setType(1);
+        result.getAreaList().add(0,areaHeader);
+        areaBeans.addAll(result.getAreaList());
+        areaAdapter.notifyDataSetChanged();
+        styleBeans.clear();
+        DesignerAttrBean styleHeader = new DesignerAttrBean();
+        styleHeader.setName("擅长风格");
+        styleHeader.setTid(0);
+        styleHeader.setType(2);
+        result.getStyleList().add(0,styleHeader);
+        styleBeans.addAll(result.getStyleList());
+        param.setGoodfiled(0);
+        param.setGoodstyle(0);
+        mPresenter.getDesignerList(param);
     }
 
     @Override
     public void getDesignerListSuccess(DesignerListResult result) {
-
+        designerAdapter.replaceAllItem(result.getDesignerList());
     }
 }

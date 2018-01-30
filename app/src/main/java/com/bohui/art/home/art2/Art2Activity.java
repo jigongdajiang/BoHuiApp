@@ -41,6 +41,7 @@ import butterknife.BindView;
  * @author : gaojigong
  * @date : 2017/12/15
  * @description:
+ * 作品集列表
  */
 
 
@@ -92,7 +93,8 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ArtDetailActivity.comeIn(Art2Activity.this,new Bundle());
+                ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
+                ArtDetailActivity.comeIn(Art2Activity.this,itemBean.getAid());
             }
         });
         ptrClassicFrameLayout.postDelayed(new Runnable() {

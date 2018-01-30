@@ -8,4 +8,13 @@ package com.bohui.art.bean.mine;
 
 
 public class LogoutResult {
+    private int isSuccess;//0失败1成功
+
+    public int getIsSuccess() {
+        return isSuccess;
+    }
+
+    public void setIsSuccess(int isSuccess) {
+        this.isSuccess = isSuccess;
+    }
 }

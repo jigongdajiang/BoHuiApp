@@ -70,7 +70,7 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ArtDetailActivity.comeIn(getActivity(),new Bundle());
+                ArtDetailActivity.comeIn(getActivity(),((ArtGridAdapter)adapter).getData(position).getId());
             }
         });
     }

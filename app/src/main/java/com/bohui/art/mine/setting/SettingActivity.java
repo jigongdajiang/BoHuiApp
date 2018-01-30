@@ -1,11 +1,14 @@
 package com.bohui.art.mine.setting;
 
+import android.os.Build;
+import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.mine.CheckVersionResult;
 import com.bohui.art.bean.mine.LogoutResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
@@ -14,6 +17,7 @@ import com.bohui.art.mine.setting.mvp.SettingContact;
 import com.bohui.art.mine.setting.mvp.SettingModel;
 import com.bohui.art.mine.setting.mvp.SettingPresenter;
 import com.bohui.art.mine.setting.suggest.SuggestActivity;
+import com.bohui.art.start.MainActivity;
 import com.bohui.art.start.login.LoginActivity;
 import com.framework.core.base.BaseHelperUtil;
 
@@ -36,6 +40,8 @@ public class SettingActivity extends AbsNetBaseActivity<SettingPresenter,Setting
     RelativeLayout rl_update;
     @BindView(R.id.rl_exit)
     RelativeLayout rl_exit;
+
+    private UpdateHelper updateHelper;
 
     @Override
     public int getLayoutId() {
@@ -68,8 +74,7 @@ public class SettingActivity extends AbsNetBaseActivity<SettingPresenter,Setting
         RxViewUtil.addOnClick(mRxManager, rl_exit, new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
-                mPresenter.logout();
-                ((NetBaseHelperUtil)mHelperUtil).startAty(LoginActivity.class);
+                mPresenter.logout(AppFuntion.getUid());
             }
         });
     }
@@ -81,11 +86,25 @@ public class SettingActivity extends AbsNetBaseActivity<SettingPresenter,Setting
 
     @Override
     public void checkVersionSuccess(CheckVersionResult result) {
-
+        if(result.getStatus() == 1){
+            //有更新
+            updateHelper = new UpdateHelper(SettingActivity.this,result);
+            updateHelper.handleUpdate();
+        }else{
+            showMsgDialg("当前是最新版本");
+        }
     }
 
     @Override
     public void logoutSuccess(LogoutResult result) {
-
+        if(result.getIsSuccess() == 1){
+            //成功
+            AppFuntion.staticLogout(mContext);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("logout",true);
+            startAty(MainActivity.class,bundle);
+        }else{
+            showMsgDialg("退出登录失败，请稍后重试");
+        }
     }
 }

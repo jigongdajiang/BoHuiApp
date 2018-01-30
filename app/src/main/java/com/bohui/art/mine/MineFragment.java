@@ -116,7 +116,6 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
     @Override
     protected void come() {
         mPresenter.getUserInfo(AppFuntion.getUid());
-
     }
 
     @Override
