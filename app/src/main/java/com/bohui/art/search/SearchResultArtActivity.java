@@ -276,7 +276,6 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
                 param.getOneclass().addAll(oneClassIds);
                 param.getTowclass().clear();
                 param.getTowclass().addAll(twoClassIds);
-                toastLong(param.toString());
                 mPresenter.getArtList(param);
             }
         });
@@ -330,6 +329,10 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
 
     @Override
     public void getArtListSuccess(ArtListResult result) {
-        adapter.replaceAllItem(result.getPaintingList());
+        if(result != null && !CollectionUtil.isEmpty(result.getPaintingList())){
+            adapter.replaceAllItem(result.getPaintingList());
+        }else{
+            showMsgDialg("暂时没有符合条件的查询结果");
+        }
     }
 }
