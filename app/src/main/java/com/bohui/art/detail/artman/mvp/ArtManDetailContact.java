@@ -21,7 +21,7 @@ public interface ArtManDetailContact {
     String URL_ATTENTION_ART_MAN = "user/isFollow";
     String TAG_ATTENTION_ART_MAN = "tag_attention_art_man";
     interface Model extends BaseModel{
-        Observable<ArtMainDetailResult> getArtManDetail(long aid);
+        Observable<ArtMainDetailResult> getArtManDetail(long uid,long aid);
         Observable<CAResult> attentionArtMan(long uid,long artId,int type);
     }
     interface View extends BaseLoadingView{
@@ -29,7 +29,7 @@ public interface ArtManDetailContact {
         void attentionArtManSuccess(CAResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void getArtManDetail(long aid);
+        public abstract void getArtManDetail(long uid,long aid);
         public abstract void attentionArtMan(long uid,long artId,int type);
     }
 }

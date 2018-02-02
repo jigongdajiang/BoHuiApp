@@ -14,7 +14,6 @@ import com.bohui.art.bean.detail.CAResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
-import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.detail.art.adapter.DetailGuideAdapter;
@@ -27,8 +26,6 @@ import com.bohui.art.detail.artman.mvp.ArtManDetailContact;
 import com.bohui.art.detail.artman.mvp.ArtManDetailModel;
 import com.bohui.art.detail.artman.mvp.ArtManDetailPresenter;
 import com.bohui.art.home.art1.Art2Adapter;
-import com.bohui.art.home.art2.Art2Activity;
-import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.start.MainActivity;
 import com.bohui.art.start.login.LoginActivity;
 import com.flyco.tablayout.SegmentTabLayout;
@@ -37,7 +34,6 @@ import com.framework.core.log.PrintLog;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,7 +63,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
     private int zpjPosition = 1;
     private int jnPosition = 1;
     private long aid;
-    private int isfollow;//0未关注，1已关注
+    private int isfouce;//0未关注，1已关注
     private  DetailAdapter detailAdapter;
     public static final String ART_MAN_ID = "art_man_id";
     public static void comeIn(Activity activity, long aid){
@@ -113,7 +109,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
 
     @Override
     protected void extraInit() {
-        mPresenter.getArtManDetail(aid);
+        mPresenter.getArtManDetail(AppFuntion.getUid(),aid);
     }
 
     @Override
@@ -121,6 +117,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
+        isfouce = artMainDetailResult.getIsfouce();
         //简介 0
         detailAdapter = new DetailAdapter(mContext,artMainDetailResult);
         delegateAdapter.addAdapter(detailAdapter);
@@ -236,7 +233,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
                         startAty(LoginActivity.class);
                         return;
                     }
-                    if(isfollow == 0){
+                    if(isfouce == 0){
                         //未关注，则为关注
                         mPresenter.attentionArtMan(AppFuntion.getUid(),aid,1);
                     }else {
@@ -250,19 +247,19 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
 
     @Override
     public void attentionArtManSuccess(CAResult result) {
-        if(isfollow == 0){
+        if(isfouce == 0){
             //关注的结果
             if(result.getIsRes() == 1){
                 showMsgDialg("关注成功");
-                isfollow = 1;
-                detailAdapter.changeAttentionText(isfollow);
+                isfouce = 1;
+                detailAdapter.changeAttentionText(isfouce);
             }
         }else{
             //取消关注的结果
             if(result.getIsRes() == 1){
                 showMsgDialg("取消关注成功");
-                isfollow = 0;
-                detailAdapter.changeAttentionText(isfollow);
+                isfouce = 0;
+                detailAdapter.changeAttentionText(isfouce);
             }
         }
     }

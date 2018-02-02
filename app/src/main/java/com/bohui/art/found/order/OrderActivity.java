@@ -97,7 +97,8 @@ public class OrderActivity extends AbsNetBaseActivity<OrderPresenter,OrderModel>
                 OrderBean param = new OrderBean();
                 param.setType(type);
                 param.setName(name);
-                param.setPrice(price1+"-"+price2);
+                param.setPrice(price1);
+                param.setEndprice(price2);
                 param.setSize(specification);
                 param.setNum(num);
                 param.setMobile(phone);
@@ -121,7 +122,11 @@ public class OrderActivity extends AbsNetBaseActivity<OrderPresenter,OrderModel>
 
     @Override
     public void orderSuccess(OrderResult result) {
-        showMsgDialg(result.getMsg());
+        if(result == null || StrOperationUtil.isEmpty(result.getMsg())){
+            showMsgDialg("定制失败，请重新定制");
+        }else{
+            showMsgDialg(result.getMsg());
+        }
     }
 
     @Override

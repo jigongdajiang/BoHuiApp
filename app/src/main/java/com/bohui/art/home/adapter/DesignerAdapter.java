@@ -50,6 +50,6 @@ public class DesignerAdapter extends BaseAdapter<DesignerItemBean> {
         //经验
         holder.setText(R.id.tv_designer_experience,itemData.getExperience()+"年设计经验");
         //案例数
-        holder.setText(R.id.tv_designer_case_number,"案例数: "+"100");
+        holder.setText(R.id.tv_designer_case_number,"案例数: "+itemData.getCount());
     }
 }

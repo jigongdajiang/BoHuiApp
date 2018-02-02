@@ -22,7 +22,7 @@ public interface ArtDetailContact {
     String URL_COLLECT_ART = "user/isCollection";
     String TAG_COLLECT_ART = "tag_collect_art";
     interface Model extends BaseModel{
-        Observable<ArtDetailResult> getArtDetail(long id);
+        Observable<ArtDetailResult> getArtDetail(long uid,long id);
 
         /**
          *
@@ -37,7 +37,7 @@ public interface ArtDetailContact {
         void collectSuccess(CAResult result);
     }
     abstract class Presenter extends BasePresenter<Model,View>{
-        public abstract void getArtDetail(long id);
+        public abstract void getArtDetail(long uid,long id);
         public abstract void collectArt(long uid,long paintId,int type);
     }
 }

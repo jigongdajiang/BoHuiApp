@@ -21,6 +21,7 @@ import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.framework.core.glideext.GlideUtil;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -68,7 +69,20 @@ public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
                 break;
         }
         //擅长
-        holder.setText(R.id.tv_good,"擅长:山水画");
+        List<String> gooadt = itemData.getGoodat();
+        if(!CollectionUtil.isEmpty(gooadt)){
+            StringBuffer stringBuffer = new StringBuffer();
+            for(int i=0;i<gooadt.size();i++){
+                if(i == gooadt.size() - 1){
+                    stringBuffer.append(gooadt.get(i));
+                }else{
+                    stringBuffer.append(gooadt.get(i)+"-");
+                }
+            }
+            holder.setText(R.id.tv_good,"擅长:"+stringBuffer.toString());
+        }else{
+            holder.setText(R.id.tv_good,"");
+        }
         //作品数
         holder.setText(R.id.tv_art_number,"作品: "+itemData.getPaintingNum());
         //粉丝

@@ -24,9 +24,10 @@ public class UpLoadModel implements UpLoadContact.Model {
     }
 
     @Override
-    public Observable<UploadResult> upLoad(File file) {
+    public Observable<UploadResult> upLoad(long uid,File file) {
         return EasyHttp.post(UpLoadContact.URL_UPLOAD_HEAD_IMG)
-                .params("img",file,progressResponseCallBack)
+                .params("uid",String.valueOf(uid))
+                .params("file",file,progressResponseCallBack)
                 .execute(UploadResult.class);
     }
 }

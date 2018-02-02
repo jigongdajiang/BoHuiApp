@@ -25,7 +25,7 @@ public class ArtMainDetailResult {
     private String detail;//个人详情
     private String leveldesc;//级别说明
     private long aid;//用户ID
-    private int isfollow;//0未关注1已关注
+    private int isfouce;//0未关注1已关注
 
     public List<ArtItemBean> getDlist() {
         return dlist;
@@ -123,29 +123,11 @@ public class ArtMainDetailResult {
         this.aid = aid;
     }
 
-    public int getIsfollow() {
-        return isfollow;
+    public int getIsfouce() {
+        return isfouce;
     }
 
-    public void setIsfollow(int isfollow) {
-        this.isfollow = isfollow;
-    }
-
-    @Override
-    public String toString() {
-        return "ArtMainDetailResult{" +
-                "dlist=" + dlist +
-                ", setlist=" + setlist +
-                ", personalnote='" + personalnote + '\'' +
-                ", follownum=" + follownum +
-                ", level=" + level +
-                ", num=" + num +
-                ", name='" + name + '\'' +
-                ", photo='" + photo + '\'' +
-                ", artistic='" + artistic + '\'' +
-                ", detail='" + detail + '\'' +
-                ", leveldesc='" + leveldesc + '\'' +
-                ", aid=" + aid +
-                '}';
+    public void setIsfouce(int isfouce) {
+        this.isfouce = isfouce;
     }
 }

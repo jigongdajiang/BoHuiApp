@@ -56,6 +56,8 @@ public class SuggestActivity extends AbsNetBaseActivity<SuggestPresenter,Suggest
 
     @Override
     public void suggestSubmitSuccess(SuggestSubmitResult result) {
-
+        if(result.getIsres() == 1){
+            showMsgDialg("反馈成功，谢谢您的宝贵建议");
+        }
     }
 }

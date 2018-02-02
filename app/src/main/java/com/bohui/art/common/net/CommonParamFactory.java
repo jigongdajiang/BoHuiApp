@@ -3,6 +3,7 @@ package com.bohui.art.common.net;
 import android.content.Context;
 import android.os.Build;
 
+import com.bohui.art.common.app.AppFuntion;
 import com.framework.core.cache.core.CacheCoreFactory;
 import com.framework.core.http.model.HttpParams;
 import com.framework.core.http.model.ICommonParamFactory;
@@ -40,7 +41,7 @@ public class CommonParamFactory implements ICommonParamFactory {
     private String getHeader(Context context) {
         JSONObject h = new JSONObject();
         try {
-            h.put("token", CacheCoreFactory.getPreferenceCache(context).load(String.class,"token"));//是否加密
+            h.put("token", AppFuntion.getToken());//是否加密
             h.put("version", AppInfoUtil.getAppVersionCode(context));
             h.put("system", "Android");
             h.put("pka", AppInfoUtil.getPackname(context));

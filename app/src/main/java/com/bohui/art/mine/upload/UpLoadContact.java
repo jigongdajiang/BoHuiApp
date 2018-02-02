@@ -19,15 +19,15 @@ import io.reactivex.Observable;
 
 public interface UpLoadContact {
     // “账户上传头像“URL、TAG
-    String URL_UPLOAD_HEAD_IMG = "member/picture/modify/v2.0";
-    String TAG_UPLOAD_HEAD_IMG = "headImgPictureUpload";
+    String URL_UPLOAD_HEAD_IMG = "common/upload";
+    String TAG_UPLOAD_HEAD_IMG = "tag_upload_head_img";
     interface Model extends BaseModel {
-        Observable<UploadResult> upLoad(File file);
+        Observable<UploadResult> upLoad(long uid,File file);
     }
     interface View extends BaseView {
         void upLoadSuccess(UploadResult uploadResult);
     }
     abstract class Presenter extends BasePresenter<Model,View> {
-        public abstract void upLoad(File file);
+        public abstract void upLoad(long uid,File file);
     }
 }

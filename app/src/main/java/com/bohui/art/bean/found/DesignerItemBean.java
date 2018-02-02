@@ -15,6 +15,7 @@ public class DesignerItemBean {
     private String experience;//经验年
     private long did;//设计师id
     private String good_at_style;//擅长风格
+    private int count;//案例数量
 
     public String getName() {
         return name;
@@ -70,5 +71,13 @@ public class DesignerItemBean {
 
     public void setGood_at_style(String good_at_style) {
         this.good_at_style = good_at_style;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

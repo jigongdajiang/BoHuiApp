@@ -17,6 +17,7 @@ public class ArtManItemBean {
     private long aid;
     private int followNum;
     private List<ArtManItemArtBean> paintingList;
+    private List<String> goodat;
 
     public int getPaintingNum() {
         return paintingNum;
@@ -72,5 +73,13 @@ public class ArtManItemBean {
 
     public void setPaintingList(List<ArtManItemArtBean> paintingList) {
         this.paintingList = paintingList;
+    }
+
+    public List<String> getGoodat() {
+        return goodat;
+    }
+
+    public void setGoodat(List<String> goodat) {
+        this.goodat = goodat;
     }
 }

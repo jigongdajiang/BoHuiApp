@@ -83,12 +83,17 @@ public class LoginActivity extends AbsNetBaseActivity<LoginPresenter,LoginModel>
 
     @Override
     public void loginSuccess(LoginResult result) {
-        //登录成功
-        //保存用户登录标示信息
-        AppFuntion.saveUserInfo(result);
-        //进入首页
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("login_success",true);
-        startAty(MainActivity.class,bundle);
+        if(result.getIs() == 1){
+            //登录成功
+            //保存用户登录标示信息
+            AppFuntion.saveUserInfo(result);
+            //进入首页
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("login_success",true);
+            startAty(MainActivity.class,bundle);
+        }else{
+            showMsgDialg("用户名或密码错误");
+        }
+
     }
 }

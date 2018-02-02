@@ -136,7 +136,7 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
 
     @Override
     protected void extraInit() {
-        mPresenter.getArtDetail(id);
+        mPresenter.getArtDetail(AppFuntion.getUid(),id);
     }
 
     @Override

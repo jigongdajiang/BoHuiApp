@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.mine.UploadResult;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.app.AppParams;
 import com.bohui.art.common.app.SharePreferenceKey;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -22,6 +23,7 @@ import com.framework.core.glideext.GlideApp;
 import com.framework.core.http.callback.ProgressResponseCallBack;
 import com.framework.core.http.exception.ApiException;
 import com.framework.core.log.PrintLog;
+import com.framework.core.toast.ToastShow;
 import com.framework.core.util.StrOperationUtil;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -143,17 +145,22 @@ public class UpLoadUtil extends AbsHelperUtil implements
 
     @Override
     public void upLoad(File[] files) {
-        upLoadPresenter.upLoad(files[0]);
+        if(AppFuntion.isLogin()){
+            upLoadPresenter.upLoad(AppFuntion.getUid(),files[0]);
+        }
     }
 
     @Override
     public void upLoadSuccess(UploadResult uploadResult) {
+        int status = uploadResult.getStatus();
         String path = uploadResult.getPath();
-        if (!StrOperationUtil.isEmpty(path)) {
+        if (status == 1 && !StrOperationUtil.isEmpty(path)) {
             refreshImgAvr(path);
             if (upLoadSuccessListener != null) {
                 upLoadSuccessListener.uploadSuccess(path);
             }
+        }else{
+            ToastShow.showLong(getContext(),"上传头像失败，请稍后重试");
         }
     }
 

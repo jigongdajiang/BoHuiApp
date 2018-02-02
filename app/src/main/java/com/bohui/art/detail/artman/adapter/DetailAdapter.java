@@ -51,7 +51,7 @@ public class DetailAdapter extends BaseAdapter<ArtMainDetailResult> {
         holder.setText(R.id.tv_intro,itemData.getPersonalnote());
         tv_attention = holder.getView(R.id.tv_attention);
         //是否关注
-        changeAttentionText(itemData.getIsfollow());
+        changeAttentionText(itemData.getIsfouce());
         holder.addOnClickListener(R.id.tv_attention);
 
     }

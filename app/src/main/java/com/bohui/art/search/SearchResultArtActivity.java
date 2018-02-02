@@ -17,6 +17,8 @@ import com.bohui.art.R;
 import com.bohui.art.bean.common.ArtListParam;
 import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.home.ClassifyLevelBean;
+import com.bohui.art.bean.search.AllClassifyBean;
+import com.bohui.art.bean.search.AllClassifyResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.mvp.ArtListContact;
 import com.bohui.art.common.mvp.ArtListModel;
@@ -25,6 +27,9 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.home.art1.Art2Adapter;
+import com.bohui.art.search.mvp.GetAllClassifyContact;
+import com.bohui.art.search.mvp.GetAllClassifyModel;
+import com.bohui.art.search.mvp.GetAllClassifyPresenter;
 import com.framework.core.http.EasyHttp;
 import com.framework.core.util.CollectionUtil;
 import com.widget.smallelement.dialog.BasePowfullDialog;
@@ -42,7 +47,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter, ArtListModel> implements ArtListContact.View {
+public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter, ArtListModel> implements ArtListContact.View,GetAllClassifyContact.View {
     @BindView(R.id.ll_sequence)
     LinearLayout ll_sequence;
     @BindView(R.id.rl_common)
@@ -87,6 +92,9 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
     private ArtListParam param;
     private BasePowfullDialog filtrateDialog;
 
+    private GetAllClassifyModel getAllClassifyModel;
+    private GetAllClassifyPresenter getAllClassifyPresenter;
+
     @Override
     protected void doBeforeSetContentView() {
         super.doBeforeSetContentView();
@@ -124,10 +132,10 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
         RxViewUtil.addOnClick(mRxManager, rl_filtrate, new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
-                //请求所有分类接口
-                requestType();
                 //弹出筛选对话框
-                filtrateDialog.showDialog();
+                if(filtrateDialog != null){
+                    filtrateDialog.showDialog();
+                }
             }
         });
         RxViewUtil.addOnClick(mRxManager, rl_common, new Consumer() {
@@ -186,110 +194,10 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
 
     @NonNull
     private void initFiltrate() {
-        filtrateDialog = new BasePowfullDialog.Builder(R.layout.dialog_filtrate, mContext, getSupportFragmentManager())
-                .setDialogAnim(R.style.FiltrateDialogAnim)
-                .setDialogWidthForScreen(1.0)
-                .setCanceledOnTouchOutside(true)
-                .isCanExistWidthSoft(false)
-                .setDialogOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        return false;
-                    }
-                })
-                .builder()
-                .setViewClickCancel(R.id.rl_translate);
-        TextView tv_btn_reset = (TextView) filtrateDialog.getInsideView(R.id.tv_btn_reset);
-        TextView tv_btn_ok = (TextView) filtrateDialog.getInsideView(R.id.tv_btn_ok);
-
-        RecyclerView rvFiltrate = (RecyclerView) filtrateDialog.getInsideView(R.id.rv);
-        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
-        filtrateDelegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        final FiltratePriceAdapter filtratePriceAdapter = new FiltratePriceAdapter(mContext, "价格区间");
-        filtrateDelegateAdapter.addAdapter(filtratePriceAdapter);
-
-        typeTagAdapters = new ArrayList<>();
-
-        final List<Long> oneClassIds = new ArrayList<>();
-        final List<Long> twoClassIds = new ArrayList<>();
-        for (int j=0;j<6;j++) {
-            FiltrateTagBean typeTag = new FiltrateTagBean();
-            typeTag.setOneClassifyName("国画");
-            typeTag.setOneClassifyId(j);
-            final List<ClassifyLevelBean> twoClasses = new ArrayList<>();
-            for (int i = 0; i < 6; i++) {
-                ClassifyLevelBean twoClass = new ClassifyLevelBean();
-                twoClass.setName("国画"+i);
-                String idStr = String.valueOf(j)+String.valueOf(i);
-                long id = Long.parseLong(idStr);
-                twoClass.setId(id);
-                twoClasses.add(twoClass);
-            }
-            typeTag.setTwoClassify(twoClasses);
-            final FiltrateTagAdapter typeTagAdapter = new FiltrateTagAdapter(mContext, typeTag);
-            typeTagAdapter.setOnSelectListener(new FiltrateTagAdapter.OnSelectListener() {
-
-                @Override
-                public void onParentHasSelected(FiltrateTagBean oneClass, boolean has) {
-                    if(has){
-                        oneClassIds.add(oneClass.getOneClassifyId());
-                    }else{
-                        oneClassIds.remove(oneClass.getOneClassifyId());
-                    }
-                }
-
-                @Override
-                public void onSelectedOne(ClassifyLevelBean twoClass) {
-                    twoClassIds.add(twoClass.getId());
-                }
-
-                @Override
-                public void unSelectOne(ClassifyLevelBean twoClass) {
-                    twoClassIds.remove(twoClass.getId());
-                }
-            });
-            typeTagAdapter.setDelegateAdapter(filtrateDelegateAdapter);
-            typeTagAdapters.add(typeTagAdapter);
-        }
-        filtrateDelegateAdapter.addAdapters(typeTagAdapters);
-        rvFiltrate.setLayoutManager(virtualLayoutManager);
-        rvFiltrate.setAdapter(filtrateDelegateAdapter);
-
-        RxViewUtil.addOnClick(mRxManager, tv_btn_reset, new Consumer() {
-            @Override
-            public void accept(Object o) throws Exception {
-                oneClassIds.clear();
-                twoClassIds.clear();
-                filtratePriceAdapter.reset();
-                for (DelegateAdapter.Adapter typeTagAdapter : typeTagAdapters) {
-                    ((FiltrateTagAdapter)typeTagAdapter).reset();
-                }
-            }
-        });
-        RxViewUtil.addOnClick(mRxManager, tv_btn_ok, new Consumer() {
-            @Override
-            public void accept(Object o) throws Exception {
-                filtrateDialog.miss();
-                param.setStartprice(filtratePriceAdapter.getPrice1());
-                param.setEndprice(filtratePriceAdapter.getPrice2());
-                param.getOneclass().clear();
-                param.getOneclass().addAll(oneClassIds);
-                param.getTowclass().clear();
-                param.getTowclass().addAll(twoClassIds);
-                mPresenter.getArtList(param);
-            }
-        });
-    }
-
-    private void requestType() {
-        mRxManager.add(EasyHttp.post("")
-                .execute(FiltrateTagBean.class)
-                .subscribeWith(new AppProgressSubScriber<FiltrateTagBean>() {
-                    @Override
-                    protected void onResultSuccess(FiltrateTagBean filtrateTagBean) {
-
-                    }
-                }));
+        getAllClassifyModel = new GetAllClassifyModel();
+        getAllClassifyPresenter = new GetAllClassifyPresenter();
+        getAllClassifyPresenter.setMV(getAllClassifyModel,this);
+        getAllClassifyPresenter.getAllClassify();
     }
 
     private void hideCommon() {
@@ -333,6 +241,92 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
             adapter.replaceAllItem(result.getPaintingList());
         }else{
             showMsgDialg("暂时没有符合条件的查询结果");
+        }
+    }
+
+    @Override
+    public void getAllClassifySuccess(AllClassifyResult result) {
+        if(result != null && !CollectionUtil.isEmpty(result.getList())){
+            filtrateDialog = new BasePowfullDialog.Builder(R.layout.dialog_filtrate, mContext, getSupportFragmentManager())
+                    .setDialogAnim(R.style.FiltrateDialogAnim)
+                    .setDialogWidthForScreen(1.0)
+                    .setCanceledOnTouchOutside(true)
+                    .isCanExistWidthSoft(false)
+                    .setDialogOnKeyListener(new DialogInterface.OnKeyListener() {
+                        @Override
+                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                            return false;
+                        }
+                    })
+                    .builder()
+                    .setViewClickCancel(R.id.rl_translate);
+            TextView tv_btn_reset = (TextView) filtrateDialog.getInsideView(R.id.tv_btn_reset);
+            TextView tv_btn_ok = (TextView) filtrateDialog.getInsideView(R.id.tv_btn_ok);
+
+            RecyclerView rvFiltrate = (RecyclerView) filtrateDialog.getInsideView(R.id.rv);
+            VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
+            filtrateDelegateAdapter = new DelegateAdapter(virtualLayoutManager);
+            final FiltratePriceAdapter filtratePriceAdapter = new FiltratePriceAdapter(mContext, "价格区间");
+            filtrateDelegateAdapter.addAdapter(filtratePriceAdapter);
+
+            typeTagAdapters = new ArrayList<>();
+
+            final List<Long> oneClassIds = new ArrayList<>();
+            final List<Long> twoClassIds = new ArrayList<>();
+            for (AllClassifyBean allClassifyBean : result.getList()) {
+                final FiltrateTagAdapter typeTagAdapter = new FiltrateTagAdapter(mContext, allClassifyBean);
+                typeTagAdapter.setOnSelectListener(new FiltrateTagAdapter.OnSelectListener() {
+
+                    @Override
+                    public void onParentHasSelected(AllClassifyBean oneClass, boolean has) {
+                        if(has){
+                            oneClassIds.add(oneClass.getId());
+                        }else{
+                            oneClassIds.remove(oneClass.getId());
+                        }
+                    }
+
+                    @Override
+                    public void onSelectedOne(ClassifyLevelBean twoClass) {
+                        twoClassIds.add(twoClass.getId());
+                    }
+
+                    @Override
+                    public void unSelectOne(ClassifyLevelBean twoClass) {
+                        twoClassIds.remove(twoClass.getId());
+                    }
+                });
+                typeTagAdapter.setDelegateAdapter(filtrateDelegateAdapter);
+                typeTagAdapters.add(typeTagAdapter);
+            }
+            filtrateDelegateAdapter.addAdapters(typeTagAdapters);
+            rvFiltrate.setLayoutManager(virtualLayoutManager);
+            rvFiltrate.setAdapter(filtrateDelegateAdapter);
+
+            RxViewUtil.addOnClick(mRxManager, tv_btn_reset, new Consumer() {
+                @Override
+                public void accept(Object o) throws Exception {
+                    oneClassIds.clear();
+                    twoClassIds.clear();
+                    filtratePriceAdapter.reset();
+                    for (DelegateAdapter.Adapter typeTagAdapter : typeTagAdapters) {
+                        ((FiltrateTagAdapter)typeTagAdapter).reset();
+                    }
+                }
+            });
+            RxViewUtil.addOnClick(mRxManager, tv_btn_ok, new Consumer() {
+                @Override
+                public void accept(Object o) throws Exception {
+                    filtrateDialog.miss();
+                    param.setStartprice(filtratePriceAdapter.getPrice1());
+                    param.setEndprice(filtratePriceAdapter.getPrice2());
+                    param.getOneclass().clear();
+                    param.getOneclass().addAll(oneClassIds);
+                    param.getTowclass().clear();
+                    param.getTowclass().addAll(twoClassIds);
+                    mPresenter.getArtList(param);
+                }
+            });
         }
     }
 }

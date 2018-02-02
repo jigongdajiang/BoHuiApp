@@ -13,8 +13,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class ArtDetailPesenter extends ArtDetailContact.Presenter {
     @Override
-    public void getArtDetail(long id) {
-        mRxManage.add(mModel.getArtDetail(id).subscribeWith(new AppProgressSubScriber<ArtDetailResult>(mView, ArtDetailContact.TAG_GET_ART_DETAIL, mView) {
+    public void getArtDetail(long uid,long id) {
+        mRxManage.add(mModel.getArtDetail(uid,id).subscribeWith(new AppProgressSubScriber<ArtDetailResult>(mView, ArtDetailContact.TAG_GET_ART_DETAIL, mView) {
             @Override
             protected void onResultSuccess(ArtDetailResult result) {
                 mView.getArtDetailSuccess(result);

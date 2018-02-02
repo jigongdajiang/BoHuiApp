@@ -10,6 +10,7 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.home.ClassifyLevelBean;
+import com.bohui.art.bean.search.AllClassifyBean;
 import com.bohui.art.common.widget.rv.ItemType;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -28,12 +29,11 @@ import java.util.Set;
  */
 
 
-public class FiltrateTagAdapter extends BaseAdapter<FiltrateTagBean> {
-    private FiltrateTagBean bean;
+public class FiltrateTagAdapter extends BaseAdapter<AllClassifyBean> {
     private MyTagAdapter tagAdapter;
     private TagFlowLayout tagFlowLayout;
 
-    public FiltrateTagAdapter(Context context, FiltrateTagBean bean) {
+    public FiltrateTagAdapter(Context context, AllClassifyBean bean) {
         super(context);
         addItem(bean);
     }
@@ -49,10 +49,10 @@ public class FiltrateTagAdapter extends BaseAdapter<FiltrateTagBean> {
     }
 
     @Override
-    public void bindViewHolder(BaseViewHolder holder, final FiltrateTagBean itemData, int position) {
-        holder.setText(R.id.tv_des,itemData.getOneClassifyName());
+    public void bindViewHolder(BaseViewHolder holder, final AllClassifyBean itemData, int position) {
+        holder.setText(R.id.tv_des,itemData.getName());
         tagFlowLayout = holder.getView(R.id.tag);
-        tagAdapter = new MyTagAdapter(itemData.getTwoClassify(),tagFlowLayout,itemData);
+        tagAdapter = new MyTagAdapter(itemData.getList(),tagFlowLayout,itemData);
         tagFlowLayout.setAdapter(tagAdapter);
         tagFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
@@ -74,7 +74,7 @@ public class FiltrateTagAdapter extends BaseAdapter<FiltrateTagBean> {
 
     }
     public interface OnSelectListener{
-        void onParentHasSelected(FiltrateTagBean oneClass,boolean has);
+        void onParentHasSelected(AllClassifyBean oneClass,boolean has);
         void onSelectedOne(ClassifyLevelBean twoClass);
         void unSelectOne(ClassifyLevelBean twoClass);
     }
@@ -85,9 +85,9 @@ public class FiltrateTagAdapter extends BaseAdapter<FiltrateTagBean> {
     }
     private class MyTagAdapter extends TagAdapter<ClassifyLevelBean>{
         private ViewGroup tagFlowLayout;
-        private FiltrateTagBean itemData;
+        private AllClassifyBean itemData;
 
-        public MyTagAdapter(List<ClassifyLevelBean> datas, ViewGroup tagFlowLayout, FiltrateTagBean itemData) {
+        public MyTagAdapter(List<ClassifyLevelBean> datas, ViewGroup tagFlowLayout, AllClassifyBean itemData) {
             super(datas);
             this.tagFlowLayout = tagFlowLayout;
             this.itemData = itemData;
@@ -106,7 +106,7 @@ public class FiltrateTagAdapter extends BaseAdapter<FiltrateTagBean> {
         public void onSelected(int position, View view) {
             super.onSelected(position, view);
             if(mOnSelectListener != null){
-                mOnSelectListener.onSelectedOne(itemData.getTwoClassify().get(position));
+                mOnSelectListener.onSelectedOne(itemData.getList().get(position));
             }
         }
 
@@ -114,7 +114,7 @@ public class FiltrateTagAdapter extends BaseAdapter<FiltrateTagBean> {
         public void unSelected(int position, View view) {
             super.unSelected(position, view);
             if(mOnSelectListener != null){
-                mOnSelectListener.unSelectOne(itemData.getTwoClassify().get(position));
+                mOnSelectListener.unSelectOne(itemData.getList().get(position));
             }
         }
     }

@@ -23,7 +23,7 @@ public class SettingModel implements SettingContact.Model {
     @Override
     public Observable<LogoutResult> logout(long uid) {
         return EasyHttp.post(SettingContact.URL_LOGOUT)
-                .params("uid",String.valueOf(uid))
+                .params("id",String.valueOf(uid))
                 .execute(LogoutResult.class);
     }
 }

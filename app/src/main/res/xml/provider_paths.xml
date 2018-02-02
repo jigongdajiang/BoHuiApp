@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <external-path name="my_external" />
+    <!--<files-path>内部存储空间应用私有目录下的 files/ 目录,等同于 Context.getFilesDir() 所获取的目录路径;-->
+    <!--<cache-path>内部存储空间应用私有目录下的 cache/ 目录,等同于 Context.getCacheDir() 所获取的目录路径;-->
+    <!--<external-path>外部存储空间根目录,等同于 Environment.getExternalStorageDirectory() 所获取的目录路径;-->
+    <!--<external-files-path>外部存储空间应用私有目录下的 files/ 目录,等同于 Context.getExternalFilesDir();-->
+    <!--<external-cache-path>外部存储空间应用私有目录下的 cache/ 目录,等同于 Context.getExternalCacheDir();-->
+    <!--相机相关-->
+    <!-- <paths>
+         <external-path
+             name="my_camera"
+             path="take_photos" />
+     </paths>
+     &lt;!&ndash;更新apk&ndash;&gt;
+     <paths>
+         <external-files-path
+             name="my_download"
+             path="download_apk" />
+     </paths>
+     &lt;!&ndash;读取合同&ndash;&gt;
+     <paths>
+         <external-path
+             name="my_contanct"
+             path="read_contanct" />
+     </paths>-->
+    <paths>
+        <external-path
+            name="my_contanct"
+            path="" />
+    </paths>
+</resources>

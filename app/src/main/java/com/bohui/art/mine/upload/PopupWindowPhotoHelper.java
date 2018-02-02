@@ -173,7 +173,7 @@ public class PopupWindowPhotoHelper {
         if (SDState.equals(Environment.MEDIA_MOUNTED)) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0及以上
-                Uri uriForFile = FileProvider.getUriForFile(currentContext, "com.jimeijf.financing.fileprovider", tempFile);
+                Uri uriForFile = FileProvider.getUriForFile(currentContext, "com.bohui.art.fileprovider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -219,7 +219,7 @@ public class PopupWindowPhotoHelper {
         if (requestCode == SELECT_PIC_BY_TACK_PHOTO) {// 拍照
             if (tempFile.exists()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Uri inputUri = FileProvider.getUriForFile(currentContext, "com.jimeijf.financing.fileprovider", tempFile);//通过FileProvider创建一个content类型的Uri
+                    Uri inputUri = FileProvider.getUriForFile(currentContext, "com.bohui.art.fileprovider", tempFile);//通过FileProvider创建一个content类型的Uri
                     cropImage(inputUri);//设置输入类型
                 } else {
                     cropImage(Uri.fromFile(tempFile));

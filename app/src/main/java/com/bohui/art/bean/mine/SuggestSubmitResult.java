@@ -8,4 +8,13 @@ package com.bohui.art.bean.mine;
 
 
 public class SuggestSubmitResult {
+    private int isres;
+
+    public int getIsres() {
+        return isres;
+    }
+
+    public void setIsres(int isres) {
+        this.isres = isres;
+    }
 }

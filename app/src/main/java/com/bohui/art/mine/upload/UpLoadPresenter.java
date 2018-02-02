@@ -14,8 +14,8 @@ import java.io.File;
 
 public class UpLoadPresenter extends UpLoadContact.Presenter {
     @Override
-    public void upLoad(File file) {
-        mRxManage.add(mModel.upLoad(file).subscribeWith(new BaseSubscriber<UploadResult>(mView,UpLoadContact.TAG_UPLOAD_HEAD_IMG) {
+    public void upLoad(long uid,File file) {
+        mRxManage.add(mModel.upLoad(uid,file).subscribeWith(new BaseSubscriber<UploadResult>(mView,UpLoadContact.TAG_UPLOAD_HEAD_IMG) {
             @Override
             protected void onResultSuccess(UploadResult uploadResult) {
                 mView.upLoadSuccess(uploadResult);

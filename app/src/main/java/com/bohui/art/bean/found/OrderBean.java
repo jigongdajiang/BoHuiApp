@@ -8,14 +8,15 @@ package com.bohui.art.bean.found;
 
 
 public class OrderBean {
-    private String type;
-    private String price;
     private String size;
+    private String createtime;
+    private String price;
     private String num;
-    private String remarks;
-    private String mobile;
     private String name;
-    private String time;
+    private String mobile;
+    private String type;
+    private String remarks;
+    private String endprice;
     private long uid;
 
     public String getType() {
@@ -82,25 +83,19 @@ public class OrderBean {
         this.uid = uid;
     }
 
-    public String getTime() {
-        return time;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
-    @Override
-    public String toString() {
-        return "OrderParam{" +
-                "type='" + type + '\'' +
-                ", price='" + price + '\'' +
-                ", size='" + size + '\'' +
-                ", num='" + num + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", name='" + name + '\'' +
-                ", uid=" + uid +
-                '}';
+    public String getEndprice() {
+        return endprice;
+    }
+
+    public void setEndprice(String endprice) {
+        this.endprice = endprice;
     }
 }

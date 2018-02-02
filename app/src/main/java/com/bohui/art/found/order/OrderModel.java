@@ -19,6 +19,7 @@ public class OrderModel implements OrderContact.Model {
         return EasyHttp.post(OrderContact.URL_ORDER)
                 .params("type",param.getType())
                 .params("price",param.getPrice())
+                .params("endprice",param.getEndprice())
                 .params("size",param.getSize())
                 .params("num",param.getNum())
                 .params("remarks",param.getRemarks())

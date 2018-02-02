@@ -8,6 +8,7 @@ import com.bohui.art.R;
 import com.bohui.art.bean.found.OrderBean;
 import com.bohui.art.bean.mine.MyOrderBean;
 import com.bohui.art.common.widget.rv.ItemType;
+import com.framework.core.util.strformat.TimeFromatUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -37,7 +38,7 @@ public class MyOrderAdapter extends BaseAdapter<OrderBean> {
     public void bindViewHolder(BaseViewHolder holder, OrderBean itemData, int position) {
         holder.setText(R.id.tv_order_type,itemData.getType());
         holder.setText(R.id.tv_order_name,itemData.getName());
-        holder.setText(R.id.tv_order_time,itemData.getTime());
+        holder.setText(R.id.tv_order_time, TimeFromatUtil.getStringByFormat(itemData.getCreatetime(),TimeFromatUtil.dateFormatYMDHMS));
     }
 
     @Override

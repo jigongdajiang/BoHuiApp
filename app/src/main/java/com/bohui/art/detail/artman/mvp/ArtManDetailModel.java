@@ -15,8 +15,9 @@ import io.reactivex.Observable;
 
 public class ArtManDetailModel implements ArtManDetailContact.Model {
     @Override
-    public Observable<ArtMainDetailResult> getArtManDetail(long aid) {
+    public Observable<ArtMainDetailResult> getArtManDetail(long uid,long aid) {
         return EasyHttp.post(ArtManDetailContact.URL_GET_ART_MAN_DETAIL)
+                .params("uid",String.valueOf(uid))
                 .params("aid",String.valueOf(aid))
                 .execute(ArtMainDetailResult.class);
     }

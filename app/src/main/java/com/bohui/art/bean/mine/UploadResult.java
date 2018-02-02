@@ -9,6 +9,15 @@ package com.bohui.art.bean.mine;
 
 public class UploadResult {
     private String path;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getPath() {
         return path;

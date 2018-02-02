@@ -61,7 +61,7 @@ public class FileUtil {
     private static String getExternalCacheDir(Context context) {
         if (isExternalStorageAvailable()) {
             String sdcard = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
-            String path = sdcard + "jimei/";
+            String path = sdcard + "bohui/";
             File cache = new File(path);
             cache.mkdirs();
             return path;
