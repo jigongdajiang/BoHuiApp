@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_nodata"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_color_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ln_zwjl_jyjl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_100"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_nodata_head"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_nodata_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_50"
+            android:gravity="center"
+            android:text="@string/tv_scrib"
+            android:textColor="@color/sys_color_font_somber"
+            android:textSize="@dimen/sp_24" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_nodata_message"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ln_zwjl_jyjl"
+        android:layout_marginTop="@dimen/dp_40"
+        android:gravity="center"
+        android:text="@string/tv_scrib1"
+        android:textColor="@color/sys_color_font_somber"
+        android:textSize="@dimen/sys_font_size_large" />
+
+    <TextView
+        android:id="@+id/tv_leave"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_above="@+id/tv_copyby"
+        android:text="暂时离开"
+        android:textColor="@color/sys_color_font_white"
+        android:textSize="@dimen/sys_font_size_large"
+        android:gravity="center"
+        android:background="@drawable/selector_btn_bg_base"
+        android:layout_marginLeft="@dimen/sys_margin"
+        android:layout_marginRight="@dimen/sys_margin"
+        android:layout_marginTop="@dimen/dp_30"
+        />
+
+    <TextView
+        android:id="@+id/tv_copyby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:gravity="bottom|center"
+        android:text=""
+        android:textColor="@color/sys_color_font_light_gray"
+        android:textSize="@dimen/sys_font_size_small" />
+</RelativeLayout>

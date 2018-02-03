@@ -19,6 +19,7 @@ package com.framework.core.http.exception;
 import android.net.ParseException;
 
 import com.framework.core.http.model.ApiResult;
+import com.framework.core.log.PrintLog;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
@@ -119,66 +120,58 @@ public class ApiException extends Exception {
     }
     /**
      * 错误分发处理将请求中的错误进行分类
+     * 整个网络请求抛出的异常都经过这里
+     *
      * @param e
      * @return
      */
     public static ApiException handleException(Throwable e) {
+        PrintLog.e("Exception", e.getMessage());
         ApiException ex;
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
             ex = new ApiException(httpException, httpException.code());
             ex.displayMessage = httpException.getMessage();
-            return ex;
         } else if (e instanceof ServerException) {
             ServerException resultException = (ServerException) e;
-            ex = new ApiException(resultException, resultException.getErrCode());
-            ex.displayMessage = resultException.getMessage();
-            return ex;
+            ex = new ApiException(resultException.getMessage(), resultException.getErrCode());
+            ex.setErrorData(resultException.getErrorData());
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
-                || e instanceof JsonSyntaxException
                 || e instanceof JsonSerializer
                 || e instanceof NotSerializableException
                 || e instanceof ParseException) {
             ex = new ApiException(e, ERROR.PARSE_ERROR);
             ex.displayMessage = "解析错误";
-            return ex;
         } else if (e instanceof ClassCastException) {
             ex = new ApiException(e, ERROR.CAST_ERROR);
             ex.displayMessage = "类型转换错误";
-            return ex;
         } else if (e instanceof ConnectException) {
             ex = new ApiException(e, ERROR.NETWORD_ERROR);
-            ex.displayMessage = "连接失败";
-            return ex;
+            ex.displayMessage = "网络连接失败，请检查网络";
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
             ex = new ApiException(e, ERROR.SSL_ERROR);
             ex.displayMessage = "证书验证失败";
-            return ex;
         } else if (e instanceof ConnectTimeoutException) {
             ex = new ApiException(e, ERROR.TIMEOUT_ERROR);
-            ex.displayMessage = "连接超时";
-            return ex;
+            ex.displayMessage = "网络连接超时，请稍后重试";
         } else if (e instanceof java.net.SocketTimeoutException) {
             ex = new ApiException(e, ERROR.TIMEOUT_ERROR);
-            ex.displayMessage = "连接超时";
-            return ex;
+            ex.displayMessage = "网络连接超时，请稍后重试";
         } else if (e instanceof UnknownHostException) {
             ex = new ApiException(e, ERROR.UNKNOWNHOST_ERROR);
             ex.displayMessage = "无法解析该域名";
-            return ex;
         } else if (e instanceof NullPointerException) {
             ex = new ApiException(e, ERROR.NULLPOINTER_EXCEPTION);
-            ex.displayMessage = "NullPointerException";
-            return ex;
-        }else if( e instanceof ApiException){
+            ex.displayMessage = "空指针";
+        } else if (e instanceof ApiException) {
             ex = (ApiException) e;
-            return ex;
         } else {
             ex = new ApiException(e, ERROR.UNKNOWN);
-            ex.displayMessage = "未知错误";
-            return ex;
+            ex.displayMessage = "未知错误" + e.getMessage();
         }
+        PrintLog.e("ApiException", "code=" + ex.getCode() + "--displayMessage=" + ex.getDisplayMessage());
+        return ex;
     }
 
     @Override
@@ -187,13 +180,13 @@ public class ApiException extends Exception {
     }
 
     /**
-     * 约定异常
+     * 约定异常非业务异常
      */
     public static class ERROR {
         /**
          * 未知错误
          */
-        public static final int UNKNOWN = 48000;
+        public static final int UNKNOWN = 100000;
         /**
          * 解析错误
          */
@@ -263,5 +256,69 @@ public class ApiException extends Exception {
          * 程序内部错误
          */
         public static final int PROGRESS_ERROR = SERVER_FORCE_UPDATE + 1;
+    }
+
+    public static class SERVERERROR {
+        /**
+         * 后台系统错误
+         */
+        public static final int SERVER_SYSTEM_ERROR = 20000;
+        /**
+         * 异地登录，需要重新登录
+         */
+        public static final int FORCE_RE_LOGIN = 20001;
+
+        /**
+         * 站点升级中
+         */
+        public static final int STATE_UPDATING = 20002;
+        /**
+         * 数据统计中
+         */
+        public static final int DATA_IS_STATISTICS = 20003;
+        /**
+         * 强制更新
+         */
+        public static final int FORCE_UPDATE = 20004;
+        /**
+         * 会员被禁
+         */
+        public static final int USER_IS_FORBED = 20005;
+        /**
+         * 重新登录
+         */
+        public static final int RE_LOGIN = 20006;
+        /**
+         * 流标
+         */
+        public static final int PRODUCT_FLOW = 20007;
+        /**
+         * 签名失败
+         */
+        public static final int SIGNATURE_FAILURE = 40000;
+        /**
+         * 重复请求
+         */
+        public static final int REQUEST_AGING = 50000;
+        /**
+         * 频繁请求
+         */
+        public static final int REQUEST_MORE = 50001;
+
+    }
+
+    public static class HTTP_ERROR {
+        //对应HTTP的状态码
+        public static final int BADREQUEST = 400;
+        public static final int UNAUTHORIZED = 401;
+        public static final int FORBIDDEN = 403;
+        public static final int NOT_FOUND = 404;
+        public static final int METHOD_NOT_ALLOWED = 405;
+        public static final int REQUEST_TIMEOUT = 408;
+        public static final int INTERNAL_SERVER_ERROR = 500;
+        public static final int BAD_GATEWAY = 502;
+        public static final int SERVICE_UNAVAILABLE = 503;
+        public static final int GATEWAY_TIMEOUT = 504;
+        public static final int STOP_SERVICE = 999;
     }
 }

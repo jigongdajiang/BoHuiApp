@@ -186,9 +186,6 @@ public class MainActivity extends AbsNetBaseActivity {
             if (mFragmentChangeManager != null && (mineFragment == null || !fragments.contains(mineFragment))) {
                 mineFragment = new MineFragment();
                 mFragmentChangeManager.addFragment(mineFragment);
-                //更新首页防止闪
-                mFragmentChangeManager.removeFragment(0);
-                mFragmentChangeManager.addFragment(new HomeFragment(),0);
                 changeTab(backPosition);
             }
         }
@@ -198,8 +195,6 @@ public class MainActivity extends AbsNetBaseActivity {
             if (mFragmentChangeManager != null && mineFragment != null && fragments.contains(mineFragment)) {
                 mFragmentChangeManager.removeFragment(3);
                 mineFragment = null;
-                mFragmentChangeManager.removeFragment(0);
-                mFragmentChangeManager.addFragment(new HomeFragment(),0);
                 changeTab(0);
             }
         }

@@ -4,6 +4,7 @@
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="prompt">提示</string>
+    <string name="network">设置网络</string>
 
     <!-- 启动页版权说明 -->
     <string name="all_right">Copyright © 2017 BoHui</string>
@@ -29,4 +30,7 @@
         ，王希孟、赵伯驹、赵伯骕的青绿山水，南北竞辉，达到高峰。从此成为中国画中的一大画科；元代山水画趋向写意，以虚带实，侧重笔
         墨神韵，开创新风；明清及近代，续有发展，亦出新貌。表现上讲究经营位置和表达意境。传统分法有水墨、青绿、金碧、没骨、浅绛、
         淡彩等形式。</string>
+    <!--停服-->
+    <string name="tv_scrib">更多精彩，更好的体验\n正在为你准备</string>
+    <string name="tv_scrib1">我们将尽快为你呈现\n请稍后回来</string>
 </resources>

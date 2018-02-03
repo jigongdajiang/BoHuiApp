@@ -1,5 +1,6 @@
 package com.bohui.art.mine;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -43,6 +44,8 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
     RecyclerView rv_mine;
 
     private MineTopAdapter mineTopAdapter;
+
+    private MineInfoResult mineInfoResult;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_mine;
@@ -86,7 +89,11 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 if(adapter instanceof MineTopAdapter){
-                    ((BaseHelperUtil)mHelperUtil).startAty(AccountEditActivity.class);
+                    if(mineInfoResult != null){
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountEditActivity.ACCOUNT_INFO,mineInfoResult);
+                        startAty(AccountEditActivity.class,bundle);
+                    }
                 }else if(adapter instanceof GuideItemAdapter){
                     GuideItemBean itemBean = (GuideItemBean) adapter.getData(position);
                     switch (itemBean.getTypeId()){
@@ -125,6 +132,7 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
 
     @Override
     public void getUserInfoSuccess(MineInfoResult result) {
+        mineInfoResult = result;
         mineTopAdapter.refresh(result);
     }
 }

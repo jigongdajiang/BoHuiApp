@@ -25,6 +25,7 @@ import com.framework.core.log.PrintLog;
 import com.framework.core.security.AESUtils;
 import com.framework.core.security.P2PSecurityRSACoder;
 import com.framework.core.security.RSAUtils;
+import com.framework.core.util.TUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
@@ -78,27 +79,39 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
         if (!TextUtils.isEmpty(json)) {
             JSONObject jsonObject = new JSONObject(json);
             int code = jsonObject.optInt("code");
-            String msg = jsonObject.optString("msg");
+            String message = jsonObject.optString("msg");
             apiResult.setCode(code);
-            apiResult.setMsg(msg);
+            apiResult.setMsg(message);
             JSONObject returnData = jsonObject.optJSONObject("data");
             jsonObject.put("data", returnData);
+            String jsonStr = jsonObject.toString();
             if (code == ApiException.FORCE_UPDATE) {
                 ApiException exception = new ApiException("强制更新", ApiException.ERROR.SERVER_FORCE_UPDATE);
                 exception.setErrorData(returnData);
                 throw exception;
             } else if (code == ApiResult.OK) {
-                String jsonStr = jsonObject.toString();
-                ApiResult result = gson.fromJson(jsonStr, type);
-                if (result != null) {
-                    apiResult = result;
+                final Class<T> clazz = TUtil.getClass(type, 0);
+                if (clazz.equals(String.class)) {
+                    //data 可能同一个接口有多种类型，这时候把Data泛型为String，到返回层再去解析
+                    apiResult.setCode(code);
+                    apiResult.setMsg(message);
+                    apiResult.setData((T) returnData.toString());
                 } else {
-                    throw new JsonParseException("return ok but fromJson failed");
+                    try {
+                        ApiResult result = gson.fromJson(jsonStr, type);
+                        result.setCode(code);
+                        result.setMsg(message);
+                        apiResult = result;
+                    } catch (Exception e) {
+                        PrintLog.e("JsonParseException",e.getMessage());
+                        throw new JsonParseException("return ok but fromJson failed");
+                    }
                 }
-            } else {
-                ApiException exception = new ApiException(msg, code);
-                exception.setErrorData(returnData);
-                throw exception;
+            }else {
+                //服务业务逻辑错误
+                apiResult.setCode(code);
+                apiResult.setMsg(message);
+                apiResult.setErrrorData(returnData);
             }
         } else {
             throw new ApiException("服务端返回数据为空", ApiException.ERROR.SERVER_NULL_JSON);

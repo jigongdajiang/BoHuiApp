@@ -16,6 +16,8 @@
 
 package com.framework.core.http.model;
 
+import org.json.JSONObject;
+
 /**
  * <p>描述：提供的默认的标准返回api</p>
  * 作者： zhouyou<br>
@@ -28,6 +30,7 @@ public class ApiResult<T> {
     private int code;
     private String msg;
     private T data;
+    private JSONObject errrorData;
     public int getCode() {
         return code;
     }
@@ -60,12 +63,22 @@ public class ApiResult<T> {
         return code == OK;
     }
 
+
+    public JSONObject getErrrorData() {
+        return errrorData;
+    }
+
+    public void setErrrorData(JSONObject errrorData) {
+        this.errrorData = errrorData;
+    }
+
     @Override
     public String toString() {
         return "ApiResult{" +
-                "code='" + code + '\'' +
+                "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
+                ", errrorData=" + errrorData +
                 '}';
     }
 }

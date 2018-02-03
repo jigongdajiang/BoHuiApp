@@ -8,6 +8,7 @@ import android.widget.RadioGroup;
 
 import com.bohui.art.R;
 import com.bohui.art.bean.mine.AccountEditResult;
+import com.bohui.art.bean.mine.MineInfoResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.util.RxViewUtil;
@@ -18,6 +19,7 @@ import com.bohui.art.mine.accountedit.mvp.AccountEditModel;
 import com.bohui.art.mine.accountedit.mvp.AccountEditPresenter;
 import com.bohui.art.mine.accountedit.mvp.UserInfoEditParam;
 import com.bohui.art.mine.upload.UpLoadUtil;
+import com.framework.core.glideext.GlideUtil;
 import com.framework.core.util.StrOperationUtil;
 
 import butterknife.BindView;
@@ -33,6 +35,8 @@ import io.reactivex.functions.Consumer;
 public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter,AccountEditModel> implements AccountEditContact.View {
     @BindView(R.id.iv_avr)
     ImageView iv_avr;
+    @BindView(R.id.et_account)
+    EditText et_account;
     @BindView(R.id.et_nick)
     EditText et_nick;
     @BindView(R.id.rg_sex)
@@ -40,8 +44,17 @@ public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter
     @BindView(R.id.et_intro)
     EditText et_intro;
 
+    public static final String ACCOUNT_INFO = "account_info";
     private int sex = 1;
     private UpLoadUtil upLoadUtil;//头像上传工具类
+
+    private MineInfoResult info;
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        info = (MineInfoResult) getIntent().getSerializableExtra(ACCOUNT_INFO);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_account_edit;
@@ -70,6 +83,19 @@ public class AccountEditActivity extends AbsNetBaseActivity<AccountEditPresenter
                     }
                 })
                 .builder();
+        if(info != null){
+            if(!StrOperationUtil.isEmpty(info.getPhoto())){
+                GlideUtil.displayCircle(this,iv_avr,info.getPhoto());
+            }
+            et_account.setText(info.getMobile());
+            et_nick.setText(info.getName());
+            if(info.getSex() == 1){
+                rg_sex.check(R.id.rb_nan);
+            }else{
+                rg_sex.check(R.id.rb_nv);
+            }
+            et_intro.setText(info.getIndustry());
+        }
         rg_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

@@ -16,6 +16,8 @@
 
 package com.framework.core.http.exception;
 
+import org.json.JSONObject;
+
 /**
  * <p>描述：处理服务器异常</p>
  * 压根没响应时封装成改异常对象，这种一般是无网络，超时等情况下使用
@@ -26,6 +28,8 @@ package com.framework.core.http.exception;
 public class ServerException extends RuntimeException {
     private int errCode;
     private String message;
+    //错误时的异常data对象
+    private JSONObject errorData;
 
     public ServerException(int errCode, String msg) {
         super(msg);
@@ -40,5 +44,21 @@ public class ServerException extends RuntimeException {
     @Override
     public String getMessage() {
         return message;
+    }
+
+    public void setErrCode(int errCode) {
+        this.errCode = errCode;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public JSONObject getErrorData() {
+        return errorData;
+    }
+
+    public void setErrorData(JSONObject errorData) {
+        this.errorData = errorData;
     }
 }

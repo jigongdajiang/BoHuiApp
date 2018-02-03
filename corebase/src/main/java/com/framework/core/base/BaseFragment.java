@@ -149,7 +149,6 @@ public abstract class BaseFragment <P extends BasePresenter, M extends BaseModel
     public void onDestroyView() {
         super.onDestroyView();
         showLife("onDestroyView");
-        mHelperUtil = null;
         if (mPresenter != null)
             mPresenter.onDestroy();
         if(mRxManager!=null) {

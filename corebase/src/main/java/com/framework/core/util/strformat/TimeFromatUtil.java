@@ -316,7 +316,10 @@ public class TimeFromatUtil {
 
     }
 
-
+    public static int getCurrentYear() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
     //获取当前系统当天日期
     public static String getCurrentDay() {
         String curDateTime = null;

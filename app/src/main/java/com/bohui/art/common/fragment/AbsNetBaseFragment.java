@@ -80,7 +80,7 @@ public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends Base
             //子类拦截的将不会走统一处理
             return true;
         }
-        if(commonHandlerException(e)){
+        if(commonHandlerException(apiName,e)){
             //公共处理的，不会在子类中再处理
             return true;
         }
@@ -91,17 +91,12 @@ public abstract class AbsNetBaseFragment<P extends BasePresenter, M extends Base
         return false;
     }
 
-    private boolean commonHandlerException(ApiException e) {
-        switch (e.getCode()){
-            case 20000:
-                return true;
-            case 20004:
-                return true;
-        }
-        return false;
+    private boolean commonHandlerException(String apiName,ApiException e) {
+        return ((NetBaseHelperUtil)mHelperUtil).handleException(apiName,e);
     }
 
     protected boolean childHandlerException(String apiName, ApiException e) {
+        ((NetBaseHelperUtil)mHelperUtil).showMsgDialg(e.getDisplayMessage());
         return false;
     }
 
