@@ -43,4 +43,5 @@ public class NormalWrapAdapter<T> extends BaseWrapper<T,EmptyBean,NetErrorBean> 
         holder.setText(R.id.tv_net_error_title,netErrorData.getTitle());
         holder.setText(R.id.tv_net_error_message,netErrorData.getDes());
     }
+
 }

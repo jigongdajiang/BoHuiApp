@@ -8,6 +8,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.vlayout.LayoutHelper;
 import com.framework.core.log.PrintLog;
 import com.framework.core.util.NetWorkUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -361,4 +362,9 @@ public abstract class BaseWrapper<T,EM,ER> extends BaseAdapter<T> {
     protected abstract void bindEmpty(BaseViewHolder holder, EM emptyData);
 
     protected abstract void bindNetError(BaseViewHolder holder, ER netErrorData);
+
+    @Override
+    public LayoutHelper onCreateLayoutHelper() {
+        return mAdapter.onCreateLayoutHelper();
+    }
 }

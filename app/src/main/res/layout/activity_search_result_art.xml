@@ -83,14 +83,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/sys_margin_small"
-            >
-
-        </android.support.v7.widget.RecyclerView>
+        <include layout="@layout/layout_refresh_rv"/>
         <LinearLayout
             android:id="@+id/ll_common_list"
             android:layout_width="match_parent"

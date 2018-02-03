@@ -14,7 +14,7 @@ import com.widget.grecycleview.adapter.wrapper.BaseWrapper;
 
 public class RecyclerViewHandler implements LoadMoreHandler {
 
-    private static BaseWrapper mRecyclerAdapter;
+    private BaseWrapper mRecyclerAdapter;
     private View mFooter;
 
     @Override

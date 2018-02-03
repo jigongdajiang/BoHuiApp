@@ -168,7 +168,7 @@ public class Art2Activity extends AbsNetBaseActivity<ArtListPresenter,ArtListMod
         if(isRefresh){
             ptrClassicFrameLayout.refreshComplete();
             if(!CollectionUtil.isEmpty(list)){
-                art2Adapter.replaceAllItem(result.getPaintingList());
+                art2Adapter.replaceAllItem(list);
                 if(list.size() >= param.getLength()){
                     ptrClassicFrameLayout.setLoadMoreEnable(true);
                 }else{

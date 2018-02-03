@@ -7,11 +7,13 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.mine.MyAttentionResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
+import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.ArtManListAdapter;
@@ -22,6 +24,12 @@ import com.bohui.art.mine.attention.mvp.MyAttentionContact;
 import com.bohui.art.mine.attention.mvp.MyAttentionModel;
 import com.bohui.art.mine.attention.mvp.MyAttentionPresenter;
 import com.bohui.art.mine.collect.mvp.MyCollectParam;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
+import com.framework.core.http.exception.ApiException;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -38,12 +46,17 @@ import butterknife.BindView;
 
 
 public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter,MyAttentionModel> implements MyAttentionContact.View {
+    @BindView(R.id.ptr)
+    PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
     RecyclerView rv;
     private ArtManListAdapter artManListAdapter;
+    MyCollectParam param = new MyCollectParam();
+    private boolean isRefresh;
+    private boolean isRequesting;
     @Override
     public int getLayoutId() {
-        return R.layout.layout_common_rv;
+        return R.layout.layout_refresh_rv;
     }
 
     @Override
@@ -56,14 +69,33 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
         //猜你喜欢数据适配器
         artManListAdapter = new ArtManListAdapter(mContext);
         artManListAdapter.setDelegateAdapter(delegateAdapter);
-        delegateAdapter.addAdapter(artManListAdapter);
+        NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,artManListAdapter);
+        artManListAdapter.setWrapper(wrapper);
+        wrapper.setDelegateAdapter(delegateAdapter);
+        delegateAdapter.addAdapter(wrapper);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 ArtManItemBean itemBean = (ArtManItemBean) adapter.getData(position);
-                ArtManDetailActivity.comeIn(MyAttentionActivity.this,itemBean.getAid());
+                if(itemBean != null){
+                    ArtManDetailActivity.comeIn(MyAttentionActivity.this,itemBean.getAid());
+                }
+            }
+        });
+        ptrClassicFrameLayout.setAutoLoadMoreEnable(false);
+        ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                requestFirstPage();
+            }
+        });
+        ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void loadMore() {
+                requestNextPage();
             }
         });
     }
@@ -75,13 +107,65 @@ public class MyAttentionActivity extends AbsNetBaseActivity<MyAttentionPresenter
 
     @Override
     protected void extraInit() {
-        MyCollectParam param = new MyCollectParam();
         param.setUid(AppFuntion.getUid());
-        mPresenter.myAttention(param);
+        requestFirstPage();
+    }
+    private void requestFirstPage(){
+        isRefresh = true;
+        param.setStart(0);
+        request();
+    }
+    private void requestNextPage(){
+        isRefresh = false;
+        param.setStart(param.getStart()+param.getLength());
+        request();
+    }
+    private void request() {
+        if(!isRequesting){
+            mPresenter.myAttention(param);
+            isRequesting = true;
+        }
+    }
+
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        isRequesting = false;
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+        }else{
+            ptrClassicFrameLayout.setLoadMoreEnable(false);
+            ptrClassicFrameLayout.loadMoreComplete(false);
+        }
+        return super.childInterceptException(apiName, e);
     }
 
     @Override
     public void myAttentionSuccess(MyAttentionResult result) {
-        artManListAdapter.replaceAllItem(result.getList());
+        isRequesting = false;
+        List<ArtManItemBean> list = result.getList();
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+            if(!CollectionUtil.isEmpty(list)){
+                artManListAdapter.replaceAllItem(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.setLoadMoreEnable(true);
+                }else{
+                    ptrClassicFrameLayout.setLoadMoreEnable(false);
+                }
+            }else{
+                ptrClassicFrameLayout.setLoadMoreEnable(false);
+            }
+        }else{
+            if(CollectionUtil.isEmpty(list)){
+                ptrClassicFrameLayout.loadMoreComplete(false);
+            }else{
+                artManListAdapter.addItems(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.loadMoreComplete(true);
+                }else{
+                    ptrClassicFrameLayout.loadMoreComplete(false);
+                }
+            }
+        }
     }
 }

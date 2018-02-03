@@ -16,6 +16,7 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.common.ArtListParam;
 import com.bohui.art.bean.common.ArtListResult;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.home.ClassifyLevelBean;
 import com.bohui.art.bean.search.AllClassifyBean;
 import com.bohui.art.bean.search.AllClassifyResult;
@@ -25,13 +26,23 @@ import com.bohui.art.common.mvp.ArtListModel;
 import com.bohui.art.common.mvp.ArtListPresenter;
 import com.bohui.art.common.net.AppProgressSubScriber;
 import com.bohui.art.common.util.RxViewUtil;
+import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
+import com.bohui.art.home.art2.Art2Activity;
 import com.bohui.art.search.mvp.GetAllClassifyContact;
 import com.bohui.art.search.mvp.GetAllClassifyModel;
 import com.bohui.art.search.mvp.GetAllClassifyPresenter;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.framework.core.http.EasyHttp;
+import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.CollectionUtil;
+import com.widget.grecycleview.adapter.base.BaseAdapter;
+import com.widget.grecycleview.listener.RvClickListenerIml;
 import com.widget.smallelement.dialog.BasePowfullDialog;
 
 import java.util.ArrayList;
@@ -79,6 +90,8 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
     @BindView(R.id.v_shadow)
     View v_shadow;
 
+    @BindView(R.id.ptr)
+    PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
     RecyclerView rv;
 
@@ -89,17 +102,18 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
     private List<DelegateAdapter.Adapter> typeTagAdapters;
     private DelegateAdapter filtrateDelegateAdapter;
 
-    private ArtListParam param;
     private BasePowfullDialog filtrateDialog;
 
     private GetAllClassifyModel getAllClassifyModel;
     private GetAllClassifyPresenter getAllClassifyPresenter;
+    private ArtListParam param = new ArtListParam();
+    private boolean isRefresh;
+    private boolean isRequesting;
 
     @Override
     protected void doBeforeSetContentView() {
         super.doBeforeSetContentView();
         mSearchKey = getIntent().getStringExtra(SearchActivity.SEARCH_KEY);
-        param = new ArtListParam();
         param.setName(mSearchKey);
     }
 
@@ -119,9 +133,35 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         adapter = new Art2Adapter(mContext);
         adapter.setDelegateAdapter(delegateAdapter);
-        delegateAdapter.addAdapter(adapter);
+        NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,adapter);
+        adapter.setWrapper(wrapper);
+        wrapper.setDelegateAdapter(delegateAdapter);
+        delegateAdapter.addAdapter(wrapper);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
+        rv.addOnItemTouchListener(new RvClickListenerIml(){
+            @Override
+            public void onItemClick(BaseAdapter adapter, View view, int position) {
+                ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
+                if(itemBean != null){
+                    ArtDetailActivity.comeIn(SearchResultArtActivity.this,itemBean.getAid());
+                }
+            }
+        });
+        ptrClassicFrameLayout.setAutoLoadMoreEnable(false);
+        ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                requestFirstPage();
+            }
+        });
+        ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void loadMore() {
+                requestNextPage();
+            }
+        });
     }
 
     /**
@@ -163,7 +203,7 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
             @Override
             public void accept(Object o) throws Exception {
                 param.setYouxian(1);
-                mPresenter.getArtList(param);
+                requestFirstPage();
                 hideCommon();
             }
         });
@@ -171,7 +211,7 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
             @Override
             public void accept(Object o) throws Exception {
                 param.setYouxian(2);
-                mPresenter.getArtList(param);
+                requestFirstPage();
                 hideCommon();
             }
         });
@@ -179,14 +219,14 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
             @Override
             public void accept(Object o) throws Exception {
                 param.setLooksort(0);
-                mPresenter.getArtList(param);
+                requestFirstPage();
             }
         });
         RxViewUtil.addOnClick(mRxManager, tv_price, new Consumer() {
             @Override
             public void accept(Object o) throws Exception {
                 param.setPricesort(0);
-                mPresenter.getArtList(param);
+                requestFirstPage();
             }
         });
 
@@ -231,16 +271,67 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
 
     @Override
     protected void extraInit() {
-        mPresenter.getArtList(param);
+        requestFirstPage();
     }
 
+    private void requestFirstPage(){
+        isRefresh = true;
+        param.setStart(0);
+        request();
+    }
+    private void requestNextPage(){
+        isRefresh = false;
+        param.setStart(param.getStart()+param.getLength());
+        request();
+    }
+    private void request() {
+        if(!isRequesting){
+            mPresenter.getArtList(param);
+            isRequesting = true;
+        }
+    }
+
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        if(apiName.equals(ArtListContact.TAG_ART_LIST)){
+            isRequesting = false;
+            if(isRefresh){
+                ptrClassicFrameLayout.refreshComplete();
+            }else{
+                ptrClassicFrameLayout.setLoadMoreEnable(false);
+                ptrClassicFrameLayout.loadMoreComplete(false);
+            }
+        }
+        return super.childInterceptException(apiName, e);
+    }
 
     @Override
     public void getArtListSuccess(ArtListResult result) {
-        if(result != null && !CollectionUtil.isEmpty(result.getPaintingList())){
-            adapter.replaceAllItem(result.getPaintingList());
+        isRequesting = false;
+        List<ArtItemBean> list = result.getPaintingList();
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+            if(!CollectionUtil.isEmpty(list)){
+                adapter.replaceAllItem(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.setLoadMoreEnable(true);
+                }else{
+                    ptrClassicFrameLayout.setLoadMoreEnable(false);
+                }
+            }else{
+                ptrClassicFrameLayout.setLoadMoreEnable(false);
+            }
         }else{
-            showMsgDialg("暂时没有符合条件的查询结果");
+            if(CollectionUtil.isEmpty(list)){
+                ptrClassicFrameLayout.loadMoreComplete(false);
+            }else{
+                adapter.addItems(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.loadMoreComplete(true);
+                }else{
+                    ptrClassicFrameLayout.loadMoreComplete(false);
+                }
+            }
         }
     }
 
@@ -324,7 +415,7 @@ public class SearchResultArtActivity extends AbsNetBaseActivity<ArtListPresenter
                     param.getOneclass().addAll(oneClassIds);
                     param.getTowclass().clear();
                     param.getTowclass().addAll(twoClassIds);
-                    mPresenter.getArtList(param);
+                    requestFirstPage();
                 }
             });
         }

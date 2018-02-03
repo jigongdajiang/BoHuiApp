@@ -6,17 +6,28 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtListParam;
+import com.bohui.art.bean.common.ArtListResult;
+import com.bohui.art.bean.found.OrderBean;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.bean.mine.MyOrderBean;
 import com.bohui.art.bean.mine.MyOrderListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
+import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.found.order.OrderActivity;
 import com.bohui.art.mine.collect.mvp.MyCollectParam;
 import com.bohui.art.mine.order.mvp.MyOrderContact;
 import com.bohui.art.mine.order.mvp.MyOrderModel;
 import com.bohui.art.mine.order.mvp.MyOrderPresenter;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.http.exception.ApiException;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -33,12 +44,17 @@ import butterknife.BindView;
 
 
 public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrderModel> implements MyOrderContact.View {
+    @BindView(R.id.ptr)
+    PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
     RecyclerView rv;
     private MyOrderAdapter myOrderAdapter;
+    private MyCollectParam param = new MyCollectParam();
+    private boolean isRefresh;
+    private boolean isRequesting;
     @Override
     public int getLayoutId() {
-        return R.layout.layout_common_rv;
+        return R.layout.layout_refresh_rv;
     }
 
     @Override
@@ -51,13 +67,30 @@ public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrder
 
         myOrderAdapter = new MyOrderAdapter(mContext);
         myOrderAdapter.setDelegateAdapter(delegateAdapter);
-        delegateAdapter.addAdapter(myOrderAdapter);
+        NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,myOrderAdapter);
+        myOrderAdapter.setWrapper(wrapper);
+        wrapper.setDelegateAdapter(delegateAdapter);
+        delegateAdapter.addAdapter(wrapper);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
 
+            }
+        });
+        ptrClassicFrameLayout.setAutoLoadMoreEnable(false);
+        ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                requestFirstPage();
+            }
+        });
+        ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void loadMore() {
+                requestNextPage();
             }
         });
 
@@ -70,13 +103,65 @@ public class MyOrderActivity extends AbsNetBaseActivity<MyOrderPresenter,MyOrder
 
     @Override
     protected void extraInit() {
-        MyCollectParam param = new MyCollectParam();
         param.setUid(AppFuntion.getUid());
-        mPresenter.myOrder(param);
+        requestFirstPage();
+    }
+    private void requestFirstPage(){
+        isRefresh = true;
+        param.setStart(0);
+        request();
+    }
+    private void requestNextPage(){
+        isRefresh = false;
+        param.setStart(param.getStart()+param.getLength());
+        request();
+    }
+    private void request() {
+        if(!isRequesting){
+            mPresenter.myOrder(param);
+            isRequesting = true;
+        }
+    }
+
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        isRequesting = false;
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+        }else{
+            ptrClassicFrameLayout.setLoadMoreEnable(false);
+            ptrClassicFrameLayout.loadMoreComplete(false);
+        }
+        return super.childInterceptException(apiName, e);
     }
 
     @Override
     public void myOrderSuccess(MyOrderListResult result) {
-        myOrderAdapter.replaceAllItem(result.getList());
+        isRequesting = false;
+        List<OrderBean> list = result.getList();
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+            if(!CollectionUtil.isEmpty(list)){
+                myOrderAdapter.replaceAllItem(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.setLoadMoreEnable(true);
+                }else{
+                    ptrClassicFrameLayout.setLoadMoreEnable(false);
+                }
+            }else{
+                ptrClassicFrameLayout.setLoadMoreEnable(false);
+            }
+        }else{
+            if(CollectionUtil.isEmpty(list)){
+                ptrClassicFrameLayout.loadMoreComplete(false);
+            }else{
+                myOrderAdapter.addItems(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.loadMoreComplete(true);
+                }else{
+                    ptrClassicFrameLayout.loadMoreComplete(false);
+                }
+            }
+        }
     }
 }

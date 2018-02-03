@@ -10,18 +10,27 @@ import android.widget.ListView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.found.DesignerAttrBean;
 import com.bohui.art.bean.found.DesignerAttrResult;
 import com.bohui.art.bean.found.DesignerItemBean;
 import com.bohui.art.bean.found.DesignerListParam;
 import com.bohui.art.bean.found.DesignerListResult;
+import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
+import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.designer.DesignerDetailActivity;
 import com.bohui.art.home.adapter.DesignerAdapter;
 import com.bohui.art.search.SearchActivity;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.http.exception.ApiException;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 import com.widget.smallelement.dropdown.DropDownMenu;
@@ -45,6 +54,7 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
     DropDownMenu mDropDownMenu;
 
     private RecyclerView rv;
+    private PtrClassicFrameLayout ptrClassicFrameLayout;
 
     private List<View> popupViews = new ArrayList<>();
     private ListDropDownAdapter areaAdapter;
@@ -53,13 +63,9 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
     private List<DesignerAttrBean> styleBeans;
     private DesignerAdapter designerAdapter;
     private final String headers[] = {"擅长领域", "擅长风格"};
-    private DesignerListParam param;
-
-    @Override
-    protected void doBeforeSetContentView() {
-        super.doBeforeSetContentView();
-        param = new DesignerListParam();
-    }
+    private DesignerListParam param = new DesignerListParam();
+    private boolean isRefresh;
+    private boolean isRequesting;
 
     @Override
     public int getLayoutId() {
@@ -80,7 +86,7 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
                     }
                 })
                 .builder();
-        View convertView =  LayoutInflater.from(mContext).inflate(R.layout.layout_common_rv,null);
+        View convertView =  LayoutInflater.from(mContext).inflate(R.layout.layout_refresh_rv,null);
 
         final ListView areaView = new ListView(this);
         areaView.setDividerHeight(0);
@@ -111,7 +117,7 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
                 mDropDownMenu.setTabText(areaBeans.get(position).getName());
                 mDropDownMenu.closeMenu();
                 param.setGoodfiled(areaBeans.get(position).getTid());
-                mPresenter.getDesignerList(param);
+                requestFirstPage();
             }
         });
 
@@ -122,7 +128,7 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
                 mDropDownMenu.setTabText(styleBeans.get(position).getName());
                 mDropDownMenu.closeMenu();
                 param.setGoodstyle(styleBeans.get(position).getTid());
-                mPresenter.getDesignerList(param);
+                requestFirstPage();
             }
         });
 
@@ -131,18 +137,38 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
 
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, convertView);
         rv = convertView.findViewById(R.id.rv);
+        ptrClassicFrameLayout = convertView.findViewById(R.id.ptr);
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         designerAdapter = new DesignerAdapter(mContext);
         designerAdapter.setDelegateAdapter(delegateAdapter);
-        delegateAdapter.addAdapter(designerAdapter);
+        NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,designerAdapter);
+        designerAdapter.setWrapper(wrapper);
+        wrapper.setDelegateAdapter(delegateAdapter);
+        delegateAdapter.addAdapter(wrapper);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 DesignerItemBean itemBean = (DesignerItemBean) adapter.getData(position);
-                DesignerDetailActivity.comeIn(DesignerActivity.this, AppFuntion.getUid(),itemBean.getDid());
+                if(itemBean != null){
+                    DesignerDetailActivity.comeIn(DesignerActivity.this, AppFuntion.getUid(),itemBean.getDid());
+                }
+            }
+        });
+        ptrClassicFrameLayout.setAutoLoadMoreEnable(false);
+        ptrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                requestFirstPage();
+            }
+        });
+        ptrClassicFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void loadMore() {
+                requestNextPage();
             }
         });
     }
@@ -154,9 +180,67 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
 
     @Override
     protected void extraInit() {
-        mPresenter.getDesignerAttr();
+        requestFirstPage();
     }
 
+    private void requestFirstPage(){
+        isRefresh = true;
+        param.setStart(0);
+        request();
+    }
+    private void requestNextPage(){
+        isRefresh = false;
+        param.setStart(param.getStart()+param.getLength());
+        request();
+    }
+    private void request() {
+        if(!isRequesting){
+            mPresenter.getDesignerList(param);
+            isRequesting = true;
+        }
+    }
+
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        isRequesting = false;
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+        }else{
+            ptrClassicFrameLayout.setLoadMoreEnable(false);
+            ptrClassicFrameLayout.loadMoreComplete(false);
+        }
+        return super.childInterceptException(apiName, e);
+    }
+
+    @Override
+    public void getDesignerListSuccess(DesignerListResult result) {
+        isRequesting = false;
+        List<DesignerItemBean> list = result.getDesignerList();
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+            if(!CollectionUtil.isEmpty(list)){
+                designerAdapter.replaceAllItem(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.setLoadMoreEnable(true);
+                }else{
+                    ptrClassicFrameLayout.setLoadMoreEnable(false);
+                }
+            }else{
+                ptrClassicFrameLayout.setLoadMoreEnable(false);
+            }
+        }else{
+            if(CollectionUtil.isEmpty(list)){
+                ptrClassicFrameLayout.loadMoreComplete(false);
+            }else{
+                designerAdapter.addItems(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.loadMoreComplete(true);
+                }else{
+                    ptrClassicFrameLayout.loadMoreComplete(false);
+                }
+            }
+        }
+    }
     @Override
     public void getDesignerAttrSuccess(DesignerAttrResult result) {
         areaBeans.clear();
@@ -176,11 +260,6 @@ public class DesignerActivity extends AbsNetBaseActivity<DesignerListPresenter,D
         styleBeans.addAll(result.getStyleList());
         param.setGoodfiled(0);
         param.setGoodstyle(0);
-        mPresenter.getDesignerList(param);
-    }
-
-    @Override
-    public void getDesignerListSuccess(DesignerListResult result) {
-        designerAdapter.replaceAllItem(result.getDesignerList());
+        requestFirstPage();
     }
 }
