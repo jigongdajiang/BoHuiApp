@@ -1108,6 +1108,7 @@ public class PtrFrameLayout extends ViewGroup {
         }
 
         if (hasInitLoadMoreView) {
+            mLoadMoreView.showNormal();
             if (isLoadMoreEnable) {
                 mLoadMoreHandler.addFooter();
             } else {

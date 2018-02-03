@@ -19,6 +19,10 @@ import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
 import com.bohui.art.home.art2.Art2Activity;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.CollectionUtil;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
@@ -37,8 +41,10 @@ import butterknife.BindView;
 
 
 public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, ClassifyModel> implements ClassifyContact.View {
-    @BindView(R.id.rv_classify_type)
-    RecyclerView rv_classify_type;
+    @BindView(R.id.ptr)
+    PtrClassicFrameLayout mPtrClassicFrameLayout;
+    @BindView(R.id.rv)
+    RecyclerView rv;
 
     public static final String TYPE = "type";
     private ClassifyLevelBean mType;
@@ -69,9 +75,9 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, 
     public void initView() {
         VirtualLayoutManager layoutManager = new VirtualLayoutManager(mContext);
         mDelegateAdapter = new DelegateAdapter(layoutManager);
-        rv_classify_type.setLayoutManager(layoutManager);
-        rv_classify_type.setAdapter(mDelegateAdapter);
-        rv_classify_type.addOnItemTouchListener(new RvClickListenerIml() {
+        rv.setLayoutManager(layoutManager);
+        rv.setAdapter(mDelegateAdapter);
+        rv.addOnItemTouchListener(new RvClickListenerIml() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 if(adapter instanceof  ClassifyTypeDetailAdapter){
@@ -80,6 +86,12 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, 
                     bundle.putSerializable(Art2Activity.TYPE,levelBean);
                     startAty(Art2Activity.class,bundle);
                 }
+            }
+        });
+        mPtrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                doLoad();
             }
         });
     }
@@ -95,7 +107,14 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, 
     }
 
     @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        mPtrClassicFrameLayout.refreshComplete();
+        return super.childInterceptException(apiName, e);
+    }
+
+    @Override
     public void getClassifyLevel2Success(ClassifyLevel2Result result) {
+        mPtrClassicFrameLayout.refreshComplete();
         mResult = result;
         refreshData();
     }

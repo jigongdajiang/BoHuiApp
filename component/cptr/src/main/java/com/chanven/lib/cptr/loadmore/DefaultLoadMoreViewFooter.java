@@ -72,7 +72,7 @@ public class DefaultLoadMoreViewFooter implements ILoadMoreViewFactory {
 
         @Override
         public void showNomore() {
-            footerTv.setText("已经加载完毕");
+            footerTv.setText("没有更多数据");
             footerBar.setVisibility(View.GONE);
             footerView.setOnClickListener(null);
         }
