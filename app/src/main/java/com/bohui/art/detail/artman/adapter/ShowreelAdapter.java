@@ -45,7 +45,7 @@ public class ShowreelAdapter extends BaseAdapter<ShowreelBean> {
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(2);
-        gridLayoutHelper.setHGap(10);
+        gridLayoutHelper.setHGap(20);
         return gridLayoutHelper;
     }
 }

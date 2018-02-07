@@ -87,7 +87,8 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
 
     @Override
     protected void extraInit() {
-        mPresenter.getArtManLevel();
+        //暂时写死艺术家级别
+//        mPresenter.getArtManLevel();
     }
 
     @Override

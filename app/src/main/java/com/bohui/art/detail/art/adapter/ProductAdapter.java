@@ -17,6 +17,7 @@ import com.framework.core.glideext.GlideUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 import com.widget.smallelement.banner.ConvenientBanner;
+import com.widget.smallelement.banner.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,12 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
     }
 
     private int currentNumber = 1;
+    private OnItemClickListener onItemClickListener;
+    private ConvenientBanner cb_banner;
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
         //详情图片
-        ConvenientBanner<String> cb_banner = holder.getView(R.id.banner);
+        cb_banner = holder.getView(R.id.banner);
         List<BannerBean>  bannerBeans = new ArrayList<>();
         for(String imgUrl : itemData.getImgs()){
             BannerBean bannerBean = new BannerBean();
@@ -76,6 +79,7 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
 
             }
         });
+        cb_banner.setOnItemClickListener(onItemClickListener);
         //艺术品名称
         holder.setText(R.id.tv_name,itemData.getName() + itemData.getArtname()+"作品");
         //艺术品价格
@@ -107,6 +111,14 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
     private void showTvNumber(TextView tv,int cn,int numbers){
         tv.setText(cn+"/"+numbers);
     }
+
+    public void setCurrentItem(int position){
+        cb_banner.setcurrentitem(position);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         return new SingleLayoutHelper();

@@ -17,7 +17,7 @@
             android:layout_height="@dimen/dp_110"
             android:layout_gravity="center"
             android:src="@drawable/img_temp_1"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerInside"/>
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"

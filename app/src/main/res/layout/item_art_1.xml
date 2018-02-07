@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         android:src="@drawable/img_temp_1" />
 
     <RelativeLayout
@@ -23,7 +23,7 @@
             android:id="@+id/tv_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="国画山水"
             android:textColor="@color/sys_color_font_somber"
@@ -38,7 +38,6 @@
             android:paddingTop="@dimen/dp_2"
             android:paddingBottom="@dimen/dp_2"
             android:layout_alignParentRight="true"
-            android:text=""
             android:textColor="@color/sys_color_font_white"
             android:textSize="@dimen/sys_font_size_small"
             android:layout_marginRight="@dimen/dp_5"

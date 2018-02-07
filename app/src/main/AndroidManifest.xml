@@ -154,6 +154,9 @@
         <!-- 设计师详情 -->
         <activity android:name=".detail.designer.DesignerDetailActivity"
             android:screenOrientation="portrait"/>
+        <!-- 图片查看器 -->
+        <activity android:name="com.widget.smallelement.photoview.ImagePagerActivity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"

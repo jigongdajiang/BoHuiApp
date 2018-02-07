@@ -38,6 +38,8 @@ import com.framework.core.util.ResUtil;
 import com.framework.core.util.StrOperationUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
+import com.widget.smallelement.banner.listener.OnItemClickListener;
+import com.widget.smallelement.photoview.ImagePagerActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,6 +141,9 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
         mPresenter.getArtDetail(AppFuntion.getUid(),id);
     }
 
+    private ProductAdapter productAdapter;
+
+    private static final int IMAGE_START_REQUEST_CODE = 0x3001;
     @Override
     public void getArtDetailSuccess(final ArtDetailResult result) {
         List<String> imgs = result.getImgs();
@@ -149,7 +154,18 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //产品  0
-        ProductAdapter productAdapter = new ProductAdapter(mContext,result);
+        productAdapter = new ProductAdapter(mContext,result);
+        productAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                List<String> imgs = result.getImgs();
+                if(!CollectionUtil.isEmpty(imgs)){
+                    ArrayList<String> imgArry = new ArrayList<>();
+                    imgArry.addAll(imgs);
+                    ImagePagerActivity.comeIn(ArtDetailActivity.this,position, imgArry,IMAGE_START_REQUEST_CODE);
+                }
+            }
+        });
         delegateAdapter.addAdapter(productAdapter);
         //简介 Guide  1
         DetailGuideAdapter detailGuideAdapterIntro = new DetailGuideAdapter(mContext,"简介");
@@ -272,6 +288,17 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
                 showMsgDialg("取消收藏成功");
                 isfollow = 0;
                 tv_like.setText("喜欢并收藏");
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == IMAGE_START_REQUEST_CODE) {
+                int position = data.getIntExtra(ImagePagerActivity.EXTRA_BACK_POSITION, 0);
+                productAdapter.setCurrentItem(position);
             }
         }
     }

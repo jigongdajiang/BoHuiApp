@@ -10,7 +10,7 @@
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_120"
         android:src="@drawable/img_temp_1"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerInside"/>
     <TextView
         android:id="@+id/tv_designer_name"
         android:layout_width="wrap_content"

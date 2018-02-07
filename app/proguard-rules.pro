@@ -211,18 +211,18 @@
 -keepattributes EnclosingMethod
 
 # bean
--keep class com.jimeijf.financing.bean.** {
+-keep class com.bohui.art.bean.** {
     *;
 }
 
 ##---------------End: proguard configuration for Gson  ----------
 
 # 核心框架不被混淆
--keep class com.jimeijf.core.** {
+-keep class com.framework.core.** {
     *;
 }
 # Dialog组件不被混淆，因为里面show用到反射
--keep class com.jimeijf.smallelement.dialog.**{
+-keep class com.widget.smallelement.dialog.**{
     *;
 }
 
@@ -234,7 +234,10 @@
 -keepclassmembers class * extends android.webkit.WebViewClient {
     public void *(android.webkit.WebView, java.lang.String);
 }
--keepclassmembers class com.jimeijf.financing.mine.cunguan.CunGuanWebActivity$JSInterfacel {
+-keepclassmembers class com.bohui.art.common.activity.BaseWebActivity$JSInterfacel {
+    <methods>;
+}
+-keepclassmembers class com.bohui.art.common.activity.CommonStaticActivity$JSInterfacel {
     <methods>;
 }
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {
@@ -276,3 +279,16 @@
     *;
 }
 
+#RenderScript
+-keepclasseswithmembernames class * {
+native <methods>;
+}
+-keep class android.support.v8.renderscript.** { *; }
+
+# 保留M P 不被混淆
+-keep class * extends com.framework.core.base.BasePresenter {
+
+}
+-keep class * implements com.framework.core.base.BaseModel{
+
+}

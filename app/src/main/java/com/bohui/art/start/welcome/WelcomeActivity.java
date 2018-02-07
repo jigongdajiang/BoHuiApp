@@ -15,6 +15,7 @@ import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.util.helperutil.AbsBaseHelperUtil;
 import com.bohui.art.start.MainActivity;
 import com.framework.core.glideext.GlideUtil;
+import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.StatusBarCompatUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -177,6 +178,11 @@ public class WelcomeActivity extends AbsNetBaseActivity<WelcomePresenter,Welcome
         dots[positon].setEnabled(false);
         dots[currentIndex].setEnabled(true);
         currentIndex = positon;
+    }
+
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        return true;
     }
 
     /**

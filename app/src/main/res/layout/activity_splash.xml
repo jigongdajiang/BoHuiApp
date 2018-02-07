@@ -15,7 +15,7 @@
             android:layout_height="189dp"
             android:layout_centerInParent="true"
             android:background="@drawable/img_splash_logo"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +31,8 @@
     <ImageView
         android:id="@+id/iv_adv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
     <TextView
         android:id="@+id/tv_leave_splash"
         android:layout_width="wrap_content"

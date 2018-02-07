@@ -9,7 +9,7 @@
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
         android:src="@drawable/img_temp_1"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         android:layout_centerVertical="true"/>
 
     <RelativeLayout

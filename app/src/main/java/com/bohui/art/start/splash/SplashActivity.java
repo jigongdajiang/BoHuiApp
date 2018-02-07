@@ -1,11 +1,18 @@
 package com.bohui.art.start.splash;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +39,7 @@ import com.framework.core.http.exception.ApiException;
 import com.framework.core.util.StatusBarCompatUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -211,4 +219,6 @@ public class SplashActivity extends AbsNetBaseActivity<SplashPresenter,SplashMod
             }
         });
     }
+
+
 }
