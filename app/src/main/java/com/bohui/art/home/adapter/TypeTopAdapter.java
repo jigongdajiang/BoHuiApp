@@ -43,7 +43,7 @@ public class TypeTopAdapter extends BaseAdapter<ClassifyLevelBean> {
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
-        singleLayoutHelper.setMargin(0, ResUtil.getResDimensionPixelOffset(mContext,R.dimen.sys_margin_small),0,0);
+        singleLayoutHelper.setMargin(0, 0,0,0);
         return singleLayoutHelper;
     }
 }

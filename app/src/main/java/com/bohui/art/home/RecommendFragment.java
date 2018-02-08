@@ -166,9 +166,9 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
                 String typeName = remomerList.get(i).getName();
                 long typeId = remomerList.get(i).getId();
                 List<ArtCoverItemBean> list = remomerList.get(i).getList();
-                TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId));
-                adapters.add(typeTopAdapter);
                 if (list != null && list.size() > 0) {
+                    TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId));
+                    adapters.add(typeTopAdapter);
                     int listSize = list.size();
                     if (listSize == 3) {
                         Art1Plus2Adapter onePuls2adapter = new Art1Plus2Adapter(getActivity());
@@ -185,10 +185,10 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
         //机构推荐
         RecommendMechanismBean recommendMechanismBean = mResult.getMechanism();
         if (recommendMechanismBean != null) {
-            TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendMechanismBean.getName(), 3));
-            adapters.add(jigouTopAdapter);
             List<ArtItemBean> list = recommendMechanismBean.getList();
             if (!CollectionUtil.isEmpty(list)) {
+                TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendMechanismBean.getName(), 3));
+                adapters.add(jigouTopAdapter);
                 ArtGridAdapter mechanisAdapter = new ArtGridAdapter(mContext);
                 mechanisAdapter.setDatas(list);
                 adapters.add(mechanisAdapter);
@@ -198,10 +198,10 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
         //设计师推荐
         RecommendDesignerBean recommendDesignerBean = mResult.getDesigner();
         if (recommendDesignerBean != null) {
-            TypeTopAdapter designerTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendDesignerBean.getName(), 4));
-            adapters.add(designerTopAdapter);
             List<DesignerItemBean> list = recommendDesignerBean.getList();
             if (!CollectionUtil.isEmpty(list)) {
+                TypeTopAdapter designerTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendDesignerBean.getName(), 4));
+                adapters.add(designerTopAdapter);
                 DesignerAdapter designerAdapter = new DesignerAdapter(mContext);
                 designerAdapter.setDatas(list);
                 adapters.add(designerAdapter);

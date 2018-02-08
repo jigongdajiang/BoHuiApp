@@ -3,6 +3,8 @@ package com.bohui.art.home.adapter;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.alibaba.android.vlayout.LayoutHelper;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.found.DesignerItemBean;
 import com.bohui.art.detail.artman.mvp.ArtManDetailContact;
@@ -51,5 +53,12 @@ public class DesignerAdapter extends BaseAdapter<DesignerItemBean> {
         holder.setText(R.id.tv_designer_experience,itemData.getExperience()+"年设计经验");
         //案例数
         holder.setText(R.id.tv_designer_case_number,"案例数: "+itemData.getCount());
+    }
+
+    @Override
+    public LayoutHelper onCreateLayoutHelper() {
+        LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
+        linearLayoutHelper.setDividerHeight(10);
+        return linearLayoutHelper;
     }
 }

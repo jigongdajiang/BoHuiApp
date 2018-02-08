@@ -2,6 +2,7 @@ package com.bohui.art.home.adapter;
 
 import android.content.Context;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
@@ -9,6 +10,7 @@ import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.framework.core.glideext.GlideUtil;
+import com.framework.core.util.DisplayUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -37,6 +39,9 @@ public class ArtGridAdapter extends BaseAdapter<ArtItemBean> {
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtItemBean itemData, int position) {
         ImageView iv = holder.getView(R.id.iv_img);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv.getLayoutParams();
+        params.height = DisplayUtil.getScreenWidth(mContext)/2 - 1;
+        iv.setLayoutParams(params);
         GlideUtil.display(mContext,iv,itemData.getCover());
 
         holder.setText(R.id.tv_des,itemData.getName());
@@ -47,8 +52,8 @@ public class ArtGridAdapter extends BaseAdapter<ArtItemBean> {
     @Override
     public LayoutHelper onCreateLayoutHelper() {
         GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(2);
-        gridLayoutHelper.setVGap(2);
-        gridLayoutHelper.setHGap(2);
+        gridLayoutHelper.setVGap(10);
+        gridLayoutHelper.setHGap(10);
         return gridLayoutHelper;
     }
 }

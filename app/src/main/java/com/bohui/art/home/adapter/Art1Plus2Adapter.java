@@ -41,6 +41,7 @@ public class Art1Plus2Adapter extends BaseAdapter<ArtCoverItemBean> {
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtCoverItemBean itemData, int position) {
         ImageView imageView = holder.getView(R.id.iv_img);
+        holder.setBackgroundColor(R.id.iv_img,ResUtil.getResColor(mContext,R.color.sys_color_content_bg));
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
         if (position == 0) {
             params.height = ResUtil.getResDimensionPixelOffset(mContext, R.dimen.dp_180);

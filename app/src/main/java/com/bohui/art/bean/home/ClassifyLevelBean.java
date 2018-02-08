@@ -16,6 +16,7 @@ public class ClassifyLevelBean implements Serializable{
     private String logo;
     private long pid;
     private boolean isChecked;
+    private boolean isBu;
 
     public ClassifyLevelBean() {
     }
@@ -75,6 +76,14 @@ public class ClassifyLevelBean implements Serializable{
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public boolean isBu() {
+        return isBu;
+    }
+
+    public void setBu(boolean bu) {
+        isBu = bu;
     }
 
     @Override

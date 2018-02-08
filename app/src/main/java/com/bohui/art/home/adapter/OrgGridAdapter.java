@@ -9,6 +9,7 @@ import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.framework.core.glideext.GlideUtil;
+import com.framework.core.util.DisplayUtil;
 import com.framework.core.util.ResUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
@@ -39,7 +40,7 @@ public class OrgGridAdapter extends BaseAdapter<ArtCoverItemBean> {
     public void bindViewHolder(BaseViewHolder holder, ArtCoverItemBean itemData, int position) {
         ImageView imageView = holder.getView(R.id.iv_img);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-        params.height = ResUtil.getResDimensionPixelOffset(mContext, R.dimen.dp_180);
+        params.height = DisplayUtil.getScreenWidth(mContext)/2 - 1;
         imageView.setLayoutParams(params);
         GlideUtil.display(mContext,imageView,itemData.getCover());
         holder.setText(R.id.tv_des,itemData.getName());

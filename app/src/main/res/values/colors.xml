@@ -29,6 +29,7 @@
     <color name="color_ED6D46">#ED6D46</color>
     <color name="color_C9CACA">#C9CACA</color>
     <color name="color_F55050">#F55050</color>
+    <color name="color_CCCCCC">#CCCCCC</color>
 
     <color name="color_00000000">#00000000</color>
     <color name="color_55F5F5F5">#55F5F5F5</color>
@@ -93,5 +94,6 @@
     <color name="main_tab_bg">@color/sys_color_white</color>
     <color name="main_tab_text_selected">@color/sys_color_font_base</color>
     <color name="main_tab_text_un_selected">@color/sys_color_font_black</color>
-
+    <!-- 封面图片背景 -->
+    <color name="feng_main_img_bg">@color/color_CCCCCC</color>
 </resources>

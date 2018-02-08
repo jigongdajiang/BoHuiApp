@@ -3,6 +3,8 @@ package com.bohui.art.home.art1;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.alibaba.android.vlayout.LayoutHelper;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.widget.rv.ItemType;
@@ -43,5 +45,12 @@ public class Art2Adapter extends BaseAdapter<ArtItemBean> {
         holder.setText(R.id.tv_art_price,"￥ "+String.valueOf(itemData.getSalePrice()));
         //尺寸
         holder.setText(R.id.tv_eye,itemData.getLookNum()+"人浏览");
+    }
+
+    @Override
+    public LayoutHelper onCreateLayoutHelper() {
+        LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
+        linearLayoutHelper.setDividerHeight(10);
+        return linearLayoutHelper;
     }
 }
