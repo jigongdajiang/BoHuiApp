@@ -51,7 +51,7 @@ public class IntroAdapter extends BaseAdapter<ArtMainDetailResult> {
         //艺术家级别简介
         holder.setText(R.id.tv_art_man_level_des,itemData.getLeveldesc());
         //艺术格言
-        holder.setText(R.id.tv_pro,itemData.getPersonalnote());
+        holder.setText(R.id.tv_pro,itemData.getArtistic());
         //Ta的详情
         holder.setText(R.id.tv_detail_des,itemData.getPersonalnote());
 

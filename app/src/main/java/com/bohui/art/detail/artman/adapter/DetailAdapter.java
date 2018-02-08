@@ -48,9 +48,9 @@ public class DetailAdapter extends BaseAdapter<ArtMainDetailResult> {
         //粉丝量
         holder.setText(R.id.tv_fans_num,"粉丝:  "+itemData.getFollownum());
         //艺术格言
-        holder.setText(R.id.tv_intro,itemData.getPersonalnote());
-        tv_attention = holder.getView(R.id.tv_attention);
+        holder.setText(R.id.tv_intro,itemData.getArtistic());
         //是否关注
+        tv_attention = holder.getView(R.id.tv_attention);
         changeAttentionText(itemData.getIsfouce());
         holder.addOnClickListener(R.id.tv_attention);
 

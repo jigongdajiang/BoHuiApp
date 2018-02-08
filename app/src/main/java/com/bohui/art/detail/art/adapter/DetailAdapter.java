@@ -42,7 +42,6 @@ public class DetailAdapter extends BaseAdapter<ArtDetailResult> {
     public void bindViewHolder(BaseViewHolder holder, ArtDetailResult itemData, int position) {
         WebView wv_detail = holder.getView(R.id.webView);
         wv_detail.setFocusable(false);
-        wv_detail.loadUrl(itemData.getDetailH5());
         webSettings = wv_detail.getSettings();
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setBuiltInZoomControls(true);
@@ -52,6 +51,7 @@ public class DetailAdapter extends BaseAdapter<ArtDetailResult> {
         webSettings.setUseWideViewPort(true);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         wv_detail.setWebViewClient(new GoodsDetailWebViewClient());
+        wv_detail.loadUrl(itemData.getDetailH5());
     }
 
     @Override
