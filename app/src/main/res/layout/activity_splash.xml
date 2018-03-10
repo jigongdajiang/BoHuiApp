@@ -45,7 +45,7 @@
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:paddingTop="3dp"
-        android:textColor="@color/sys_color_font_white"
+        android:textColor="@color/sys_color_font_light_gray"
         android:textSize="@dimen/sys_font_size_middle"
         android:visibility="gone"/>
 </RelativeLayout>

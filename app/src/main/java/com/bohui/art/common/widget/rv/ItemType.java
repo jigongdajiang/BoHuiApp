@@ -21,6 +21,10 @@ public class ItemType {
     public static int MINE_TOP = TYPE_START++;
     //二级列表页
     public static int ART_2 = TYPE_START++;
+    //艺术家首页Item
+    public static int ART_MAN_1LEVEL = TYPE_START++;
+    //艺术家首页Item中的2级Item
+    public static int ART_MAN_2LEVEL = TYPE_START++;
     //艺术家列表页item布局
     public static int ART_MAN_LIST = TYPE_START++;
     //我的定制列表Item布局

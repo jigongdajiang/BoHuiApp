@@ -157,6 +157,12 @@
         <!-- 图片查看器 -->
         <activity android:name="com.widget.smallelement.photoview.ImagePagerActivity"
             android:screenOrientation="portrait"/>
+        <!-- 艺术家首页 -->
+        <activity android:name=".found.artman.ArtManHomeActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 艺术家二级列表页 -->
+        <activity android:name=".found.artman.ArtMan2LevelActivity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"

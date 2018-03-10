@@ -14,6 +14,7 @@ import com.bohui.art.common.widget.rv.ItemType;
 import com.bohui.art.common.util.BannerHelper;
 import com.bohui.art.bean.detail.ArtDetailResult;
 import com.framework.core.glideext.GlideUtil;
+import com.framework.core.util.strformat.NumberFormatUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 import com.widget.smallelement.banner.ConvenientBanner;
@@ -83,7 +84,7 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
         //艺术品名称
         holder.setText(R.id.tv_name,itemData.getName() + itemData.getArtname()+"作品");
         //艺术品价格
-        holder.setText(R.id.tv_price,String.valueOf(itemData.getPrice()));
+        holder.setText(R.id.tv_price, NumberFormatUtil.getCnMonery(itemData.getPrice()));
         //艺术品尺寸规格
         holder.setText(R.id.tv_size,itemData.getSize());
         //剩余量

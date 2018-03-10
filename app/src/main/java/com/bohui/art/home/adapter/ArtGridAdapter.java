@@ -11,6 +11,7 @@ import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.framework.core.glideext.GlideUtil;
 import com.framework.core.util.DisplayUtil;
+import com.framework.core.util.strformat.NumberFormatUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
@@ -45,7 +46,7 @@ public class ArtGridAdapter extends BaseAdapter<ArtItemBean> {
         GlideUtil.display(mContext,iv,itemData.getCover());
 
         holder.setText(R.id.tv_des,itemData.getName());
-        holder.setText(R.id.tv_price,"￥"+itemData.getSalePrice());
+        holder.setText(R.id.tv_price, NumberFormatUtil.getCnMonery(itemData.getSalePrice()));
         holder.setText(R.id.tv_tab,itemData.getLookNum()+"人浏览");
     }
 

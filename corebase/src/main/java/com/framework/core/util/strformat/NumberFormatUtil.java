@@ -1,5 +1,7 @@
 package com.framework.core.util.strformat;
 
+import android.text.Html;
+
 import java.text.DecimalFormat;
 
 /**
@@ -24,5 +26,24 @@ public class NumberFormatUtil {
      */
     public static String NF2Point3Split(double d) {
         return numberFomat("###,###.##",d);
+    }
+
+    /**
+     * 得到￥ 0.0
+     */
+    public static String getCnMonery(String source){
+        return Html.fromHtml("&yen").toString()+" "+ source;
+    }
+    public static String getCnMonery(double source){
+        return Html.fromHtml("&yen").toString()+" "+ source;
+    }
+    public static String getCnMonery(float source){
+        return Html.fromHtml("&yen").toString()+" "+ source;
+    }
+    public static String getCnMonery(int source){
+        return Html.fromHtml("&yen").toString()+" "+ source;
+    }
+    public static String getCnMonery(long source){
+        return Html.fromHtml("&yen").toString()+" "+ source;
     }
 }

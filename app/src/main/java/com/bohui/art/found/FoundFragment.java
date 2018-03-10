@@ -15,6 +15,7 @@ import com.bohui.art.bean.common.BannerResult;
 import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.found.artman.ArtManActivity;
+import com.bohui.art.found.artman.ArtManHomeActivity;
 import com.bohui.art.found.designer.DesignerActivity;
 import com.bohui.art.found.mvp.FoundContact;
 import com.bohui.art.found.mvp.FoundModel;
@@ -98,7 +99,7 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
                 GuideItemBean itemBean = (GuideItemBean) adapter.getData(position);
                 switch (itemBean.getTypeId()){
                     case 0:
-                        ((BaseHelperUtil)mHelperUtil).startAty(ArtManActivity.class);
+                        ((BaseHelperUtil)mHelperUtil).startAty(ArtManHomeActivity.class);
                         break;
                     case 1:
                         ((BaseHelperUtil)mHelperUtil).startAty(DesignerActivity.class);
