@@ -15,6 +15,8 @@ import com.framework.core.util.strformat.NumberFormatUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.viewholder.BaseViewHolder;
 
+import java.util.List;
+
 /**
  * @author : gaojigong
  * @date : 2017/12/15
@@ -23,6 +25,10 @@ import com.widget.grecycleview.viewholder.BaseViewHolder;
 
 
 public class Art2Adapter extends BaseAdapter<ArtItemBean> {
+    public Art2Adapter(Context context, List<ArtItemBean> datas) {
+        super(context, datas);
+    }
+
     public Art2Adapter(Context context) {
         super(context);
     }

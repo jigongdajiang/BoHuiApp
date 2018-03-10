@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:background="@color/sys_color_bg">
+    <!-- 头部 -->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/sys_padding"
+            android:src="@mipmap/ic_arrow_left"
+            android:layout_centerVertical="true"/>
+        <com.flyco.tablayout.SegmentTabLayout
+            android:id="@+id/segment_tab"
+            android:layout_marginLeft="@dimen/sys_margin_small"
+            android:layout_marginRight="@dimen/sys_margin_small"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            tl:tl_bar_color="@color/sys_color_bg"
+            tl:tl_textSelectColor="@color/sys_color_font_white"
+            tl:tl_textUnselectColor="@color/sys_color_font_somber"
+            tl:tl_indicator_color="@color/color_595757"
+            tl:tl_indicator_corner_radius="2dp"
+            tl:tl_tab_width="@dimen/dp_60" />
+        <ImageView
+            android:id="@+id/iv_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/sys_padding"
+            android:src="@mipmap/ic_home_normal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

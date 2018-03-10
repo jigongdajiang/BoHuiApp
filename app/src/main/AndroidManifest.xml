@@ -163,6 +163,15 @@
         <!-- 艺术家二级列表页 -->
         <activity android:name=".found.artman.ArtMan2LevelActivity"
             android:screenOrientation="portrait"/>
+        <!-- 机构列表 -->
+        <activity android:name=".found.company.CompanyListActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 机构详情 -->
+        <activity android:name=".detail.comapny.CompanyDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 机构作品列表 -->
+        <activity android:name=".detail.comapny.CompanyArtListActivity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"

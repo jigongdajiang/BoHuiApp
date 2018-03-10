@@ -16,6 +16,7 @@ import com.bohui.art.common.fragment.AbsMianFragment;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.found.artman.ArtManActivity;
 import com.bohui.art.found.artman.ArtManHomeActivity;
+import com.bohui.art.found.company.CompanyListActivity;
 import com.bohui.art.found.designer.DesignerActivity;
 import com.bohui.art.found.mvp.FoundContact;
 import com.bohui.art.found.mvp.FoundModel;
@@ -74,17 +75,19 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
 
         GuideItemBean designerItem = new GuideItemBean("设计师",R.mipmap.ic_stylist,1,R.dimen.dp_1);
         foundItemBeans.add(designerItem);
+        GuideItemBean companyItem = new GuideItemBean("艺术机构",R.mipmap.ic_stylist,2,R.dimen.dp_1);
+        foundItemBeans.add(companyItem);
 
-        GuideItemBean artPenItem = new GuideItemBean("艺术圈",R.mipmap.ic_art_pen,2,R.dimen.dp_10);
+        GuideItemBean artPenItem = new GuideItemBean("艺术圈",R.mipmap.ic_art_pen,3,R.dimen.dp_10);
         foundItemBeans.add(artPenItem);
 
-        GuideItemBean cooperationItem = new GuideItemBean("合作说明",R.mipmap.ic_cooperation,3,R.dimen.dp_1);
+        GuideItemBean cooperationItem = new GuideItemBean("合作说明",R.mipmap.ic_cooperation,4,R.dimen.dp_1);
         foundItemBeans.add(cooperationItem);
 
-        GuideItemBean customizationItem = new GuideItemBean("我要定制",R.mipmap.ic_customization,4,R.dimen.dp_10);
+        GuideItemBean customizationItem = new GuideItemBean("我要定制",R.mipmap.ic_customization,5,R.dimen.dp_10);
         foundItemBeans.add(customizationItem);
 
-        GuideItemBean extItem = new GuideItemBean("更多",R.mipmap.ic_ext,5,R.dimen.dp_10);
+        GuideItemBean extItem = new GuideItemBean("更多",R.mipmap.ic_ext,6,R.dimen.dp_10);
         foundItemBeans.add(extItem);
 
         foundItemAdapter.setDatas(foundItemBeans);
@@ -99,26 +102,29 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
                 GuideItemBean itemBean = (GuideItemBean) adapter.getData(position);
                 switch (itemBean.getTypeId()){
                     case 0:
-                        ((BaseHelperUtil)mHelperUtil).startAty(ArtManHomeActivity.class);
+                        startAty(ArtManHomeActivity.class);
                         break;
                     case 1:
-                        ((BaseHelperUtil)mHelperUtil).startAty(DesignerActivity.class);
+                        startAty(DesignerActivity.class);
                         break;
                     case 2:
-                        ((BaseHelperUtil)mHelperUtil).toastShort("敬请期待");
+                        startAty(CompanyListActivity.class);
                         break;
                     case 3:
+                        toastShort("敬请期待");
+                        break;
+                    case 4:
                         if(!StrOperationUtil.isEmpty(coopDescUrl)){
                             Bundle bundle = new Bundle();
                             bundle.putString(CommonStaticActivity.WEB_URL_CONTENT,coopDescUrl);
                             startAty(CommonStaticActivity.class,bundle);
                         }
                         break;
-                    case 4:
-                        ((BaseHelperUtil)mHelperUtil).startAty(OrderActivity.class);
-                        break;
                     case 5:
-                        ((BaseHelperUtil)mHelperUtil).toastShort("敬请期待");
+                        startAty(OrderActivity.class);
+                        break;
+                    case 6:
+                        toastShort("敬请期待");
                         break;
                 }
             }

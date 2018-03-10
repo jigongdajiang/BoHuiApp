@@ -53,4 +53,10 @@ public class ItemType {
     public static int DESIGNER_DETAIL_CASE = TYPE_START++;
     //设计师详情-设计师简介
     public static int DESIGNER_DETAIL_INTRO = TYPE_START++;
+    //机构列表Item
+    public static int COMPANY_LIST_ITEM = TYPE_START++;
+    //机构详情-基本信息
+    public static int COMPANY_DETAIL_INFO = TYPE_START++;
+    //机构详情-详细描述
+    public static int COMPANY_DETAIL_DES = TYPE_START++;
 }

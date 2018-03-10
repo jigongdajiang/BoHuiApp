@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_color_content_bg">
+    <ImageView
+        android:id="@+id/iv_company"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:scaleType="centerCrop"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/sys_margin_small"
+        android:layout_marginRight="@dimen/sys_margin_small">
+        <TextView
+            android:id="@+id/tv_company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXX机构"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sys_font_size_middle"
+            android:textColor="@color/sys_color_font_somber"/>
+        <TextView
+            android:id="@+id/tv_product_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="作品(12)"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sys_font_size_small"
+            android:textColor="@color/sys_color_font_light_gray"/>
+    </RelativeLayout>
+    <View
+        style="@style/divider_line_full_hor"/>
+</LinearLayout>

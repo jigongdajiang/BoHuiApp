@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_color_content_bg"
+    android:padding="@dimen/sys_padding">
+    <TextView
+        android:id="@+id/tv_company_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/temp_jianjie"
+        android:textSize="@dimen/sys_font_size_middle"
+        android:textColor="@color/sys_color_font_light_gray"/>
+</LinearLayout>
