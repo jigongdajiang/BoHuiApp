@@ -43,7 +43,7 @@ public class ArtMan1LevelAdapter extends BaseAdapter<ArtMan1LevelBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtMan1LevelBean itemData, int position) {
-        holder.setText(R.id.tv_type_top,artMan1LevelBean.getArtManLevel1Name());
+        holder.setText(R.id.tv_type_top,artMan1LevelBean.getName());
     }
     @Override
     public LayoutHelper onCreateLayoutHelper() {

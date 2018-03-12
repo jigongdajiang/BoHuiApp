@@ -14,8 +14,9 @@ import io.reactivex.Observable;
 
 public class ArtManLevelModel implements ArtManListContact.IArtManLevelModel {
     @Override
-    public Observable<ArtManLevelResult> getArtManLevel() {
+    public Observable<ArtManLevelResult> getArtManLevel(int tid) {
         return EasyHttp.post(ArtManListContact.URL_GET_ART_MAN_LEVEL)
+                .params("tid",String.valueOf(tid))
                 .execute(ArtManLevelResult.class);
     }
 }

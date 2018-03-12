@@ -8,6 +8,7 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
 import com.bohui.art.bean.common.ArtManListParam;
 import com.bohui.art.bean.detail.ArtManLevelBean;
+import com.bohui.art.bean.found.ArtMan2LevelBean;
 import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
@@ -44,7 +45,7 @@ public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter
     RecyclerView rv;
 
     public static final String TYPE = "type";
-    private ArtManLevelBean mType;
+    private ArtMan2LevelBean mType;
     private ArtManListAdapter artManListAdapter;
     private ArtManListParam param = new ArtManListParam();
     private boolean isRefresh;
@@ -53,7 +54,7 @@ public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter
     @Override
     protected void doBeforeSetContentView() {
         super.doBeforeSetContentView();
-        mType = (ArtManLevelBean) getIntent().getSerializableExtra(TYPE);
+        mType = (ArtMan2LevelBean) getIntent().getSerializableExtra(TYPE);
     }
 
     @Override
@@ -64,11 +65,10 @@ public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("国画-国家级艺术家")
+                .setTitle(mType.getName()+"-艺术家")
                 .builder();
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(ArtMan2LevelActivity.this);
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        //猜你喜欢数据适配器
         artManListAdapter = new ArtManListAdapter(mContext);
         artManListAdapter.setDelegateAdapter(delegateAdapter);
         NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,artManListAdapter);
@@ -114,7 +114,7 @@ public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter
     }
 
     protected void doLoad() {
-        param.setLevel(mType.getId());
+        param.setTowid(mType.getTid());
         requestFirstPage();
     }
     private void requestFirstPage(){

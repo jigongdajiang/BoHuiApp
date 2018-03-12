@@ -8,8 +8,10 @@ package com.bohui.art.bean.common;
 
 
 public class ArtManListParam extends PageParam {
-    private int level;
+    private int level = 0;
     private String name="";
+    private int oneid = 0;
+    private int towid = 0;
 
     public int getLevel() {
         return level;
@@ -25,5 +27,21 @@ public class ArtManListParam extends PageParam {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getOneid() {
+        return oneid;
+    }
+
+    public void setOneid(int oneid) {
+        this.oneid = oneid;
+    }
+
+    public int getTowid() {
+        return towid;
+    }
+
+    public void setTowid(int towid) {
+        this.towid = towid;
     }
 }

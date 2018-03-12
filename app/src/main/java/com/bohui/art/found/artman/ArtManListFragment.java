@@ -7,20 +7,16 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
-import com.bohui.art.bean.common.ArtListResult;
 import com.bohui.art.bean.common.ArtManListParam;
-import com.bohui.art.bean.detail.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtManItemBean;
+import com.bohui.art.bean.found.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtManListResult;
-import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.mvp.ArtManListContact;
 import com.bohui.art.found.artman.mvp.ArtManListModel;
 import com.bohui.art.found.artman.mvp.ArtManListPresenter;
-import com.bohui.art.home.RecommendFragment;
-import com.bohui.art.bean.home.ArtCoverItemBean;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
@@ -30,7 +26,6 @@ import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -118,7 +113,7 @@ public class ArtManListFragment extends AbsNetBaseFragment<ArtManListPresenter,A
 
     @Override
     protected void doLoad() {
-        param.setLevel(mType.getId());
+        param.setTowid(mType.getTid());
         requestFirstPage();
     }
     private void requestFirstPage(){

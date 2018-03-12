@@ -1,5 +1,6 @@
 package com.bohui.art.bean.found;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,32 +10,41 @@ import java.util.List;
  */
 
 
-public class ArtMan2LevelBean {
-    private String art2LevelName;
-    private String art2LevelId;
-    private List<ArtManHomeItemBean> artManHomeItemBeans;
+public class ArtMan2LevelBean implements Serializable{
+    private String name;
+    private int pid;
+    private int tid;
+    private List<ArtManHomeItemBean> list;
 
-    public String getArt2LevelName() {
-        return art2LevelName;
+    public String getName() {
+        return name;
     }
 
-    public void setArt2LevelName(String art2LevelName) {
-        this.art2LevelName = art2LevelName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getArt2LevelId() {
-        return art2LevelId;
+    public int getPid() {
+        return pid;
     }
 
-    public void setArt2LevelId(String art2LevelId) {
-        this.art2LevelId = art2LevelId;
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
-    public List<ArtManHomeItemBean> getArtManHomeItemBeans() {
-        return artManHomeItemBeans;
+    public int getTid() {
+        return tid;
     }
 
-    public void setArtManHomeItemBeans(List<ArtManHomeItemBean> artManHomeItemBeans) {
-        this.artManHomeItemBeans = artManHomeItemBeans;
+    public void setTid(int tid) {
+        this.tid = tid;
+    }
+
+    public List<ArtManHomeItemBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ArtManHomeItemBean> list) {
+        this.list = list;
     }
 }

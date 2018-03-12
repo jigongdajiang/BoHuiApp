@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.vlayout.LayoutHelper;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
+import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.bohui.art.R;
 import com.bohui.art.bean.found.ArtMan2LevelBean;
 import com.bohui.art.bean.found.ArtManHomeItemBean;
@@ -52,9 +55,9 @@ public class ArtMan2LevelAdapter extends BaseAdapter<ArtMan2LevelBean> {
 
     @Override
     public void bindViewHolder(BaseViewHolder holder, ArtMan2LevelBean itemData, int position) {
-        holder.setText(R.id.tv_type_top,itemData.getArt2LevelName());
+        holder.setText(R.id.tv_type_top,itemData.getName());
         GridView gridView = holder.getView(R.id.gv_art_man_arts);
-        setGridView(gridView,itemData.getArtManHomeItemBeans());
+        setGridView(gridView,itemData.getList());
         holder.addOnClickListener(R.id.rl_art_man_2);
         holder.addOnClickListener(R.id.iv_more);
     }
@@ -65,16 +68,18 @@ public class ArtMan2LevelAdapter extends BaseAdapter<ArtMan2LevelBean> {
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity)mContext).getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;
-        int length = 60;//gridView每个item的宽度
-        int gridviewWidth = (int) (size * (length + 4) * density);
+        int length = 60;//图片的高度
+        int lrW = 30;//图片的左右间距
+        int gridItemWidth = (int) ((length + lrW) * density);//每个Item的宽度
+        int gridViewWidth = size * gridItemWidth;//GirdView的总宽度
         imgWh = (int) (length * density);
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gridView.getLayoutParams();
-        params.width = gridviewWidth;
+        params.width = gridViewWidth;
         params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
         gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
-        gridView.setColumnWidth(imgWh+100); // 设置列表项宽
-        gridView.setHorizontalSpacing(5); // 设置列表项水平间距
+        gridView.setColumnWidth(gridItemWidth); // 设置列表项宽
+        gridView.setHorizontalSpacing(1); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(size); // 设置列数量=列表集合数
 
@@ -136,10 +141,16 @@ public class ArtMan2LevelAdapter extends BaseAdapter<ArtMan2LevelBean> {
             params.height = imgWh;
             imageView.setLayoutParams(params);
             ArtManHomeItemBean artBean = list.get(position);
-            GlideUtil.displayCircle(mContext, imageView, artBean.getArtManLogo());
+            GlideUtil.displayCircle(mContext, imageView, artBean.getPhoto());
             TextView tv = convertView.findViewById(R.id.tv_des);
-            tv.setText(artBean.getArtManName());
+            tv.setText(artBean.getName());
             return convertView;
         }
+    }
+    @Override
+    public LayoutHelper onCreateLayoutHelper() {
+        LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
+        linearLayoutHelper.setMargin(0, 2,0,0);
+        return linearLayoutHelper;
     }
 }

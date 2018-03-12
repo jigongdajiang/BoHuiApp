@@ -17,18 +17,18 @@ import io.reactivex.Observable;
 
 
 public interface ArtManListContact {
-    String URL_GET_ART_MAN_LEVEL = "";
+    String URL_GET_ART_MAN_LEVEL = "artist/getTowListByOneId";
     String TAG_GET_ART_MAN_LEVEL = "tag_get_art_man_level";
     String URL_GET_ART_MAN_LIST = "artist/getArtistList";
     String TAG_GET_ART_MAN_LIST = "tag_get_art_man_list";
     interface IArtManLevelModel extends BaseModel{
-        Observable<ArtManLevelResult> getArtManLevel();
+        Observable<ArtManLevelResult> getArtManLevel(int tid);
     }
     interface IArtManLevelView extends BaseLoadingView{
         void getArtManLevelSuccess(ArtManLevelResult result);
     }
     abstract class IArtManLevelPresenter extends BasePresenter<IArtManLevelModel,IArtManLevelView>{
-        public abstract void getArtManLevel();
+        public abstract void getArtManLevel(int tid);
     }
     interface IArtManListModel extends BaseModel{
         Observable<ArtManListResult> getArtManList(ArtManListParam param);

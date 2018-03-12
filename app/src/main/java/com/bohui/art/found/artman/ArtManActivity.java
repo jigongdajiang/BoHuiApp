@@ -6,7 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.bohui.art.R;
-import com.bohui.art.bean.detail.ArtManLevelBean;
+import com.bohui.art.bean.found.ArtMan1LevelBean;
+import com.bohui.art.bean.found.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtManLevelResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
@@ -37,6 +38,15 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
     @BindView(R.id.view_pager)
     ViewPager view_pager;
     private BaseFragmentStateAdapter mAdapter;
+    public static final String ARTMAN_LEVEL1 = "artman_level1";
+    private ArtMan1LevelBean artMan1LevelBean;
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        artMan1LevelBean = (ArtMan1LevelBean) getIntent().getSerializableExtra(ARTMAN_LEVEL1);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_art_man;
@@ -45,7 +55,7 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("艺术家")
+                .setTitle(artMan1LevelBean.getName()+"-艺术家")
                 .setRightImage1(R.mipmap.ic_search)
                 .setRightImage1ClickListner(new View.OnClickListener() {
                     @Override
@@ -57,12 +67,23 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
                     }
                 })
                 .builder();
-        List<ArtManLevelBean> types = new ArrayList<>();
-        types.add(new ArtManLevelBean(1,"国家级"));
-        types.add(new ArtManLevelBean(2,"省级"));
-        types.add(new ArtManLevelBean(3,"市级"));
-        types.add(new ArtManLevelBean(4,"其它"));
-        refresh(types);
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        mPresenter.getArtManLevel(artMan1LevelBean.getTid());
+    }
+
+    @Override
+    public void getArtManLevelSuccess(ArtManLevelResult result) {
+        if(!CollectionUtil.isEmpty(result.getArtistType())){
+            refresh(result.getArtistType());
+        }
     }
     private void refresh(List<ArtManLevelBean> types) {
         List<Fragment> fragments = new ArrayList<>();
@@ -78,21 +99,5 @@ public class ArtManActivity extends AbsNetBaseActivity<ArtManLevelPresenter,ArtM
             }
             tab.setViewPager(view_pager,titles);
         }
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setMV(mModel,this);
-    }
-
-    @Override
-    protected void extraInit() {
-        //暂时写死艺术家级别
-//        mPresenter.getArtManLevel();
-    }
-
-    @Override
-    public void getArtManLevelSuccess(ArtManLevelResult result) {
-
     }
 }

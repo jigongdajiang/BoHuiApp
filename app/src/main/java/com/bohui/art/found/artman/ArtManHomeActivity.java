@@ -12,16 +12,21 @@ import com.bohui.art.bean.detail.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtMan1LevelBean;
 import com.bohui.art.bean.found.ArtMan2LevelBean;
 import com.bohui.art.bean.found.ArtManHomeItemBean;
+import com.bohui.art.bean.found.ArtManHomeResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
+import com.bohui.art.found.artman.mvp.ArtManHomeContact;
+import com.bohui.art.found.artman.mvp.ArtManHomeModel;
+import com.bohui.art.found.artman.mvp.ArtManHomePresenter;
 import com.bohui.art.home.art2.Art2Activity;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.framework.core.http.exception.ApiException;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -37,7 +42,7 @@ import butterknife.BindView;
  */
 
 
-public class ArtManHomeActivity extends AbsNetBaseActivity implements ArtMan2LevelAdapter.OnGirdItemClickListener {
+public class ArtManHomeActivity extends AbsNetBaseActivity<ArtManHomePresenter,ArtManHomeModel> implements ArtMan2LevelAdapter.OnGirdItemClickListener,ArtManHomeContact.IArtManHomeView {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout mPtrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -62,7 +67,12 @@ public class ArtManHomeActivity extends AbsNetBaseActivity implements ArtMan2Lev
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 if(adapter instanceof ArtMan1LevelAdapter){
-                    startAty(ArtManActivity.class);
+                    ArtMan1LevelBean artMan1LevelBean = ((ArtMan1LevelAdapter)adapter).getData(position);
+                    if(artMan1LevelBean != null){
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ArtManActivity.ARTMAN_LEVEL1,artMan1LevelBean);
+                        startAty(ArtManActivity.class,bundle);
+                    }
                 }
             }
 
@@ -75,9 +85,8 @@ public class ArtManHomeActivity extends AbsNetBaseActivity implements ArtMan2Lev
                             //进入二级列表
                             ArtMan2LevelAdapter artMan2LevelAdapter = (ArtMan2LevelAdapter) adapter;
                             ArtMan2LevelBean artMan2LevelBean = artMan2LevelAdapter.getData(position);
-                            ArtManLevelBean artManLevelBean = new ArtManLevelBean(1,artMan2LevelBean.getArt2LevelName());
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable(ArtMan2LevelActivity.TYPE,artManLevelBean);
+                            bundle.putSerializable(ArtMan2LevelActivity.TYPE,artMan2LevelBean);
                             startAty(ArtMan2LevelActivity.class,bundle);
                             break;
                     }
@@ -92,43 +101,60 @@ public class ArtManHomeActivity extends AbsNetBaseActivity implements ArtMan2Lev
         });
     }
 
+    @Override
+    public void initPresenter() {
+        super.initPresenter();
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
+    protected void extraInit() {
+        super.extraInit();
+        doLoad();
+    }
+
     private void doLoad() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        mPtrClassicFrameLayout.refreshComplete();
-        List<ArtMan1LevelBean> artMan1LevelBeans = new ArrayList<>();
-        for(int i=0;i<5;i++){
-            ArtMan1LevelBean artMan1LevelBean = new ArtMan1LevelBean();
-            artMan1LevelBean.setArtManLevel1Name("国画"+i);
-            List<ArtMan2LevelBean> artMan2LevelBeans = new ArrayList<>();
-            for(int j=0;j<6;j++){
-                ArtMan2LevelBean artMan2LevelBean = new ArtMan2LevelBean();
-                artMan2LevelBean.setArt2LevelName("国画二级"+j);
-                List<ArtManHomeItemBean> artManHomeItemBeans = new ArrayList<>();
-                for(int k=0;k<6;k++){
-                    ArtManHomeItemBean artManHomeItemBean = new ArtManHomeItemBean();
-                    artManHomeItemBean.setArtManName("艺术家"+k);
-                    artManHomeItemBean.setArtManLogo("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520692122633&di=cc5b7f965a2866675b19542b90736e70&imgtype=0&src=http%3A%2F%2Fpic11.nipic.com%2F20101107%2F1951702_172652019701_2.jpg");
-                    artManHomeItemBeans.add(artManHomeItemBean);
-                }
-                artMan2LevelBean.setArtManHomeItemBeans(artManHomeItemBeans);
-                artMan2LevelBeans.add(artMan2LevelBean);
-            }
-            artMan1LevelBean.setArtMan2LevelBeans(artMan2LevelBeans);
-            artMan1LevelBeans.add(artMan1LevelBean);
-        }
+        mPresenter.getArtManHome();
+    }
+
+    private void refreshView(List<ArtMan1LevelBean> artMan1LevelBeans) {
         List<DelegateAdapter.Adapter> adapters = new ArrayList<>();
         for (ArtMan1LevelBean artMan1LevelBean : artMan1LevelBeans) {
-            ArtMan1LevelAdapter artMan1LevelAdapter = new ArtMan1LevelAdapter(mContext,artMan1LevelBean);
-            adapters.add(artMan1LevelAdapter);
-            ArtMan2LevelAdapter artMan2LevelAdapter = new ArtMan2LevelAdapter(mContext,artMan1LevelBean.getArtMan2LevelBeans());
-            artMan2LevelAdapter.setOnGirdItemClickListener(this);
-            adapters.add(artMan2LevelAdapter);
+            if(hasData(artMan1LevelBean)){
+                //有二级列表，且二级列表中有数据
+                ArtMan1LevelAdapter artMan1LevelAdapter = new ArtMan1LevelAdapter(mContext,artMan1LevelBean);
+                adapters.add(artMan1LevelAdapter);
+                List<ArtMan2LevelBean> artMan2LevelBeans = filterArtMan2Level(artMan1LevelBean);
+                if(!CollectionUtil.isEmpty(artMan2LevelBeans)){
+                    ArtMan2LevelAdapter artMan2LevelAdapter = new ArtMan2LevelAdapter(mContext,artMan2LevelBeans);
+                    artMan2LevelAdapter.setOnGirdItemClickListener(this);
+                    adapters.add(artMan2LevelAdapter);
+                }
+            }
         }
         delegateAdapter.setAdapters(adapters);
+    }
+
+    private List<ArtMan2LevelBean> filterArtMan2Level(ArtMan1LevelBean artMan1LevelBean) {
+        List<ArtMan2LevelBean> artMan2LevelBeans = new ArrayList<>();
+        for (ArtMan2LevelBean artMan2LevelBean : artMan1LevelBean.getList()) {
+            if(artMan2LevelBean != null && !CollectionUtil.isEmpty(artMan2LevelBean.getList())){
+                artMan2LevelBeans.add(artMan2LevelBean);
+            }
+        }
+        return artMan2LevelBeans;
+    }
+
+    private boolean hasData(ArtMan1LevelBean artMan1LevelBean) {
+        if(CollectionUtil.isEmpty(artMan1LevelBean.getList())){
+            return false;
+        }
+        for (ArtMan2LevelBean artMan2LevelBean : artMan1LevelBean.getList()) {
+            if(!CollectionUtil.isEmpty(artMan2LevelBean.getList())){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -139,6 +165,14 @@ public class ArtManHomeActivity extends AbsNetBaseActivity implements ArtMan2Lev
 
     @Override
     public void girdItemClick(ArtManHomeItemBean itemBean) {
-        ArtManDetailActivity.comeIn(ArtManHomeActivity.this,12);
+        ArtManDetailActivity.comeIn(ArtManHomeActivity.this,itemBean.getAid());
+    }
+
+    @Override
+    public void getArtManHomeSuccess(ArtManHomeResult artManHomeResult) {
+        mPtrClassicFrameLayout.refreshComplete();
+        if(!CollectionUtil.isEmpty(artManHomeResult.getArtistList())){
+            refreshView(artManHomeResult.getArtistList());
+        }
     }
 }

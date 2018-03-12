@@ -12,8 +12,8 @@ import com.bohui.art.common.net.AppProgressSubScriber;
 
 public class ArtManLevelPresenter extends ArtManListContact.IArtManLevelPresenter {
     @Override
-    public void getArtManLevel() {
-        mRxManage.add(mModel.getArtManLevel().subscribeWith(new AppProgressSubScriber<ArtManLevelResult>(mView,ArtManListContact.TAG_GET_ART_MAN_LEVEL,mView) {
+    public void getArtManLevel(int tid) {
+        mRxManage.add(mModel.getArtManLevel(tid).subscribeWith(new AppProgressSubScriber<ArtManLevelResult>(mView,ArtManListContact.TAG_GET_ART_MAN_LEVEL,mView) {
             @Override
             protected void onResultSuccess(ArtManLevelResult result) {
                 mView.getArtManLevelSuccess(result);

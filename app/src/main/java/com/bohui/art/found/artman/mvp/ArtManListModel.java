@@ -20,6 +20,8 @@ public class ArtManListModel implements ArtManListContact.IArtManListModel {
                 .params("start",String.valueOf(param.getStart()))
                 .params("length",String.valueOf(param.getLength()))
                 .params("level",String.valueOf(param.getLevel()))
+                .params("oneid",String.valueOf(param.getOneid()))
+                .params("towid",String.valueOf(param.getTowid()))
                 .params("name",param.getName())
                 .execute(ArtManListResult.class);
     }

@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/sys_color_content_bg">
     <RelativeLayout
         android:id="@+id/rl_art_man_2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:background="@color/sys_color_bg">
+        android:layout_height="@dimen/dp_40">
         <View
             android:id="@+id/v_div"
             android:layout_width="5dp"
@@ -27,6 +27,8 @@
             android:text="国画"/>
 
     </RelativeLayout>
+    <View
+        style="@style/divider_line_full_hor"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +36,7 @@
         >
         <HorizontalScrollView
             android:id="@+id/hsv_arts"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/sys_margin"
             android:layout_toLeftOf="@+id/iv_more"

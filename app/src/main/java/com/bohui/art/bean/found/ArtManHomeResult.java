@@ -10,13 +10,20 @@ import java.util.List;
 
 
 public class ArtManHomeResult {
-    private List<ArtMan1LevelBean> artMan1LevelBeans;
+    private List<ArtMan1LevelBean> artistList;
 
-    public List<ArtMan1LevelBean> getArtMan1LevelBeans() {
-        return artMan1LevelBeans;
+    public List<ArtMan1LevelBean> getArtistList() {
+        return artistList;
     }
 
-    public void setArtMan1LevelBeans(List<ArtMan1LevelBean> artMan1LevelBeans) {
-        this.artMan1LevelBeans = artMan1LevelBeans;
+    public void setArtistList(List<ArtMan1LevelBean> artistList) {
+        this.artistList = artistList;
+    }
+
+    @Override
+    public String toString() {
+        return "ArtManHomeResult{" +
+                "artistList=" + artistList +
+                '}';
     }
 }

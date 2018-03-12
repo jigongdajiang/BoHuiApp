@@ -1,5 +1,7 @@
 package com.bohui.art.bean.found;
 
+import java.io.Serializable;
+
 /**
  * @author : gaojigong
  * @date : 2018/3/10
@@ -7,32 +9,32 @@ package com.bohui.art.bean.found;
  */
 
 
-public class ArtManHomeItemBean {
-    private String artManLogo;
-    private String artManName;
-    private int artManId;
+public class ArtManHomeItemBean implements Serializable{
+    private String name;
+    private String photo;
+    private long aid;
 
-    public String getArtManLogo() {
-        return artManLogo;
+    public String getName() {
+        return name;
     }
 
-    public void setArtManLogo(String artManLogo) {
-        this.artManLogo = artManLogo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getArtManName() {
-        return artManName;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setArtManName(String artManName) {
-        this.artManName = artManName;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public int getArtManId() {
-        return artManId;
+    public long getAid() {
+        return aid;
     }
 
-    public void setArtManId(int artManId) {
-        this.artManId = artManId;
+    public void setAid(long aid) {
+        this.aid = aid;
     }
 }
