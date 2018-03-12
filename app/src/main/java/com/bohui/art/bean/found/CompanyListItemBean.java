@@ -1,5 +1,7 @@
 package com.bohui.art.bean.found;
 
+import java.io.Serializable;
+
 /**
  * @author : gaojigong
  * @date : 2018/3/10
@@ -7,18 +9,18 @@ package com.bohui.art.bean.found;
  */
 
 
-public class CompanyListItemBean {
-    private long id;
+public class CompanyListItemBean implements Serializable{
+    private int mid;
     private String name;
-    private int nums;
+    private int num;
     private String logo;
 
-    public long getId() {
-        return id;
+    public int getMid() {
+        return mid;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setMid(int mid) {
+        this.mid = mid;
     }
 
     public String getName() {
@@ -29,12 +31,12 @@ public class CompanyListItemBean {
         this.name = name;
     }
 
-    public int getNums() {
-        return nums;
+    public int getNum() {
+        return num;
     }
 
-    public void setNums(int nums) {
-        this.nums = nums;
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public String getLogo() {

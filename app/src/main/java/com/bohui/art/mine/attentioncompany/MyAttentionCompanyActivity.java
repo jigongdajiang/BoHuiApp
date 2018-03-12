@@ -1,4 +1,4 @@
-package com.bohui.art.found.company;
+package com.bohui.art.mine.attentioncompany;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,16 +6,21 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
-import com.bohui.art.bean.common.PageParam;
 import com.bohui.art.bean.found.CompanyListItemBean;
 import com.bohui.art.bean.found.CompanyListResult;
+import com.bohui.art.bean.mine.MyAttentionCompanyResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.comapny.CompanyDetailActivity;
-import com.bohui.art.found.company.mvp.CompanyContact;
-import com.bohui.art.found.company.mvp.CompanyModel;
-import com.bohui.art.found.company.mvp.CompanyPresenter;
+import com.bohui.art.found.artman.ArtManListAdapter;
+import com.bohui.art.found.company.CompanyListActivity;
+import com.bohui.art.found.company.CompanyListAdapter;
+import com.bohui.art.mine.attentioncompany.mvp.MyAttentionCompanyContact;
+import com.bohui.art.mine.attentioncompany.mvp.MyAttentionCompanyModel;
+import com.bohui.art.mine.attentioncompany.mvp.MyAttentionCompanyPresenter;
+import com.bohui.art.mine.collect.mvp.MyCollectParam;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
@@ -32,30 +37,29 @@ import butterknife.BindView;
 
 /**
  * @author : gaojigong
- * @date : 2018/3/10
+ * @date : 2018/3/12
  * @description:
- * 机构列表
  */
 
 
-public class CompanyListActivity extends AbsNetBaseActivity<CompanyPresenter,CompanyModel> implements CompanyContact.ICompanyView {
+public class MyAttentionCompanyActivity extends AbsNetBaseActivity<MyAttentionCompanyPresenter,MyAttentionCompanyModel> implements MyAttentionCompanyContact.View {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
     RecyclerView rv;
+    private CompanyListAdapter companyListAdapter;
+    MyCollectParam param = new MyCollectParam();
     private boolean isRefresh;
     private boolean isRequesting;
-    private CompanyListAdapter companyListAdapter;
-    private PageParam param = new PageParam();
     @Override
     public int getLayoutId() {
-        return R.layout.activity_company_list;
+        return R.layout.layout_refresh_rv;
     }
 
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("机构列表")
+                .setTitle("我关注的艺术机构")
                 .builder();
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
@@ -72,8 +76,9 @@ public class CompanyListActivity extends AbsNetBaseActivity<CompanyPresenter,Com
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                CompanyListItemBean companyListItemBean = (CompanyListItemBean) adapter.getData(position);
-                CompanyDetailActivity.comeIn(CompanyListActivity.this,companyListItemBean.getMid());
+                CompanyListAdapter companyListAdapter = (CompanyListAdapter) adapter;
+                CompanyListItemBean companyListItemBean = companyListAdapter.getData(position);
+                CompanyDetailActivity.comeIn(MyAttentionCompanyActivity.this,companyListItemBean.getMid());
             }
         });
         ptrClassicFrameLayout.setAutoLoadMoreEnable(false);
@@ -91,16 +96,14 @@ public class CompanyListActivity extends AbsNetBaseActivity<CompanyPresenter,Com
             }
         });
     }
-
     @Override
     public void initPresenter() {
-        super.initPresenter();
         mPresenter.setMV(mModel,this);
     }
-
     @Override
     protected void extraInit() {
         super.extraInit();
+        param.setUid(AppFuntion.getUid());
         requestFirstPage();
     }
 
@@ -117,7 +120,7 @@ public class CompanyListActivity extends AbsNetBaseActivity<CompanyPresenter,Com
 
     private void request() {
         if(!isRequesting){
-            mPresenter.getCompanyList(param);
+            mPresenter.getMyAttentionCompany(param);
             isRequesting = true;
         }
     }
@@ -134,33 +137,33 @@ public class CompanyListActivity extends AbsNetBaseActivity<CompanyPresenter,Com
         return super.childInterceptException(apiName, e);
     }
 
+
+
     @Override
-    public void getCompanyListSuccess(CompanyListResult result) {
+    public void getMyAttentionCompanySuccess(MyAttentionCompanyResult result) {
         isRequesting = false;
-        if(!CollectionUtil.isEmpty(result.getMechanismList())){
-            List<CompanyListItemBean> list = result.getMechanismList();
-            if(isRefresh){
-                ptrClassicFrameLayout.refreshComplete();
-                if(!CollectionUtil.isEmpty(list)){
-                    companyListAdapter.replaceAllItem(list);
-                    if(list.size() >= param.getLength()){
-                        ptrClassicFrameLayout.setLoadMoreEnable(true);
-                    }else{
-                        ptrClassicFrameLayout.setLoadMoreEnable(false);
-                    }
+        List<CompanyListItemBean> list = result.getListItemBeans();
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+            if(!CollectionUtil.isEmpty(list)){
+                companyListAdapter.replaceAllItem(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.setLoadMoreEnable(true);
                 }else{
                     ptrClassicFrameLayout.setLoadMoreEnable(false);
                 }
             }else{
-                if(CollectionUtil.isEmpty(list)){
-                    ptrClassicFrameLayout.loadMoreComplete(false);
+                ptrClassicFrameLayout.setLoadMoreEnable(false);
+            }
+        }else{
+            if(CollectionUtil.isEmpty(list)){
+                ptrClassicFrameLayout.loadMoreComplete(false);
+            }else{
+                companyListAdapter.addItems(list);
+                if(list.size() >= param.getLength()){
+                    ptrClassicFrameLayout.loadMoreComplete(true);
                 }else{
-                    companyListAdapter.addItems(list);
-                    if(list.size() >= param.getLength()){
-                        ptrClassicFrameLayout.loadMoreComplete(true);
-                    }else{
-                        ptrClassicFrameLayout.loadMoreComplete(false);
-                    }
+                    ptrClassicFrameLayout.loadMoreComplete(false);
                 }
             }
         }

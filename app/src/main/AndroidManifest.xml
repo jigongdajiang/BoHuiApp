@@ -172,6 +172,9 @@
         <!-- 机构作品列表 -->
         <activity android:name=".detail.comapny.CompanyArtListActivity"
             android:screenOrientation="portrait"/>
+        <!-- 我关注的艺术机构 -->
+        <activity android:name=".mine.attentioncompany.MyAttentionCompanyActivity"
+            android:screenOrientation="portrait"/>
         <!-- ThinkerResultService -->
         <service
             android:name="com.framework.core.thinker.service.SampleResultService"

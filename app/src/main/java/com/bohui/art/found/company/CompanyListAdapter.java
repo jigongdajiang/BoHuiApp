@@ -43,6 +43,6 @@ public class CompanyListAdapter extends BaseAdapter<CompanyListItemBean> {
         ImageView iv = holder.getView(R.id.iv_company);
         GlideUtil.display(mContext,iv,itemData.getLogo());
         holder.setText(R.id.tv_company_name,itemData.getName());
-        holder.setText(R.id.tv_product_num,"作品("+itemData.getNums()+")");
+        holder.setText(R.id.tv_product_num,"作品("+itemData.getNum()+")");
     }
 }

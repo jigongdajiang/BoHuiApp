@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.detail.CAResult;
+import com.bohui.art.bean.detail.CompanyAttentionResult;
 import com.bohui.art.bean.detail.CompanyDetailResult;
 import com.bohui.art.bean.detail.ShowreelBean;
 import com.bohui.art.bean.home.ArtItemBean;
@@ -23,6 +25,9 @@ import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.detail.artman.adapter.ShowreelAdapter;
 import com.bohui.art.detail.comapny.adapter.DetailAdapter;
 import com.bohui.art.detail.comapny.adapter.IntroAdapter;
+import com.bohui.art.detail.comapny.mvp.CompanyDetailContact;
+import com.bohui.art.detail.comapny.mvp.CompanyDetailModel;
+import com.bohui.art.detail.comapny.mvp.CompanyDetailPresenter;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.start.MainActivity;
 import com.bohui.art.start.login.LoginActivity;
@@ -46,7 +51,7 @@ import io.reactivex.functions.Consumer;
  */
 
 
-public class CompanyDetailActivity extends AbsNetBaseActivity {
+public class CompanyDetailActivity extends AbsNetBaseActivity<CompanyDetailPresenter,CompanyDetailModel> implements CompanyDetailContact.ICompanyDetailView {
     @BindView(R.id.segment_tab)
     SegmentTabLayout segment_tab;
     @BindView(R.id.iv_back)
@@ -61,14 +66,14 @@ public class CompanyDetailActivity extends AbsNetBaseActivity {
 
     private int dbzPosition = 1;
     private int jnPosition = 1;
-    private long aid;
+    private int aid;
     private int isfouce;//0未关注，1已关注
     private DetailAdapter detailAdapter;
     public static final String COMPANY_ID = "company_id";
-    public static void comeIn(Activity activity, long aid){
+    public static void comeIn(Activity activity, int aid){
         Intent intent = new Intent(activity,CompanyDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putLong(COMPANY_ID,aid);
+        bundle.putInt(COMPANY_ID,aid);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }
@@ -76,7 +81,7 @@ public class CompanyDetailActivity extends AbsNetBaseActivity {
     @Override
     protected void doBeforeSetContentView() {
         super.doBeforeSetContentView();
-        aid = getIntent().getLongExtra(COMPANY_ID,0);
+        aid = getIntent().getIntExtra(COMPANY_ID,0);
     }
 
     @Override
@@ -103,39 +108,23 @@ public class CompanyDetailActivity extends AbsNetBaseActivity {
     }
 
     @Override
+    public void initPresenter() {
+        super.initPresenter();
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
     protected void extraInit() {
         super.extraInit();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CompanyDetailResult detailResult = new CompanyDetailResult();
-        detailResult.setId(1);
-        detailResult.setLogo("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520704210497&di=5d4bdbcc149d50a8714f6c4b65acbc62&imgtype=0&src=http%3A%2F%2Fdealer0.autoimg.cn%2Fdl%2F125117%2Fnewsimg%2F130492619601208820.jpg");
-        detailResult.setAddress("北京市海淀区");
-        detailResult.setDes("艺术是生命之光");
-        detailResult.setIsAttention(1);
-        detailResult.setName("牛逼机构");
-        detailResult.setNum(23);
-        detailResult.setDetail(ResUtil.getResString(mContext,R.string.temp_jianjie));
-        List<ArtItemBean> artItemBeanList = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            ArtItemBean artItemBean = new ArtItemBean();
-            artItemBean.setAid(1);
-            artItemBean.setId(12);
-            artItemBean.setLookNum(12);
-            artItemBean.setCover("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520704210497&di=5d4bdbcc149d50a8714f6c4b65acbc62&imgtype=0&src=http%3A%2F%2Fdealer0.autoimg.cn%2Fdl%2F125117%2Fnewsimg%2F130492619601208820.jpg");
-            artItemBean.setSalePrice(100.00);
-            artItemBean.setName("山水文园");
-            artItemBean.setSize("12cm*12cm");
-            artItemBeanList.add(artItemBean);
-        }
-        detailResult.setArtItemBeans(artItemBeanList);
+        mPresenter.getCompanyDetail(AppFuntion.getUid(),aid);
+    }
+
+    @Override
+    public void getCompanyDetailSuccess(final CompanyDetailResult detailResult) {
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
-        isfouce = detailResult.getIsAttention();
+        isfouce = detailResult.getIsfollow();
 
         //简介 0
         detailAdapter = new DetailAdapter(mContext,detailResult);
@@ -146,7 +135,7 @@ public class CompanyDetailActivity extends AbsNetBaseActivity {
         delegateAdapter.addAdapter(detailGuideAdapter);
         dbzPosition = 1;
         //代表作列表 2
-        Art2Adapter art2Adapter = new Art2Adapter(mContext,detailResult.getArtItemBeans());
+        Art2Adapter art2Adapter = new Art2Adapter(mContext,detailResult.getList());
         delegateAdapter.addAdapter(art2Adapter);
         //机构描述导航
         jnPosition = art2Adapter.getItemCount() + dbzPosition +1;
@@ -223,7 +212,9 @@ public class CompanyDetailActivity extends AbsNetBaseActivity {
                     //进入机构作品列表页
                     String des = ((DetailGuideAdapter)adapter).getData(position);
                     if("代表作".equals(des)){
-                        startAty(CompanyArtListActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(CompanyArtListActivity.TYPE,detailResult);
+                        startAty(CompanyArtListActivity.class,bundle);
                     }
                 }
             }
@@ -238,11 +229,32 @@ public class CompanyDetailActivity extends AbsNetBaseActivity {
                     }
                     if(isfouce == 0){
                         //未关注，则为关注
+                        mPresenter.attentionCompany(AppFuntion.getUid(),aid,1);
                     }else {
                         //已关注，则为取消关注
+                        mPresenter.attentionCompany(AppFuntion.getUid(),aid,2);
                     }
                 }
             }
         });
+    }
+
+    @Override
+    public void attentionCompanySuccess(CompanyAttentionResult result) {
+        if(isfouce == 0){
+            //关注的结果
+            if(result.getIs() == 1){
+                showMsgDialg("关注成功");
+                isfouce = 1;
+                detailAdapter.changeAttentionText(isfouce);
+            }
+        }else{
+            //取消关注的结果
+            if(result.getIs() == 1){
+                showMsgDialg("取消关注成功");
+                isfouce = 0;
+                detailAdapter.changeAttentionText(isfouce);
+            }
+        }
     }
 }

@@ -10,13 +10,13 @@ import java.util.List;
 
 
 public class CompanyListResult {
-    private List<CompanyListItemBean> list;
+    private List<CompanyListItemBean> mechanismList;
 
-    public List<CompanyListItemBean> getList() {
-        return list;
+    public List<CompanyListItemBean> getMechanismList() {
+        return mechanismList;
     }
 
-    public void setList(List<CompanyListItemBean> list) {
-        this.list = list;
+    public void setMechanismList(List<CompanyListItemBean> mechanismList) {
+        this.mechanismList = mechanismList;
     }
 }

@@ -48,10 +48,10 @@ public class DetailAdapter extends BaseAdapter<CompanyDetailResult> {
         //地址
         holder.setText(R.id.tv_fans_num,"地址:  "+itemData.getAddress());
         //艺术格言
-        holder.setText(R.id.tv_intro,itemData.getDes());
+        holder.setText(R.id.tv_intro,itemData.getDesc());
         //是否关注
         tv_attention = holder.getView(R.id.tv_attention);
-        changeAttentionText(itemData.getIsAttention());
+        changeAttentionText(itemData.getIsfollow());
         holder.addOnClickListener(R.id.tv_attention);
     }
     private TextView tv_attention;

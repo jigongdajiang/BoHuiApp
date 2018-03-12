@@ -1,5 +1,7 @@
 package com.bohui.art.bean.home;
 
+import java.io.Serializable;
+
 /**
  * @author : gaojigong
  * @date : 2018/1/20
@@ -8,7 +10,7 @@ package com.bohui.art.bean.home;
  */
 
 
-public class ArtItemBean {
+public class ArtItemBean implements Serializable {
     private long id;
     private long aid;//有时候是aid
     private String name;

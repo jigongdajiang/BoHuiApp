@@ -15,6 +15,7 @@ import com.bohui.art.found.GuideItemBean;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.mine.accountedit.AccountEditActivity;
 import com.bohui.art.mine.attention.MyAttentionActivity;
+import com.bohui.art.mine.attentioncompany.MyAttentionCompanyActivity;
 import com.bohui.art.mine.collect.MyCollectActivity;
 import com.bohui.art.mine.mvp.MineContact;
 import com.bohui.art.mine.mvp.MineModel;
@@ -63,16 +64,18 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
         GuideItemAdapter foundItemAdapter = new GuideItemAdapter(mContext);
         List<GuideItemBean> guideItemBeans = new ArrayList<>();
 
-        GuideItemBean collectItem = new GuideItemBean("我的收藏",R.mipmap.ic_collect,0,R.dimen.dp_10);
+        GuideItemBean collectItem = new GuideItemBean("我收藏的艺术品",R.mipmap.ic_collect,0,R.dimen.dp_10);
         guideItemBeans.add(collectItem);
 
-        GuideItemBean attentionItem = new GuideItemBean("我的关注",R.mipmap.ic_attention,1,R.dimen.dp_1);
+        GuideItemBean attentionItem = new GuideItemBean("我关注的艺术家",R.mipmap.ic_attention,1,R.dimen.dp_1);
         guideItemBeans.add(attentionItem);
+        GuideItemBean attentionCompanyItem = new GuideItemBean("我关注的艺术机构",R.mipmap.ic_attention,2,R.dimen.dp_1);
+        guideItemBeans.add(attentionCompanyItem);
 
-        GuideItemBean customizationItem = new GuideItemBean("我的定制",R.mipmap.ic_mine_customization,2,R.dimen.dp_1);
+        GuideItemBean customizationItem = new GuideItemBean("我的定制",R.mipmap.ic_mine_customization,3,R.dimen.dp_1);
         guideItemBeans.add(customizationItem);
 
-        GuideItemBean settingItem = new GuideItemBean("设置",R.mipmap.ic_setting,3,R.dimen.dp_1);
+        GuideItemBean settingItem = new GuideItemBean("设置",R.mipmap.ic_setting,4,R.dimen.dp_1);
         guideItemBeans.add(settingItem);
         for(GuideItemBean itemBean : guideItemBeans){
             itemBean.setRightArrowResId(R.mipmap.ic_right_more);
@@ -104,9 +107,12 @@ public class MineFragment extends AbsMianFragment<MinePresenter,MineModel> imple
                             ((BaseHelperUtil)mHelperUtil).startAty(MyAttentionActivity.class);
                             break;
                         case 2:
-                            ((BaseHelperUtil)mHelperUtil).startAty(MyOrderActivity.class);
+                            ((BaseHelperUtil)mHelperUtil).startAty(MyAttentionCompanyActivity.class);
                             break;
                         case 3:
+                            ((BaseHelperUtil)mHelperUtil).startAty(MyOrderActivity.class);
+                            break;
+                        case 4:
                             ((BaseHelperUtil)mHelperUtil).startAty(SettingActivity.class);
                             break;
                     }

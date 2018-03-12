@@ -7,19 +7,29 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.bohui.art.R;
+import com.bohui.art.bean.common.CompanyArtListParam;
+import com.bohui.art.bean.detail.CompanyArtListResult;
+import com.bohui.art.bean.detail.CompanyDetailResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
+import com.bohui.art.common.app.AppFuntion;
 import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
 import com.bohui.art.detail.art.ArtDetailActivity;
+import com.bohui.art.detail.comapny.mvp.CompanyArtListContact;
+import com.bohui.art.detail.comapny.mvp.CompanyArtListModel;
+import com.bohui.art.detail.comapny.mvp.CompanyArtListPresenter;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.home.art2.Art2Activity;
 import com.bohui.art.search.SearchActivity;
+import com.bohui.art.start.login.LoginActivity;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.framework.core.base.BaseHelperUtil;
+import com.framework.core.http.exception.ApiException;
+import com.framework.core.util.CollectionUtil;
 import com.widget.grecycleview.adapter.base.BaseAdapter;
 import com.widget.grecycleview.listener.RvClickListenerIml;
 
@@ -35,7 +45,7 @@ import butterknife.BindView;
  */
 
 
-public class CompanyArtListActivity extends AbsNetBaseActivity {
+public class CompanyArtListActivity extends AbsNetBaseActivity<CompanyArtListPresenter,CompanyArtListModel> implements CompanyArtListContact.View {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -43,13 +53,15 @@ public class CompanyArtListActivity extends AbsNetBaseActivity {
     public static final String TYPE = "TYPE";
     private boolean isRefresh;
     private boolean isRequesting;
-    private long companyId;
     private Art2Adapter art2Adapter;
+    private CompanyDetailResult companyDetail;
+
+    private CompanyArtListParam param = new CompanyArtListParam();
 
     @Override
     protected void doBeforeSetContentView() {
         super.doBeforeSetContentView();
-        companyId = getIntent().getLongExtra(TYPE,0);
+        companyDetail = (CompanyDetailResult) getIntent().getSerializableExtra(TYPE);
     }
 
     @Override
@@ -60,7 +72,7 @@ public class CompanyArtListActivity extends AbsNetBaseActivity {
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("XXX机构作品列表")
+                .setTitle(companyDetail.getName()+"作品列表")
                 .setRightImage1(R.mipmap.ic_search)
                 .setRightImage1ClickListner(new View.OnClickListener() {
                     @Override
@@ -88,7 +100,11 @@ public class CompanyArtListActivity extends AbsNetBaseActivity {
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
                 if(itemBean != null){
-                    ArtDetailActivity.comeIn(CompanyArtListActivity.this,itemBean.getAid());
+                    if(AppFuntion.isLogin()){
+                        ArtDetailActivity.comeIn(CompanyArtListActivity.this,itemBean.getAid());
+                    }else{
+                        startAty(LoginActivity.class);
+                    }
                 }
             }
         });
@@ -109,22 +125,75 @@ public class CompanyArtListActivity extends AbsNetBaseActivity {
     }
 
     @Override
+    public void initPresenter() {
+        super.initPresenter();
+        mPresenter.setMV(mModel,this);
+    }
+
+    @Override
     protected void extraInit() {
         super.extraInit();
-
+        param.setMid(companyDetail.getMid());
+        requestFirstPage();
     }
 
     private void requestFirstPage(){
         isRefresh = true;
+        param.setStart(0);
         request();
     }
     private void requestNextPage(){
         isRefresh = false;
+        param.setStart(param.getStart()+param.getLength());
         request();
     }
     private void request() {
         if(!isRequesting){
+            mPresenter.getCompanyArtList(param);
             isRequesting = true;
+        }
+    }
+    @Override
+    protected boolean childInterceptException(String apiName, ApiException e) {
+        isRequesting = false;
+        if(isRefresh){
+            ptrClassicFrameLayout.refreshComplete();
+        }else{
+            ptrClassicFrameLayout.setLoadMoreEnable(false);
+            ptrClassicFrameLayout.loadMoreComplete(false);
+        }
+        return super.childInterceptException(apiName, e);
+    }
+
+    @Override
+    public void getCompanyArtListSuccess(CompanyArtListResult result) {
+        isRequesting = false;
+        List<ArtItemBean> list = result.getMechanismList();
+        if(!CollectionUtil.isEmpty(list)){
+            if(isRefresh){
+                ptrClassicFrameLayout.refreshComplete();
+                if(!CollectionUtil.isEmpty(list)){
+                    art2Adapter.replaceAllItem(list);
+                    if(list.size() >= param.getLength()){
+                        ptrClassicFrameLayout.setLoadMoreEnable(true);
+                    }else{
+                        ptrClassicFrameLayout.setLoadMoreEnable(false);
+                    }
+                }else{
+                    ptrClassicFrameLayout.setLoadMoreEnable(false);
+                }
+            }else{
+                if(CollectionUtil.isEmpty(list)){
+                    ptrClassicFrameLayout.loadMoreComplete(false);
+                }else{
+                    art2Adapter.addItems(list);
+                    if(list.size() >= param.getLength()){
+                        ptrClassicFrameLayout.loadMoreComplete(true);
+                    }else{
+                        ptrClassicFrameLayout.loadMoreComplete(false);
+                    }
+                }
+            }
         }
     }
 }
