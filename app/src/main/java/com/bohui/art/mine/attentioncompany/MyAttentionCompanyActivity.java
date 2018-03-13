@@ -142,7 +142,7 @@ public class MyAttentionCompanyActivity extends AbsNetBaseActivity<MyAttentionCo
     @Override
     public void getMyAttentionCompanySuccess(MyAttentionCompanyResult result) {
         isRequesting = false;
-        List<CompanyListItemBean> list = result.getListItemBeans();
+        List<CompanyListItemBean> list = result.getMechanismList();
         if(isRefresh){
             ptrClassicFrameLayout.refreshComplete();
             if(!CollectionUtil.isEmpty(list)){

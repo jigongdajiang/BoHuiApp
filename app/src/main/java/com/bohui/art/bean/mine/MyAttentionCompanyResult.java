@@ -12,13 +12,13 @@ import java.util.List;
 
 
 public class MyAttentionCompanyResult {
-    private List<CompanyListItemBean> listItemBeans;
+    private List<CompanyListItemBean> mechanismList;
 
-    public List<CompanyListItemBean> getListItemBeans() {
-        return listItemBeans;
+    public List<CompanyListItemBean> getMechanismList() {
+        return mechanismList;
     }
 
-    public void setListItemBeans(List<CompanyListItemBean> listItemBeans) {
-        this.listItemBeans = listItemBeans;
+    public void setMechanismList(List<CompanyListItemBean> mechanismList) {
+        this.mechanismList = mechanismList;
     }
 }

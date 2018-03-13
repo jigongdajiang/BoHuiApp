@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.bohui.art.R;
+import com.bohui.art.bean.found.ArtManHomeItemBean;
 import com.bohui.art.bean.found.ArtManItemArtBean;
 import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.found.ArtManListResult;
@@ -87,6 +89,8 @@ public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
         holder.setText(R.id.tv_art_number,"作品: "+itemData.getPaintingNum());
         //粉丝
         holder.setText(R.id.tv_art_fans,"粉丝: "+itemData.getFollowNum());
+        //添加点击事件
+        holder.addOnClickListener(R.id.rl_art_man_top);
         //作品集列表
         GlideUtil.displayCircle(mContext, ivAvr,itemData.getPhoto());
         GridView gridView = holder.getView(R.id.gv_art_man_arts);
@@ -96,7 +100,7 @@ public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
     private int imgWh = 0;//要动态指定ImageView的高度
 
     /**设置GirdView参数，绑定数据*/
-    private void setGridView(GridView gridView,List<ArtManItemArtBean> artBeans) {
+    private void setGridView(GridView gridView,final List<ArtManItemArtBean> artBeans) {
         int size = artBeans.size();
         int length = 100;//gridView每个item的宽度
         DisplayMetrics dm = new DisplayMetrics();
@@ -117,6 +121,15 @@ public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
         GridViewAdapter adapter = new GridViewAdapter(mContext,
                 artBeans);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(mOnGirdItemClickListener != null){
+                    ArtManItemArtBean itemBean = artBeans.get(position);
+                    mOnGirdItemClickListener.girdItemClick(itemBean);
+                }
+            }
+        });
     }
 
     /**GirdView 数据适配器*/
@@ -164,5 +177,15 @@ public class ArtManListAdapter extends BaseAdapter<ArtManItemBean> {
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         linearLayoutHelper.setDividerHeight(10);
         return linearLayoutHelper;
+    }
+
+    private OnGirdItemClickListener mOnGirdItemClickListener;
+
+    public void setOnGirdItemClickListener(OnGirdItemClickListener onGirdItemClickListener) {
+        this.mOnGirdItemClickListener = onGirdItemClickListener;
+    }
+
+    public interface OnGirdItemClickListener{
+        void girdItemClick(ArtManItemArtBean itemBean);
     }
 }

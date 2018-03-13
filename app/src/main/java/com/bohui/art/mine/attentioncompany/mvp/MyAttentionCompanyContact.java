@@ -16,7 +16,7 @@ import io.reactivex.Observable;
 
 
 public interface MyAttentionCompanyContact {
-    String URL_MY_ATTENTION_COMPANY = "";
+    String URL_MY_ATTENTION_COMPANY = "mechanism/getFollowMechanismList";
     String TAG_MY_ATTENTION_COMPANY = "tag_my_attention_company";
     interface Model extends BaseModel{
         Observable<MyAttentionCompanyResult> getMyAttentionCompany(MyCollectParam param);

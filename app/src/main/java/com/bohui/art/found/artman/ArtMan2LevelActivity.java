@@ -9,11 +9,13 @@ import com.bohui.art.R;
 import com.bohui.art.bean.common.ArtManListParam;
 import com.bohui.art.bean.detail.ArtManLevelBean;
 import com.bohui.art.bean.found.ArtMan2LevelBean;
+import com.bohui.art.bean.found.ArtManItemArtBean;
 import com.bohui.art.bean.found.ArtManItemBean;
 import com.bohui.art.bean.found.ArtManListResult;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.widget.rv.adapter.NormalWrapAdapter;
 import com.bohui.art.common.widget.title.DefaultTitleBar;
+import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.detail.artman.ArtManDetailActivity;
 import com.bohui.art.found.artman.mvp.ArtManListContact;
 import com.bohui.art.found.artman.mvp.ArtManListModel;
@@ -38,7 +40,7 @@ import butterknife.BindView;
  */
 
 
-public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter,ArtManListModel> implements ArtManListContact.IArtManListView {
+public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter,ArtManListModel> implements ArtManListContact.IArtManListView,ArtManListAdapter.OnGirdItemClickListener {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -73,16 +75,20 @@ public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter
         artManListAdapter.setDelegateAdapter(delegateAdapter);
         NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,artManListAdapter);
         artManListAdapter.setWrapper(wrapper);
+        artManListAdapter.setOnGirdItemClickListener(this);
         wrapper.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(wrapper);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
         rv.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
-            public void onItemClick(BaseAdapter adapter, View view, int position) {
-                ArtManItemBean itemBean = (ArtManItemBean) adapter.getData(position);
-                if(null != itemBean){
-                    ArtManDetailActivity.comeIn(ArtMan2LevelActivity.this,itemBean.getAid());
+            public void onItemChildClick(BaseAdapter adapter, View view, int position) {
+                super.onItemChildClick(adapter, view, position);
+                if(view.getId() == R.id.rl_art_man_top){
+                    ArtManItemBean itemBean = (ArtManItemBean) adapter.getData(position);
+                    if(null != itemBean){
+                        ArtManDetailActivity.comeIn(ArtMan2LevelActivity.this,itemBean.getAid());
+                    }
                 }
             }
         });
@@ -174,5 +180,10 @@ public class ArtMan2LevelActivity extends AbsNetBaseActivity<ArtManListPresenter
                 }
             }
         }
+    }
+
+    @Override
+    public void girdItemClick(ArtManItemArtBean itemBean) {
+        ArtDetailActivity.comeIn(this,itemBean.getPid());
     }
 }
