@@ -12,6 +12,7 @@
         android:layout_centerInParent="true"
         android:text="国画"/>
     <ImageView
+        android:id="@+id/iv_more"
         android:layout_toRightOf="@+id/tv_type_top"
         android:layout_marginLeft="@dimen/sys_margin"
         android:layout_width="wrap_content"

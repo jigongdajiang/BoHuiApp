@@ -100,11 +100,11 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
                 } else if (adapter instanceof TypeTopAdapter) {
                     ClassifyLevelBean bean = ((TypeTopAdapter) adapter).getData(position);
                     if(bean != null){
-                        if (bean.getPid() == 0) {
+                        if (bean.getLevel() == 1) {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable(Art1Activity.CLASSIFY_LEVEL1,bean);
                             startAty(Art1Activity.class,bundle);
-                        } else {
+                        } else if(bean.getLevel() == 2) {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable(Art2Activity.TYPE,bean);
                             startAty(Art2Activity.class,bundle);
@@ -117,7 +117,7 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
                     if(adapter.getData(position) instanceof  ArtCoverItemBean){
                         id = ((ArtCoverItemBean)adapter.getData(position)).getId();
                     }else if(adapter.getData(position) instanceof ArtItemBean){
-                        id = ((ArtItemBean)adapter.getData(position)).getId();
+                        id = ((ArtItemBean)adapter.getData(position)).getAid();
                     }
                     ArtDetailActivity.comeIn(getActivity(),id);
                 }
@@ -186,50 +186,50 @@ public class TypeFragment extends AbsNetBaseFragment<TypePresenter, TypeModel> i
             adapters.add(type2LevelAdapter);
         }
         //大类推荐
-        RecommendListItemBean level1Recommend = mResult.getBoutique();
-        if (level1Recommend != null) {
-            List<ArtCoverItemBean> level1RecommendList = level1Recommend.getList();
-            if (!CollectionUtil.isEmpty(level1RecommendList)) {
-                String typeName = level1Recommend.getName();
-                long typeId = level1Recommend.getId();
-                TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId));
-                adapters.add(typeTopAdapter);
-                int listSize = level1RecommendList.size();
-                if (listSize == 3) {
-                    Art1Plus2Adapter onePuls2adapter = new Art1Plus2Adapter(getActivity());
-                    onePuls2adapter.setDatas(level1RecommendList);
-                    adapters.add(onePuls2adapter);
-                } else {
-                    OrgGridAdapter org2ItemAdapter = new OrgGridAdapter(mContext);
-                    org2ItemAdapter.setDatas(level1RecommendList);
-                    adapters.add(org2ItemAdapter);
-                }
-            }
-        }
+//        RecommendListItemBean level1Recommend = mResult.getBoutique();
+//        if (level1Recommend != null) {
+//            List<ArtCoverItemBean> level1RecommendList = level1Recommend.getList();
+//            if (!CollectionUtil.isEmpty(level1RecommendList)) {
+//                String typeName = level1Recommend.getName();
+//                long typeId = level1Recommend.getId();
+//                TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId,0,1));
+//                adapters.add(typeTopAdapter);
+//                int listSize = level1RecommendList.size();
+//                if (listSize == 3) {
+//                    Art1Plus2Adapter onePuls2adapter = new Art1Plus2Adapter(getActivity());
+//                    onePuls2adapter.setDatas(level1RecommendList);
+//                    adapters.add(onePuls2adapter);
+//                } else {
+//                    OrgGridAdapter org2ItemAdapter = new OrgGridAdapter(mContext);
+//                    org2ItemAdapter.setDatas(level1RecommendList);
+//                    adapters.add(org2ItemAdapter);
+//                }
+//            }
+//        }
 
         //该大类下的机构推荐
-        RecommendMechanismBean recommendMechanismBean = mResult.getMechanism();
-        if (recommendMechanismBean != null) {
-            List<ArtItemBean> list = recommendMechanismBean.getList();
-            if (!CollectionUtil.isEmpty(list)) {
-                TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendMechanismBean.getName(), 3));
-                adapters.add(jigouTopAdapter);
-                ArtGridAdapter mechanisAdapter = new ArtGridAdapter(mContext);
-                mechanisAdapter.setDatas(list);
-                adapters.add(mechanisAdapter);
-            }
-        }
+//        RecommendMechanismBean recommendMechanismBean = mResult.getMechanism();
+//        if (recommendMechanismBean != null) {
+//            List<ArtItemBean> list = recommendMechanismBean.getList();
+//            if (!CollectionUtil.isEmpty(list)) {
+//                TypeTopAdapter jigouTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(recommendMechanismBean.getName(), 3,0,1));
+//                adapters.add(jigouTopAdapter);
+//                ArtGridAdapter mechanisAdapter = new ArtGridAdapter(mContext);
+//                mechanisAdapter.setDatas(list);
+//                adapters.add(mechanisAdapter);
+//            }
+//        }
         //各二级子分类推荐
         List<Type2ListItemBean> chird = mResult.getChird();
         if (!CollectionUtil.isEmpty(chird)) {
             int size = chird.size();
             for (int i = 0; i < size; i++) {
-                String typeName = chird.get(i).getName();
-                if (!StrOperationUtil.isEmpty(typeName)) {
-                    long typeId = chird.get(i).getId();
+                Type2ListItemBean type2ListItemBean = chird.get(i);
+                if (!StrOperationUtil.isEmpty(type2ListItemBean.getName())) {
                     List<ArtItemBean> list = chird.get(i).getList();
                     if (!CollectionUtil.isEmpty(list)) {
-                        TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(typeName, typeId, 1));
+                        TypeTopAdapter typeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean(
+                                type2ListItemBean.getName(), type2ListItemBean.getId(), type2ListItemBean.getPid(),2));
                         adapters.add(typeTopAdapter);
                         ArtGridAdapter artGridAdapter = new ArtGridAdapter(mContext);
                         artGridAdapter.setDatas(list);

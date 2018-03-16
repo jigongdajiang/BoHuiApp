@@ -13,6 +13,7 @@ public class Type2ListItemBean {
     private String name;
     private long id;
     private List<ArtItemBean> list;
+    private long pid;
 
     public String getName() {
         return name;
@@ -36,6 +37,14 @@ public class Type2ListItemBean {
 
     public void setList(List<ArtItemBean> list) {
         this.list = list;
+    }
+
+    public long getPid() {
+        return pid;
+    }
+
+    public void setPid(long pid) {
+        this.pid = pid;
     }
 
     @Override

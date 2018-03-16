@@ -92,7 +92,7 @@ public class ArtJiActivity extends AbsNetBaseActivity<ArtJiPresenter,ArtJiModel>
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
-                ArtDetailActivity.comeIn(ArtJiActivity.this,itemBean.getId());
+                ArtDetailActivity.comeIn(ArtJiActivity.this,itemBean.getAid());
             }
         });
     }

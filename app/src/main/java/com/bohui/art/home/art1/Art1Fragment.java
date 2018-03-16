@@ -39,7 +39,7 @@ import butterknife.BindView;
  */
 
 
-public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListModel> implements ArtListContact.View {
+public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter, ArtListModel> implements ArtListContact.View {
     @BindView(R.id.ptr)
     PtrClassicFrameLayout ptrClassicFrameLayout;
     @BindView(R.id.rv)
@@ -50,9 +50,10 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
     private ArtListParam param = new ArtListParam();
     private boolean isRefresh;
     private boolean isRequesting;
-    public static Art1Fragment newInstance(ClassifyLevelBean type){
+
+    public static Art1Fragment newInstance(ClassifyLevelBean type) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TYPE,type);
+        bundle.putSerializable(TYPE, type);
         Art1Fragment fragment = new Art1Fragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -75,20 +76,18 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
         final DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         artGridAdapter = new ArtGridAdapter(mContext);
         artGridAdapter.setDelegateAdapter(delegateAdapter);
-        NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext,artGridAdapter);
+        NormalWrapAdapter wrapper = new NormalWrapAdapter(mContext, artGridAdapter);
         artGridAdapter.setWrapper(wrapper);
         wrapper.setDelegateAdapter(delegateAdapter);
         delegateAdapter.addAdapter(wrapper);
         rv.setLayoutManager(virtualLayoutManager);
         rv.setAdapter(delegateAdapter);
-        rv.addOnItemTouchListener(new RvClickListenerIml(){
+        rv.addOnItemTouchListener(new RvClickListenerIml() {
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                if(adapter instanceof ArtGridAdapter){
-                    ArtItemBean itemBean = ((ArtGridAdapter)adapter).getData(position);
-                    if(null != itemBean){
-                        ArtDetailActivity.comeIn(getActivity(),itemBean.getAid());
-                    }
+                ArtItemBean itemBean = (ArtItemBean) adapter.getData(position);
+                if (null != itemBean) {
+                    ArtDetailActivity.comeIn(getActivity(), itemBean.getAid());
                 }
             }
         });
@@ -110,7 +109,7 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
 
     @Override
     public void initPresenter() {
-        mPresenter.setMV(mModel,this);
+        mPresenter.setMV(mModel, this);
     }
 
     @Override
@@ -125,18 +124,20 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
         requestFirstPage();
     }
 
-    private void requestFirstPage(){
+    private void requestFirstPage() {
         isRefresh = true;
         param.setStart(0);
         request();
     }
-    private void requestNextPage(){
+
+    private void requestNextPage() {
         isRefresh = false;
-        param.setStart(param.getStart()+param.getLength());
+        param.setStart(param.getStart() + param.getLength());
         request();
     }
+
     private void request() {
-        if(!isRequesting){
+        if (!isRequesting) {
             mPresenter.getArtList(param);
             isRequesting = true;
         }
@@ -145,9 +146,9 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
     @Override
     protected boolean childInterceptException(String apiName, ApiException e) {
         isRequesting = false;
-        if(isRefresh){
+        if (isRefresh) {
             ptrClassicFrameLayout.refreshComplete();
-        }else{
+        } else {
             ptrClassicFrameLayout.setLoadMoreEnable(false);
             ptrClassicFrameLayout.loadMoreComplete(false);
         }
@@ -158,26 +159,26 @@ public class Art1Fragment extends AbsNetBaseFragment<ArtListPresenter,ArtListMod
     public void getArtListSuccess(ArtListResult result) {
         isRequesting = false;
         List<ArtItemBean> list = result.getPaintingList();
-        if(isRefresh){
+        if (isRefresh) {
             ptrClassicFrameLayout.refreshComplete();
-            if(!CollectionUtil.isEmpty(list)){
+            if (!CollectionUtil.isEmpty(list)) {
                 artGridAdapter.replaceAllItem(result.getPaintingList());
-                if(list.size() >= param.getLength()){
+                if (list.size() >= param.getLength()) {
                     ptrClassicFrameLayout.setLoadMoreEnable(true);
-                }else{
+                } else {
                     ptrClassicFrameLayout.setLoadMoreEnable(false);
                 }
-            }else{
+            } else {
                 ptrClassicFrameLayout.setLoadMoreEnable(false);
             }
-        }else{
-            if(CollectionUtil.isEmpty(list)){
+        } else {
+            if (CollectionUtil.isEmpty(list)) {
                 ptrClassicFrameLayout.loadMoreComplete(false);
-            }else{
+            } else {
                 artGridAdapter.addItems(list);
-                if(list.size() >= param.getLength()){
+                if (list.size() >= param.getLength()) {
                     ptrClassicFrameLayout.loadMoreComplete(true);
-                }else{
+                } else {
                     ptrClassicFrameLayout.loadMoreComplete(false);
                 }
             }

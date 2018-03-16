@@ -17,7 +17,8 @@ public class ArtItemBean implements Serializable {
     private String cover;
     private String size;
     private int lookNum;
-    private double salePrice;
+    private double saleprice;
+    private double price;
 
     public ArtItemBean() {
     }
@@ -66,12 +67,12 @@ public class ArtItemBean implements Serializable {
         this.lookNum = lookNum;
     }
 
-    public double getSalePrice() {
-        return salePrice;
+    public double getSaleprice() {
+        return saleprice;
     }
 
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
+    public void setSaleprice(double saleprice) {
+        this.saleprice = saleprice;
     }
 
     public long getAid() {
@@ -80,6 +81,14 @@ public class ArtItemBean implements Serializable {
 
     public void setAid(long aid) {
         this.aid = aid;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
@@ -91,7 +100,8 @@ public class ArtItemBean implements Serializable {
                 ", cover='" + cover + '\'' +
                 ", size='" + size + '\'' +
                 ", lookNum=" + lookNum +
-                ", salePrice=" + salePrice +
+                ", salePrice=" + saleprice +
+                ", price=" + price +
                 '}';
     }
 }

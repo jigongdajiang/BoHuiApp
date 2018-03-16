@@ -59,7 +59,7 @@ public class Art1Activity extends AbsNetBaseActivity<ClassifyPresenter,ClassifyM
     @Override
     public void initView() {
         new DefaultTitleBar.DefaultBuilder(mContext)
-                .setTitle("国画推荐")
+                .setTitle(level1.getName())
                 .setRightImage1(R.mipmap.ic_search)
                 .setRightImage1ClickListner(new View.OnClickListener() {
                     @Override

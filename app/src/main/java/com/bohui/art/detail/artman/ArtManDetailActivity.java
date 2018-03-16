@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -14,6 +15,7 @@ import com.bohui.art.bean.detail.CAResult;
 import com.bohui.art.bean.home.ArtItemBean;
 import com.bohui.art.common.activity.AbsNetBaseActivity;
 import com.bohui.art.common.app.AppFuntion;
+import com.bohui.art.common.util.CallUitl;
 import com.bohui.art.common.util.RxViewUtil;
 import com.bohui.art.detail.art.ArtDetailActivity;
 import com.bohui.art.detail.art.adapter.DetailGuideAdapter;
@@ -25,6 +27,7 @@ import com.bohui.art.bean.detail.ShowreelBean;
 import com.bohui.art.detail.artman.mvp.ArtManDetailContact;
 import com.bohui.art.detail.artman.mvp.ArtManDetailModel;
 import com.bohui.art.detail.artman.mvp.ArtManDetailPresenter;
+import com.bohui.art.detail.designer.DesignerDetailActivity;
 import com.bohui.art.home.art1.Art2Adapter;
 import com.bohui.art.start.MainActivity;
 import com.bohui.art.start.login.LoginActivity;
@@ -56,6 +59,8 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
 
     @BindView(R.id.rv)
     RecyclerView rv;
+    @BindView(R.id.rl_call)
+    RelativeLayout rl_call;
     private String[] mTabTitles = {"艺术家", "代表作", "作品集", "Ta的简介"};
     private int rvStatus = 0;
 
@@ -98,6 +103,12 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
             @Override
             public void accept(Object o) throws Exception {
                 startActivity(new Intent(ArtManDetailActivity.this, MainActivity.class));
+            }
+        });
+        RxViewUtil.addOnClick(mRxManager, rl_call, new Consumer() {
+            @Override
+            public void accept(Object o) throws Exception {
+                CallUitl.call(ArtManDetailActivity.this,"17610889017");
             }
         });
     }

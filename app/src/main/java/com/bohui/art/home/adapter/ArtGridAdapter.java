@@ -44,9 +44,9 @@ public class ArtGridAdapter extends BaseAdapter<ArtItemBean> {
         params.height = DisplayUtil.getScreenWidth(mContext)/2 - 1;
         iv.setLayoutParams(params);
         GlideUtil.display(mContext,iv,itemData.getCover());
-
+        double price = Math.max(itemData.getSaleprice(),itemData.getPrice());
         holder.setText(R.id.tv_des,itemData.getName());
-        holder.setText(R.id.tv_price, NumberFormatUtil.getCnMonery(itemData.getSalePrice()));
+        holder.setText(R.id.tv_price, NumberFormatUtil.getCnMonery(price));
         holder.setText(R.id.tv_tab,itemData.getLookNum()+"人浏览");
     }
 

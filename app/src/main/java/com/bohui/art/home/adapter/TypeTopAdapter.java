@@ -38,6 +38,9 @@ public class TypeTopAdapter extends BaseAdapter<ClassifyLevelBean> {
     @Override
     public void bindViewHolder(BaseViewHolder holder, ClassifyLevelBean itemData, int position) {
         holder.setText(R.id.tv_type_top,typeTopBean.getName());
+        if (itemData.getLevel() == 3){
+            holder.setVisible(R.id.iv_more,false);
+        }
     }
 
     @Override

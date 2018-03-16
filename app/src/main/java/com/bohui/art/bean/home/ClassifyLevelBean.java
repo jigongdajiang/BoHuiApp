@@ -17,6 +17,7 @@ public class ClassifyLevelBean implements Serializable{
     private long pid;
     private boolean isChecked;
     private boolean isBu;
+    private int level;//0 没有  1一级  2 二级  3 猜你喜欢
 
     public ClassifyLevelBean() {
     }
@@ -24,6 +25,13 @@ public class ClassifyLevelBean implements Serializable{
     public ClassifyLevelBean(String name, long id) {
         this.name = name;
         this.id = id;
+    }
+
+    public ClassifyLevelBean(String name, long id, long pid, int level) {
+        this.name = name;
+        this.id = id;
+        this.pid = pid;
+        this.level = level;
     }
 
     public ClassifyLevelBean(String name, long id, long pid) {
@@ -80,6 +88,14 @@ public class ClassifyLevelBean implements Serializable{
 
     public boolean isBu() {
         return isBu;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public void setBu(boolean bu) {

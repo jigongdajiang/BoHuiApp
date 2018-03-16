@@ -77,10 +77,14 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
                 if (adapter instanceof TypeTopAdapter) {
-                    //进入二级艺术品列表页
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Art1Activity.CLASSIFY_LEVEL1, ((TypeTopAdapter) adapter).getData(position));
-                    startAty(Art1Activity.class, bundle);
+                    ClassifyLevelBean item = ((TypeTopAdapter) adapter).getData(position);
+                    if(item != null && item.getId() != 5){
+                        //进入二级艺术品列表页
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Art1Activity.CLASSIFY_LEVEL1, item);
+                        startAty(Art1Activity.class, bundle);
+                    }
+
                 } else if (adapter instanceof Art1Plus2Adapter
                         || adapter instanceof OrgGridAdapter
                         || adapter instanceof ArtGridAdapter) {
@@ -211,7 +215,7 @@ public class RecommendFragment extends AbsNetBaseFragment<RecommendPresenter, Re
         //猜你喜欢
         List<ArtItemBean> guessLike = mResult.getGuessLike();
         if (!CollectionUtil.isEmpty(guessLike)) {
-            TypeTopAdapter guessLikeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean("猜你喜欢", 5));
+            TypeTopAdapter guessLikeTopAdapter = new TypeTopAdapter(mContext, new ClassifyLevelBean("猜你喜欢", 5,0,3));
             adapters.add(guessLikeTopAdapter);
             ArtGridAdapter guessLikeAdapter = new ArtGridAdapter(mContext);
             guessLikeAdapter.setDatas(guessLike);

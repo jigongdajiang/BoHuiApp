@@ -50,8 +50,9 @@ public class Art2Adapter extends BaseAdapter<ArtItemBean> {
         GlideUtil.display(mContext,iv_art,itemData.getCover());
         //简介
         holder.setText(R.id.tv_art_des,itemData.getName());
+        double price = Math.max(itemData.getSaleprice(),itemData.getPrice());
         //价格
-        holder.setText(R.id.tv_art_price, NumberFormatUtil.getCnMonery(itemData.getSalePrice()));
+        holder.setText(R.id.tv_art_price, NumberFormatUtil.getCnMonery(price));
         //尺寸属性
         holder.setText(R.id.tv_attr,itemData.getSize());
         //浏览量

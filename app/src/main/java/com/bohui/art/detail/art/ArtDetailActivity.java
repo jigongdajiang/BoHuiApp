@@ -196,13 +196,13 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 rvStatus = newState;
-                PrintLog.e("onScrollStateChanged","newState="+newState);
+//                PrintLog.e("onScrollStateChanged","newState="+newState);
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                PrintLog.e("onScrolled","dx="+dx+"---dy="+dy);
+//                PrintLog.e("onScrolled","dx="+dx+"---dy="+dy);
 
                 VirtualLayoutManager layoutManager = (VirtualLayoutManager) recyclerView.getLayoutManager();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
@@ -210,10 +210,10 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
                 int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
                 int lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
 
-                PrintLog.e("onScrolled_position","f="+firstVisibleItemPosition+"---" +
-                        "l="+lastVisibleItemPosition+"---" +
-                        "fc="+firstCompletelyVisibleItemPosition+"---" +
-                        "lc="+lastCompletelyVisibleItemPosition);
+//                PrintLog.e("onScrolled_position","f="+firstVisibleItemPosition+"---" +
+//                        "l="+lastVisibleItemPosition+"---" +
+//                        "fc="+firstCompletelyVisibleItemPosition+"---" +
+//                        "lc="+lastCompletelyVisibleItemPosition);
                 if(rvStatus != 0){
                     if(firstVisibleItemPosition == 0){
                         segment_tab.setCurrentTab(0);
