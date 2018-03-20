@@ -49,7 +49,7 @@ public class DetailAdapter extends BaseAdapter<ArtDetailResult> {
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setBlockNetworkImage(true);
         webSettings.setUseWideViewPort(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         wv_detail.setWebViewClient(new GoodsDetailWebViewClient());
         wv_detail.loadUrl(itemData.getDetailH5());
     }

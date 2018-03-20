@@ -99,33 +99,35 @@ public class FoundFragment extends AbsMianFragment<FoundPresenter,FoundModel> im
         rv_found.addOnItemTouchListener(new RvClickListenerIml(){
             @Override
             public void onItemClick(BaseAdapter adapter, View view, int position) {
-                GuideItemBean itemBean = (GuideItemBean) adapter.getData(position);
-                switch (itemBean.getTypeId()){
-                    case 0:
-                        startAty(ArtManHomeActivity.class);
-                        break;
-                    case 1:
-                        startAty(DesignerActivity.class);
-                        break;
-                    case 2:
-                        startAty(CompanyListActivity.class);
-                        break;
-                    case 3:
-                        toastShort("敬请期待");
-                        break;
-                    case 4:
-                        if(!StrOperationUtil.isEmpty(coopDescUrl)){
-                            Bundle bundle = new Bundle();
-                            bundle.putString(CommonStaticActivity.WEB_URL_CONTENT,coopDescUrl);
-                            startAty(CommonStaticActivity.class,bundle);
-                        }
-                        break;
-                    case 5:
-                        startAty(OrderActivity.class);
-                        break;
-                    case 6:
-                        toastShort("敬请期待");
-                        break;
+                if(adapter instanceof GuideItemAdapter){
+                    GuideItemBean itemBean = (GuideItemBean) adapter.getData(position);
+                    switch (itemBean.getTypeId()){
+                        case 0:
+                            startAty(ArtManHomeActivity.class);
+                            break;
+                        case 1:
+                            startAty(DesignerActivity.class);
+                            break;
+                        case 2:
+                            startAty(CompanyListActivity.class);
+                            break;
+                        case 3:
+                            toastShort("敬请期待");
+                            break;
+                        case 4:
+                            if(!StrOperationUtil.isEmpty(coopDescUrl)){
+                                Bundle bundle = new Bundle();
+                                bundle.putString(CommonStaticActivity.WEB_URL_CONTENT,coopDescUrl);
+                                startAty(CommonStaticActivity.class,bundle);
+                            }
+                            break;
+                        case 5:
+                            startAty(OrderActivity.class);
+                            break;
+                        case 6:
+                            toastShort("敬请期待");
+                            break;
+                    }
                 }
             }
         });
