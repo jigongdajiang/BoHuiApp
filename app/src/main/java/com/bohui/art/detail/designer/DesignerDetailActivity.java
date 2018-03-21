@@ -119,7 +119,7 @@ public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPre
     @Override
     public void getDesignerDetailSuccess(DesignerDetailResult result) {
         DesignerDetailBean designerDetailResult = result.getDesignerDetail();
-        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
+        final VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
         //详情
@@ -188,12 +188,11 @@ public class DesignerDetailActivity extends AbsNetBaseActivity<DesignerDetailPre
             @Override
             public void onTabSelect(int position) {
                 if(position == 0){
-                    rv.scrollToPosition(0);
+                    virtualLayoutManager.scrollToPositionWithOffset(0,0);
                 } else if(position == 1){
-                    rv.scrollToPosition(alPosition);
+                    virtualLayoutManager.scrollToPositionWithOffset(alPosition,0);
                 }else if(position == 2){
-                    rv.scrollToPosition(jnPosition);
-                    segment_tab.setCurrentTab(2);
+                    virtualLayoutManager.scrollToPositionWithOffset(jnPosition,0);
                 }
             }
 

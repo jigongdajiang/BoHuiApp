@@ -121,7 +121,7 @@ public class CompanyDetailActivity extends AbsNetBaseActivity<CompanyDetailPrese
 
     @Override
     public void getCompanyDetailSuccess(final CompanyDetailResult detailResult) {
-        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
+        final VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
         isfouce = detailResult.getIsfollow();
@@ -187,12 +187,11 @@ public class CompanyDetailActivity extends AbsNetBaseActivity<CompanyDetailPrese
             @Override
             public void onTabSelect(int position) {
                 if(position == 0){
-                    rv.scrollToPosition(0);
+                    virtualLayoutManager.scrollToPositionWithOffset(0,0);
                 } else if(position == 1){
-                    rv.scrollToPosition(dbzPosition);
+                    virtualLayoutManager.scrollToPositionWithOffset(dbzPosition,0);
                 }else if(position == 2){
-                    rv.scrollToPosition(jnPosition);
-                    segment_tab.setCurrentTab(2);
+                    virtualLayoutManager.scrollToPositionWithOffset(jnPosition,0);
                 }
             }
 

@@ -151,7 +151,7 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
             imgs = new ArrayList<>();
             result.setImgs(imgs);
         }
-        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
+        final VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //产品  0
         productAdapter = new ProductAdapter(mContext,result);
@@ -232,14 +232,13 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
             @Override
             public void onTabSelect(int position) {
                 if(position == 0){
-                    rv.scrollToPosition(0);
+                    virtualLayoutManager.scrollToPositionWithOffset(0,0);
                 } else if(position == 1){
-                    rv.scrollToPosition(1);
+                    virtualLayoutManager.scrollToPositionWithOffset(1,0);
                 }else if(position == 2){
-                    rv.scrollToPosition(3);
-                    segment_tab.setCurrentTab(2);
+                    virtualLayoutManager.scrollToPositionWithOffset(3,0);
                 }else if(position == 3){
-                    rv.scrollToPosition(5);
+                    virtualLayoutManager.scrollToPositionWithOffset(5,0);
                 }
             }
 

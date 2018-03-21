@@ -125,7 +125,7 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
 
     @Override
     public void getArtManDetailSuccess(ArtMainDetailResult artMainDetailResult) {
-        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
+        final VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(mContext);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
 
         isfouce = artMainDetailResult.getIsfouce();
@@ -205,14 +205,14 @@ public class ArtManDetailActivity extends AbsNetBaseActivity<ArtManDetailPresent
             @Override
             public void onTabSelect(int position) {
                 if(position == 0){
-                    rv.scrollToPosition(0);
+                    virtualLayoutManager.scrollToPositionWithOffset(0,0);
                 } else if(position == 1){
-                    rv.scrollToPosition(dbzPosition);
+                    virtualLayoutManager.scrollToPositionWithOffset(dbzPosition,0);
                 }else if(position == 2){
-                    rv.scrollToPosition(zpjPosition);
+                    virtualLayoutManager.scrollToPositionWithOffset(zpjPosition,0);
                     segment_tab.setCurrentTab(2);
                 }else if(position == 3){
-                    rv.scrollToPosition(jnPosition);
+                    virtualLayoutManager.scrollToPositionWithOffset(jnPosition,0);
                 }
             }
 

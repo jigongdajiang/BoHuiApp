@@ -18,6 +18,7 @@ import com.bohui.art.common.fragment.AbsNetBaseFragment;
 import com.bohui.art.common.util.helperutil.NetBaseHelperUtil;
 import com.bohui.art.home.RecommendFragment;
 import com.bohui.art.home.adapter.BannerAdapter;
+import com.bohui.art.home.art1.Art1Activity;
 import com.bohui.art.home.art2.Art2Activity;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
@@ -83,8 +84,13 @@ public class ClassifyTypeFragment extends AbsNetBaseFragment<ClassifyPresenter, 
                 if(adapter instanceof  ClassifyTypeDetailAdapter){
                     ClassifyLevelBean levelBean = ((ClassifyTypeDetailAdapter) adapter).getData(position);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(Art2Activity.TYPE,levelBean);
-                    startAty(Art2Activity.class,bundle);
+                    if(levelBean.getPid() == 0){
+                        bundle.putSerializable(Art1Activity.CLASSIFY_LEVEL1, levelBean);
+                        startAty(Art1Activity.class, bundle);
+                    }else{
+                        bundle.putSerializable(Art2Activity.TYPE,levelBean);
+                        startAty(Art2Activity.class,bundle);
+                    }
                 }
             }
         });
