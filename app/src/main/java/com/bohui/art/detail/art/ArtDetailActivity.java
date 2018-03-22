@@ -263,7 +263,7 @@ public class ArtDetailActivity extends AbsNetBaseActivity<ArtDetailPesenter,ArtD
             }
         });
         //浏览量
-        tv_eye.setText(result.getLooknum()+"人浏览");
+        tv_eye.setText(result.getLookNum()+"人浏览");
         isfollow = result.getIsfollow();
         if(isfollow == 0){
             tv_like.setText("喜欢并收藏");

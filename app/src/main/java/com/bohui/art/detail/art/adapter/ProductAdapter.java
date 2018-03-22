@@ -87,8 +87,8 @@ public class ProductAdapter extends BaseAdapter<ArtDetailResult> {
         holder.setText(R.id.tv_price, NumberFormatUtil.getCnMonery(itemData.getPrice()));
         //艺术品尺寸规格
         holder.setText(R.id.tv_size,itemData.getSize());
-        //剩余量
-        holder.setText(R.id.tv_loss_num,itemData.getLooknum()+"人浏览");
+        //浏览量
+        holder.setText(R.id.tv_loss_num,itemData.getLookNum()+"人浏览");
         //艺术家头像
         ImageView iv_avr = holder.getView(R.id.iv_avr);
         GlideUtil.display(mContext,iv_avr,itemData.getPhoto());

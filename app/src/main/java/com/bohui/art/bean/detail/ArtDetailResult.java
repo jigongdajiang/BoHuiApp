@@ -22,7 +22,7 @@ public class ArtDetailResult {
     private String photo;// "http://bohuiyishu.oss-cn-beijing.aliyuncs.com/file/1523863942682855.jpg",//作者头像
     private long   pid;// 17,//作品id
     private String detailH5;// "http://bohuiyishu?id=17",//详情H5链接地址
-    private int    looknum;// 0,//浏览数
+    private int    lookNum;// 0,//浏览数
     private String desc;// "梦中之蓝"//简介
     private long aid;//艺术家id
     private List<ArtItemBean> recommendList;//同类艺术品推荐
@@ -109,12 +109,12 @@ public class ArtDetailResult {
         this.detailH5 = detailH5;
     }
 
-    public int getLooknum() {
-        return looknum;
+    public int getLookNum() {
+        return lookNum;
     }
 
-    public void setLooknum(int looknum) {
-        this.looknum = looknum;
+    public void setLookNum(int lookNum) {
+        this.lookNum = lookNum;
     }
 
     public String getDesc() {
